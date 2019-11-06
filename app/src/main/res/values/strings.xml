@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Digikala</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="problem_connect_to_internet">خطا در اتصال به اینترنت!</string>
+    <string name="check_network_setting">بررسی تنظیمات شبکه</string>
+    <string name="try_again">تلاش مجدد</string>
+</resources>

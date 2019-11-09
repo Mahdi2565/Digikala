@@ -25,9 +25,11 @@ import butterknife.ButterKnife;
 import ir.mahdidev.digikala.R;
 import ir.mahdidev.digikala.controller.activity.MainActivity;
 import ir.mahdidev.digikala.networkmodel.Repository;
+import ir.mahdidev.digikala.networkmodel.category.WebserviceCategoryModel;
 import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
 import ir.mahdidev.digikala.networkutil.RetrofitApi;
 import ir.mahdidev.digikala.networkutil.RetrofitConfig;
+import ir.mahdidev.digikala.util.Const;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -64,16 +66,13 @@ public class SplashScreenFragment extends Fragment {
             productAsyncTask.execute();
     }
 
-    private class ProductAsyncTask extends AsyncTask<Void , Void , HashMap<String , List<WebserviceProductModel>>> {
+    private class ProductAsyncTask extends AsyncTask<Void , Void , HashMap<String , List>> {
 
         @Override
-        protected HashMap<String , List<WebserviceProductModel>> doInBackground(Void... voids) {
-            HashMap<String , List<WebserviceProductModel>> productListHashMap
+        protected HashMap<String , List> doInBackground(Void... voids) {
+            HashMap<String , List> productAndCategoryListHashMap
                     = new HashMap<>();
-
-            /*
             try {
-
                 List<WebserviceProductModel> mostVisitedProductList =
                         RetrofitConfig.getRetrofit().create(RetrofitApi.class)
                                 .getAllSortedProduct("popularity").execute().body();
@@ -85,28 +84,23 @@ public class SplashScreenFragment extends Fragment {
                 List<WebserviceProductModel> mostNewestProductList =
                         RetrofitConfig.getRetrofit().create(RetrofitApi.class)
                                 .getAllSortedProduct("date").execute().body();
+                List<WebserviceCategoryModel> allCategories = RetrofitConfig.getRetrofit()
+                        .create(RetrofitApi.class).getAllCategories().execute().body();
 
-
-                productListHashMap.put("mostVisitedProductList" , mostVisitedProductList);
-                productListHashMap.put("mostRatingProductList" , mostRatingProductList);
-                productListHashMap.put("mostNewestProductList" , mostNewestProductList);
-
+                productAndCategoryListHashMap.put(Const.KeyList.MOST_VISITING_LIST, mostVisitedProductList);
+                productAndCategoryListHashMap.put(Const.KeyList.MOST_RATING_LIST , mostRatingProductList);
+                productAndCategoryListHashMap.put(Const.KeyList.MOST_NEWEST_LIST , mostNewestProductList);
+                productAndCategoryListHashMap.put(Const.KeyList.CATEGORY_LIST ,   allCategories);
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-             */
-            return productListHashMap;
+            return productAndCategoryListHashMap;
         }
-
-
         @Override
-        protected void onPostExecute(HashMap<String , List<WebserviceProductModel>> productsSortHashMap) {
-            super.onPostExecute(productsSortHashMap);
-            Repository.getInstance().setMostVisitedProduct(productsSortHashMap.get("mostVisitedProductList"));
-            Repository.getInstance().setMostRatingProduct(productsSortHashMap.get("mostRatingProductList"));
-            Repository.getInstance().setMostNewestProduct(productsSortHashMap.get("mostNewestProductList"));
+        protected void onPostExecute(HashMap<String , List> productsAndCategorySortHashMap) {
+            super.onPostExecute(productsAndCategorySortHashMap);
+            Repository.getInstance().setProductsList(productsAndCategorySortHashMap);
             startActivity(MainActivity.newIntent(getActivity()));
             getActivity().finish();
         }

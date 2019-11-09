@@ -7,4 +7,10 @@
     <color name="grayText">#686868</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="grayRecyclerViewItem">#61747E</color>
+    <color name="blueRecyclerViewItem">#2397F3</color>
+    <color name="strokeCardView">#DADADA</color>
+    <color name="priceColor">#66BB6A</color>
+    <color name="titleProduct">#535353</color>
+
 </resources>

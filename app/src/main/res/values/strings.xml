@@ -6,4 +6,10 @@
     <string name="problem_connect_to_internet">خطا در اتصال به اینترنت!</string>
     <string name="check_network_setting">بررسی تنظیمات شبکه</string>
     <string name="try_again">تلاش مجدد</string>
+    <string name="home">خانه</string>
+    <string name="category_list">لیست دسته‌بندی محصولات</string>
+    <string name="basket">سبد خرید</string>
+    <string name="most_visiting">پربازدیدترین‌ها</string>
+    <string name="most_rating">پرامتیازترین‌ها</string>
+    <string name="most_newest">جدیدترین‌ها</string>
 </resources>

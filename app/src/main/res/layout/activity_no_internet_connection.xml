@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:background="@color/white"
     android:gravity="center"
     android:layout_gravity="center"
     android:orientation="vertical"

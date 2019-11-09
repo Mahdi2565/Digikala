@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/home_menuu"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="@string/home" />
+        <item
+            android:id="@+id/category_menu"
+            android:icon="@drawable/ic_list_black_24dp"
+            android:title="@string/category_list" />
+    </group>
+
+    <group
+        android:id="@+id/basket_group"
+        android:checkableBehavior="single">
+
+        <item
+            android:icon="@drawable/ic_shopping_cart_black_24dp"
+            android:id="@+id/basket_menu"
+            android:title="@string/basket"
+
+            />
+    </group>
+
+    <group
+        android:id="@+id/product_group"
+        android:checkableBehavior="single">
+
+        <item
+            android:icon="@drawable/ic_star_black_24dp"
+            android:id="@+id/most_visited_menu"
+            android:title="@string/most_visiting" />
+
+        <item
+            android:icon="@drawable/ic_star_black_24dp"
+            android:id="@+id/most_rating_menu"
+            android:title="@string/most_rating" />
+
+        <item
+            android:icon="@drawable/ic_star_black_24dp"
+            android:id="@+id/most_newest_menu"
+            android:title="@string/most_newest" />
+
+
+    </group>
+
+
+</menu>

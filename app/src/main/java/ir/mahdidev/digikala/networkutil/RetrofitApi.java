@@ -12,6 +12,9 @@ public interface RetrofitApi {
     @GET("products")
     Call<List<WebserviceProductModel>> getAllSortedProduct
             (@Query("orderby") String sortType);
+    @GET("products")
+    Call<List<WebserviceProductModel>> getNextPageSortedProduct
+            (@Query("orderby") String sortType , @Query("page") int page);
     @GET("products/categories")
     Call<List<WebserviceCategoryModel>> getAllCategories();
 }

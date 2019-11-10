@@ -7,6 +7,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -20,18 +22,23 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.smarteist.autoimageslider.SliderView;
 
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import ir.mahdidev.digikala.R;
+import ir.mahdidev.digikala.adapter.SliderAdapter;
 import ir.mahdidev.digikala.controller.fragment.MainFragment;
 import ir.mahdidev.digikala.networkmodel.Repository;
 import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
 import ir.mahdidev.digikala.networkutil.ConnectivityReceiver;
 import ir.mahdidev.digikala.util.Const;
 import ir.mahdidev.digikala.util.MyApplication;
+import ir.mahdidev.digikala.viewmodel.MainFragmentViewModel;
 
 public class MainActivity extends SingleFragmentActivity {
 
@@ -95,5 +102,9 @@ public class MainActivity extends SingleFragmentActivity {
         else{
             super.onBackPressed();
         }
+    }
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
     }
 }

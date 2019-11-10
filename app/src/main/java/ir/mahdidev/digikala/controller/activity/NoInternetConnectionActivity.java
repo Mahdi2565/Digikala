@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import ir.mahdidev.digikala.R;
 import ir.mahdidev.digikala.networkutil.ConnectivityReceiver;
 
@@ -54,5 +55,9 @@ public class NoInternetConnectionActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         finishAffinity();
+    }
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
     }
 }

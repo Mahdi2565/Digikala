@@ -1,6 +1,8 @@
 package ir.mahdidev.digikala.adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,22 +17,28 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import ir.mahdidev.digikala.R;
+import ir.mahdidev.digikala.interfaces.HorizontalRecyclerViewInterface;
 import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
+import ir.mahdidev.digikala.util.MyApplication;
 
 public class MainHorizontalRecyclerViewAdapter extends RecyclerView.Adapter<MainHorizontalRecyclerViewAdapter.ViewHolder> {
-    private static final int PRODUCT_WITHOUT_DISCOUNT = 0 ;
-    private static final int PRODUCT_WITH_DISCOUNT = 1 ;
     private List<WebserviceProductModel> productList;
     private Context context;
+    private HorizontalRecyclerViewInterface horizontalRecyclerViewInterface;
 
     public MainHorizontalRecyclerViewAdapter(List<WebserviceProductModel> productList, Context context) {
         this.productList = productList;
         this.context = context;
     }
+
+    public void setProductList(List<WebserviceProductModel> productList) {
+        this.productList.addAll(productList);
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.horizontal_recyclerview_item_discount_price
+                return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.horizontal_recyclerview_item_price
                         , parent , false));
         }
 
@@ -38,6 +46,10 @@ public class MainHorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Main
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if (productList.get(position).getPrice().equals("")) productList.remove(position);
+
+            if (position==productList.size()-1) {
+              //  horizontalRecyclerViewInterface.onBottomReached();
+            }
 
                 if (productList.get(position).getImages().isEmpty()){
                     holder.producImage.setImageResource(R.drawable.digikala_place_holder);
@@ -49,10 +61,15 @@ public class MainHorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Main
                 if (!productList.get(position).getRegularPrice().equals(productList.get(position).getPrice())) {
                     holder.priceRegular.setVisibility(View.VISIBLE);
                 }else holder.priceRegular.setVisibility(View.GONE);
+
                 holder.titleProduct.setText(productList.get(position).getName());
-                String regularPrice = productList.get(position).getRegularPrice()+ " تومان";
+                String regularPrice = MyApplication.getInstance()
+                        .getPersianNumber(Double.parseDouble(productList.get(position).getRegularPrice()))
+                        + " تومان";
                 holder.priceRegular.setText(regularPrice);
-                String price = productList.get(position).getPrice()+ " تومان";
+                String price =  MyApplication.getInstance()
+                        .getPersianNumber(Double.parseDouble(productList.get(position).getPrice()))
+                        + " تومان";
                 holder.salePrice.setText(price);
 
 
@@ -75,5 +92,8 @@ public class MainHorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Main
                     priceRegular = itemView.findViewById(R.id.price_regular);
                     salePrice    = itemView.findViewById(R.id.sale_price);
             }
+        }
+        public void setHorizontalRecyclerViewInterface (HorizontalRecyclerViewInterface horizontalRecyclerViewInterface){
+        this.horizontalRecyclerViewInterface = horizontalRecyclerViewInterface;
         }
     }

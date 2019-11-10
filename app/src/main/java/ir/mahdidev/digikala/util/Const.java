@@ -1,6 +1,11 @@
 package ir.mahdidev.digikala.util;
 
 public class Const {
+    public static class OrderTag{
+        public static final String MOST_VISITING_PRODUCT = "popularity";
+        public static final String MOST_RATING_PRODUCT = "rating";
+        public static final String MOST_NEWEST_PRODUCT = "date";
+    }
     public static class KeyList{
         public static final String MOST_VISITING_LIST = "mostVisitedProductList";
         public static final String MOST_RATING_LIST = "mostRatingProductList";

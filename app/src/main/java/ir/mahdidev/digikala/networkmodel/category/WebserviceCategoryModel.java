@@ -26,7 +26,7 @@ public class WebserviceCategoryModel {
     private String display;
     @SerializedName("image")
     @Expose
-    private Object image;
+    private Image image;
     @SerializedName("menu_order")
     @Expose
     private Integer menuOrder;
@@ -85,11 +85,11 @@ public class WebserviceCategoryModel {
         this.display = display;
     }
 
-    public Object getImage() {
+    public Image getImage() {
         return image;
     }
 
-    public void setImage(Object image) {
+    public void setImage(Image image) {
         this.image = image;
     }
 

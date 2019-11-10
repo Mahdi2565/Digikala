@@ -14,7 +14,7 @@
 
     <RelativeLayout
         android:layout_width="150dp"
-        android:layout_height="230dp">
+        android:layout_height="250dp">
 
         <ImageView
             android:layout_margin="8dp"
@@ -23,6 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"/>
         <TextView
+            android:layout_marginEnd="4dp"
             android:textColor="@color/titleProduct"
             android:id="@+id/title_product_horizontal_recyclerView"
             android:maxLines="2"

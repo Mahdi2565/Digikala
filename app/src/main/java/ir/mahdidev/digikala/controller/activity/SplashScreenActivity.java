@@ -1,7 +1,10 @@
 package ir.mahdidev.digikala.controller.activity;
 
+import android.content.Context;
+
 import androidx.fragment.app.Fragment;
 
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import ir.mahdidev.digikala.R;
 import ir.mahdidev.digikala.controller.fragment.SplashScreenFragment;
 import ir.mahdidev.digikala.networkutil.ConnectivityReceiver;
@@ -28,5 +31,8 @@ public class SplashScreenActivity extends SingleFragmentActivity implements Conn
     public String fragmentTag() {
         return Const.SPLASH_SCREEN_FRAGMENT_TAG;
     }
-
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
+    }
 }

@@ -14,13 +14,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.smarteist.autoimageslider.IndicatorAnimations;
+import com.smarteist.autoimageslider.SliderView;
+
 import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ir.mahdidev.digikala.R;
-import ir.mahdidev.digikala.adapter.MainRecyclerViewAdapter;
+import ir.mahdidev.digikala.adapter.MainVerticalRecyclerViewAdapter;
+import ir.mahdidev.digikala.adapter.SliderAdapter;
+import ir.mahdidev.digikala.util.Const;
 import ir.mahdidev.digikala.viewmodel.MainFragmentViewModel;
 
 /**
@@ -30,9 +35,12 @@ public class MainFragment extends Fragment {
 
     @BindView(R.id.main_vertical_recyclerView)
     RecyclerView verticalRecyclerView;
+    @BindView(R.id.imageSlider)
+    SliderView sliderView;
 
+    private SliderAdapter sliderAdapter;
     private MainFragmentViewModel viewModel;
-    private MainRecyclerViewAdapter adapter;
+    private MainVerticalRecyclerViewAdapter adapter;
     public MainFragment() {
         // Required empty public constructor
     }
@@ -56,14 +64,23 @@ public class MainFragment extends Fragment {
         initViewModel();
     }
 
+    private void initSliderView(HashMap<String, List> listHashMap) {
+        sliderAdapter = new SliderAdapter(listHashMap.get(Const.KeyList.CATEGORY_LIST) , getActivity());
+        sliderView.setSliderAdapter(sliderAdapter);
+    }
+
     private void initViewModel() {
         viewModel = ViewModelProviders.of(this).get(MainFragmentViewModel.class);
-        viewModel.getProductAndCategoryList().observe(this, this::initRecyclerView);
+        viewModel.getProductAndCategoryList().observe(this, listHashMap -> {
+            if (listHashMap.isEmpty()) return;
+            initRecyclerView(listHashMap);
+            initSliderView(listHashMap);
+        });
     }
 
     private void initRecyclerView(HashMap<String , List> productAndCategoryList) {
         if (adapter == null){
-            adapter = new MainRecyclerViewAdapter(productAndCategoryList , getActivity());
+            adapter = new MainVerticalRecyclerViewAdapter(productAndCategoryList , getActivity());
             verticalRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             verticalRecyclerView.setAdapter(adapter);
         }else {

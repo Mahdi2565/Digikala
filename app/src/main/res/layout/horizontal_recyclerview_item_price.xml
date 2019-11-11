@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView
+    android:id="@+id/horizontal_cardView"
     android:foreground="?android:attr/selectableItemBackground"
     android:clickable="true"
     android:layout_margin="4dp"
@@ -14,7 +15,7 @@
 
     <RelativeLayout
         android:layout_width="150dp"
-        android:layout_height="250dp">
+        android:layout_height="260dp">
 
         <ImageView
             android:layout_margin="8dp"
@@ -23,10 +24,12 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"/>
         <TextView
+            android:layout_margin="4dp"
             android:layout_marginEnd="4dp"
             android:textColor="@color/titleProduct"
             android:id="@+id/title_product_horizontal_recyclerView"
-            android:maxLines="2"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:gravity="end"
             android:layout_below="@+id/product_img_horizontal_recyclerView"
             android:text="@string/app_name"
@@ -57,8 +60,8 @@
             android:layout_height="wrap_content"/>
 
         <TextView
-            android:id="@+id/sale_price"
             android:layout_alignParentBottom="true"
+            android:id="@+id/sale_price"
             android:textColor="@color/priceColor"
             android:layout_marginStart="8dp"
             android:layout_marginBottom="4dp"

@@ -3,6 +3,7 @@ package ir.mahdidev.digikala.controller.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -15,12 +16,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.navigation.NavigationView;
 import com.smarteist.autoimageslider.SliderView;
 
@@ -36,9 +39,14 @@ import ir.mahdidev.digikala.controller.fragment.MainFragment;
 import ir.mahdidev.digikala.networkmodel.Repository;
 import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
 import ir.mahdidev.digikala.networkutil.ConnectivityReceiver;
+import ir.mahdidev.digikala.networkutil.RetrofitApi;
+import ir.mahdidev.digikala.networkutil.RetrofitConfig;
 import ir.mahdidev.digikala.util.Const;
 import ir.mahdidev.digikala.util.MyApplication;
 import ir.mahdidev.digikala.viewmodel.MainFragmentViewModel;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends SingleFragmentActivity {
 
@@ -46,6 +54,7 @@ public class MainActivity extends SingleFragmentActivity {
     private NavigationView navigationView;
     private ImageView navigationToggle;
     private DrawerLayout drawerLayout;
+    private AppBarLayout appbar;
 
     @Override
     public Fragment createFragment() {
@@ -87,6 +96,9 @@ public class MainActivity extends SingleFragmentActivity {
         setSupportActionBar(toolbar);
         navigationToggle.setOnClickListener(view -> {
             drawerLayout.openDrawer(GravityCompat.END);
+            // TODO: 11/10/2019
+            ProductAsyncTask task = new ProductAsyncTask();
+            task.execute();
         });
     }
 
@@ -106,5 +118,19 @@ public class MainActivity extends SingleFragmentActivity {
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
+    }
+    private class ProductAsyncTask extends AsyncTask<Void, Void, HashMap<String, List>> {
+
+
+        @Override
+        protected HashMap<String, List> doInBackground(Void... voids) {
+            return Repository.getInstance().getProductsAndCategoryList();
+        }
+
+        @Override
+        protected void onPostExecute(HashMap<String, List> listHashMap) {
+            super.onPostExecute(listHashMap);
+            Repository.getInstance().setProductsList(listHashMap);
+        }
     }
 }

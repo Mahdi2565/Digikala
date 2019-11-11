@@ -16,6 +16,10 @@ import ir.mahdidev.digikala.util.Const;
 public class Repository {
     public static Repository instance;
 
+    private MutableLiveData<HashMap<String, List>> productsAndCategoryListLiveData =
+            new MutableLiveData<>();
+    private MutableLiveData<Integer> productIdMutableLiveData = new MutableLiveData<>();
+
     public static Repository getInstance() {
         if (instance == null) {
             instance = new Repository();
@@ -23,10 +27,7 @@ public class Repository {
         return instance;
     }
 
-    private MutableLiveData<HashMap<String, List>> productsAndCategoryListLiveData;
-
     public void setProductsList(HashMap<String, List> productsList) {
-        productsAndCategoryListLiveData = new MutableLiveData<>();
         productsAndCategoryListLiveData.setValue(productsList);
     }
 
@@ -51,11 +52,19 @@ public class Repository {
                             .getAllSortedProduct("date").execute().body();
             List<WebserviceCategoryModel> allCategories = RetrofitConfig.getRetrofit()
                     .create(RetrofitApi.class).getAllCategories().execute().body();
+            List<WebserviceProductModel> amazingSuggestion = new ArrayList<>();
 
+            // TODO: 11/10/2019 amazingSuggestionWithTag
+            for (WebserviceProductModel products : mostNewestProductList){
+                if (!products.getRegularPrice().equals(products.getPrice())){
+                    amazingSuggestion.add(products);
+                }
+            }
             productAndCategoryListHashMap.put(Const.KeyList.MOST_VISITING_LIST, mostVisitedProductList);
             productAndCategoryListHashMap.put(Const.KeyList.MOST_RATING_LIST, mostRatingProductList);
             productAndCategoryListHashMap.put(Const.KeyList.MOST_NEWEST_LIST, mostNewestProductList);
             productAndCategoryListHashMap.put(Const.KeyList.CATEGORY_LIST, allCategories);
+            productAndCategoryListHashMap.put(Const.KeyList.AMAZING_SUGGESTION , amazingSuggestion);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -72,5 +81,12 @@ public class Repository {
             e.printStackTrace();
         }
         return productModelList;
+    }
+    public void setProductId(int productId){
+        productIdMutableLiveData.setValue(productId);
+    }
+
+    public MutableLiveData<Integer> getProductIdMutableLiveData() {
+        return productIdMutableLiveData;
     }
 }

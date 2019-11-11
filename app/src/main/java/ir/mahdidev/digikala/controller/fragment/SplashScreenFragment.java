@@ -66,7 +66,9 @@ public class SplashScreenFragment extends Fragment {
         @Override
         protected void onPostExecute(HashMap<String, List> listHashMap) {
             super.onPostExecute(listHashMap);
+
             Repository.getInstance().setProductsList(listHashMap);
+            if (listHashMap.isEmpty())return;
             startActivity(MainActivity.newIntent(getActivity()));
             getActivity().finish();
         }

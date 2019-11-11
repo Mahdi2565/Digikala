@@ -1,6 +1,8 @@
 package ir.mahdidev.digikala.controller.fragment;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,12 +12,16 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +31,9 @@ import butterknife.ButterKnife;
 import ir.mahdidev.digikala.R;
 import ir.mahdidev.digikala.adapter.MainVerticalRecyclerViewAdapter;
 import ir.mahdidev.digikala.adapter.SliderAdapter;
+import ir.mahdidev.digikala.controller.activity.ProductActivity;
+import ir.mahdidev.digikala.eventbus.OnProductClickedMessage;
+import ir.mahdidev.digikala.networkmodel.Repository;
 import ir.mahdidev.digikala.util.Const;
 import ir.mahdidev.digikala.viewmodel.MainFragmentViewModel;
 
@@ -43,6 +52,18 @@ public class MainFragment extends Fragment {
     private MainVerticalRecyclerViewAdapter adapter;
     public MainFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
     }
 
     public static MainFragment newInstance() {
@@ -73,6 +94,7 @@ public class MainFragment extends Fragment {
         viewModel = ViewModelProviders.of(this).get(MainFragmentViewModel.class);
         viewModel.getProductAndCategoryList().observe(this, listHashMap -> {
             if (listHashMap.isEmpty()) return;
+            Log.e("TAG4", "HERE UPDATE UI");
             initRecyclerView(listHashMap);
             initSliderView(listHashMap);
         });
@@ -85,6 +107,13 @@ public class MainFragment extends Fragment {
             verticalRecyclerView.setAdapter(adapter);
         }else {
             adapter.setProductAndCategoryHashMap(productAndCategoryList);
+            adapter.notifyDataSetChanged();
         }
+    }
+    @Subscribe
+    public void onProductClicked(OnProductClickedMessage message){
+        Repository.getInstance().setProductId(message.getProductId());
+        Intent intent = ProductActivity.newIntent(getActivity() , message.getProductId());
+        startActivity(intent);
     }
 }

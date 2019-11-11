@@ -12,19 +12,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.card.MaterialCardView;
 import com.squareup.picasso.Picasso;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
 import ir.mahdidev.digikala.R;
-import ir.mahdidev.digikala.interfaces.HorizontalRecyclerViewInterface;
+import ir.mahdidev.digikala.eventbus.OnProductClickedMessage;
 import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
 import ir.mahdidev.digikala.util.MyApplication;
 
 public class MainHorizontalRecyclerViewAdapter extends RecyclerView.Adapter<MainHorizontalRecyclerViewAdapter.ViewHolder> {
     private List<WebserviceProductModel> productList;
     private Context context;
-    private HorizontalRecyclerViewInterface horizontalRecyclerViewInterface;
 
     public MainHorizontalRecyclerViewAdapter(List<WebserviceProductModel> productList, Context context) {
         this.productList = productList;
@@ -46,11 +48,6 @@ public class MainHorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Main
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if (productList.get(position).getPrice().equals("")) productList.remove(position);
-
-            if (position==productList.size()-1) {
-              //  horizontalRecyclerViewInterface.onBottomReached();
-            }
-
                 if (productList.get(position).getImages().isEmpty()){
                     holder.producImage.setImageResource(R.drawable.digikala_place_holder);
                 }else {
@@ -72,7 +69,9 @@ public class MainHorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Main
                         + " تومان";
                 holder.salePrice.setText(price);
 
-
+            holder.horizontalCardView.setOnClickListener(view ->
+                    EventBus.getDefault()
+                            .post(new OnProductClickedMessage(productList.get(position).getId())));
     }
 
     @Override
@@ -85,15 +84,14 @@ public class MainHorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Main
         private TextView  titleProduct;
         private TextView  priceRegular;
         private TextView  salePrice;
+        private MaterialCardView horizontalCardView;
         public ViewHolder(@NonNull View itemView ) {
             super(itemView);
                     producImage = itemView.findViewById(R.id.product_img_horizontal_recyclerView);
                     titleProduct = itemView.findViewById(R.id.title_product_horizontal_recyclerView);
                     priceRegular = itemView.findViewById(R.id.price_regular);
                     salePrice    = itemView.findViewById(R.id.sale_price);
+                    horizontalCardView  = itemView.findViewById(R.id.horizontal_cardView);
             }
-        }
-        public void setHorizontalRecyclerViewInterface (HorizontalRecyclerViewInterface horizontalRecyclerViewInterface){
-        this.horizontalRecyclerViewInterface = horizontalRecyclerViewInterface;
         }
     }

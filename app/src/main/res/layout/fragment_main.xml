@@ -1,38 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView android:orientation="vertical"
+<androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controller.fragment.MainFragment"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:orientation="vertical"
+    tools:context=".controller.fragment.MainFragment">
 
-    <LinearLayout
-        android:descendantFocusability="blocksDescendants"
-        android:orientation="vertical"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:descendantFocusability="blocksDescendants">
 
-    <com.smarteist.autoimageslider.SliderView
-        android:id="@+id/imageSlider"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        app:sliderAnimationDuration="600"
-        app:sliderCircularHandlerEnabled="true"
-        app:sliderIndicatorAnimationDuration="600"
-        app:sliderIndicatorGravity="center_horizontal|bottom"
-        app:sliderIndicatorMargin="15dp"
-        app:sliderIndicatorOrientation="horizontal"
-        app:sliderIndicatorPadding="3dp"
-        app:sliderIndicatorRadius="1.5dp"
-        app:sliderIndicatorSelectedColor="@color/colorPrimary"
-        app:sliderIndicatorUnselectedColor="#FFF"
-        />
+        <com.smarteist.autoimageslider.SliderView
+            android:id="@+id/imageSlider"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            app:sliderAnimationDuration="600"
+            app:sliderCircularHandlerEnabled="true"
+            app:sliderIndicatorAnimationDuration="600"
+            app:sliderIndicatorGravity="center_horizontal|bottom"
+            app:sliderIndicatorMargin="15dp"
+            app:sliderIndicatorOrientation="horizontal"
+            app:sliderIndicatorPadding="3dp"
+            app:sliderIndicatorRadius="1.5dp"
+            app:sliderIndicatorSelectedColor="@color/colorPrimary"
+            app:sliderIndicatorUnselectedColor="#FFF" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/main_vertical_recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-    </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_below="@id/imageSlider"
+            android:id="@+id/category_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:layout_below="@+id/category_recyclerView"
+            android:src="@drawable/amazing_suggestion_img"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:id="@+id/amazing_suggestion_img"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:text="@string/app_name"
+            android:textColor="@color/grayRecyclerViewItem"
+            android:layout_alignParentEnd="true"
+            android:layout_width="150dp"
+            android:layout_height="50dp" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_below="@+id/amazing_suggestion_img"
+            android:id="@+id/amazing_siggestion_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+
+        <TextView
+            android:layout_below="@id/amazing_siggestion_recyclerView"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:id="@+id/title_newest_product_horizontal"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:text="@string/app_name"
+            android:textColor="@color/grayRecyclerViewItem"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_below="@id/amazing_siggestion_recyclerView"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:textColor="@color/blueRecyclerViewItem"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="16dp"
+            android:text="@string/full_list"
+            android:layout_alignParentStart="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="true" />
+
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_below="@+id/title_newest_product_horizontal"
+            android:id="@+id/newest_product_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+
+        <TextView
+            android:layout_below="@id/newest_product_recyclerView"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:id="@+id/title_rating_product_horizontal"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:text="@string/app_name"
+            android:textColor="@color/grayRecyclerViewItem"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_below="@id/newest_product_recyclerView"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:textColor="@color/blueRecyclerViewItem"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="16dp"
+            android:text="@string/full_list"
+            android:layout_alignParentStart="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="true" />
+
+
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_below="@id/title_rating_product_horizontal"
+            android:id="@+id/most_rating_product_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+
+        <TextView
+            android:layout_below="@id/most_rating_product_recyclerView"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:id="@+id/title_visiting_product_horizontal"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:text="@string/app_name"
+            android:textColor="@color/grayRecyclerViewItem"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_below="@id/most_rating_product_recyclerView"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:textColor="@color/blueRecyclerViewItem"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="16dp"
+            android:text="@string/full_list"
+            android:layout_alignParentStart="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="true" />
+
+
+
+
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_below="@id/title_visiting_product_horizontal"
+            android:id="@+id/most_visited_product_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+
+    </RelativeLayout>
 
 </androidx.core.widget.NestedScrollView>

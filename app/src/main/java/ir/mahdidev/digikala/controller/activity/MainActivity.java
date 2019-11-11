@@ -54,7 +54,6 @@ public class MainActivity extends SingleFragmentActivity {
     private NavigationView navigationView;
     private ImageView navigationToggle;
     private DrawerLayout drawerLayout;
-    private AppBarLayout appbar;
 
     @Override
     public Fragment createFragment() {
@@ -96,9 +95,7 @@ public class MainActivity extends SingleFragmentActivity {
         setSupportActionBar(toolbar);
         navigationToggle.setOnClickListener(view -> {
             drawerLayout.openDrawer(GravityCompat.END);
-            // TODO: 11/10/2019
-            ProductAsyncTask task = new ProductAsyncTask();
-            task.execute();
+
         });
     }
 
@@ -118,19 +115,5 @@ public class MainActivity extends SingleFragmentActivity {
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
-    }
-    private class ProductAsyncTask extends AsyncTask<Void, Void, HashMap<String, List>> {
-
-
-        @Override
-        protected HashMap<String, List> doInBackground(Void... voids) {
-            return Repository.getInstance().getProductsAndCategoryList();
-        }
-
-        @Override
-        protected void onPostExecute(HashMap<String, List> listHashMap) {
-            super.onPostExecute(listHashMap);
-            Repository.getInstance().setProductsList(listHashMap);
-        }
     }
 }

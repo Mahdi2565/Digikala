@@ -17,6 +17,7 @@ import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ir.mahdidev.digikala.R;
@@ -33,9 +34,13 @@ public class MainHorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Main
         this.context = context;
     }
 
-    public void setProductList(List<WebserviceProductModel> productList) {
+    public void setProductList(List<WebserviceProductModel> productList ) {
+
         this.productList.addAll(productList);
     }
+    public void updateProductList(List<WebserviceProductModel> productList ){
+        this.productList.clear();
+        this.productList.addAll(productList);    }
 
     @NonNull
     @Override

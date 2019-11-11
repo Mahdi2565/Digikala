@@ -12,12 +12,20 @@ import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
 import ir.mahdidev.digikala.networkutil.RetrofitApi;
 import ir.mahdidev.digikala.networkutil.RetrofitConfig;
 import ir.mahdidev.digikala.util.Const;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Repository {
     public static Repository instance;
 
     private MutableLiveData<HashMap<String, List>> productsAndCategoryListLiveData =
             new MutableLiveData<>();
+    private MutableLiveData<List<WebserviceCategoryModel>> categoryListLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<WebserviceProductModel>> amazingSuggestionProductListLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<WebserviceProductModel>> mostNewestProductListLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<WebserviceProductModel>> mostRatingProductListLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<WebserviceProductModel>> mostVisitingProductListLiveData = new MutableLiveData<>();
     private MutableLiveData<Integer> productIdMutableLiveData = new MutableLiveData<>();
 
     public static Repository getInstance() {
@@ -31,44 +39,82 @@ public class Repository {
         productsAndCategoryListLiveData.setValue(productsList);
     }
 
-    public MutableLiveData<HashMap<String, List>> getProductsAndCategoryListLiveData() {
-        return productsAndCategoryListLiveData;
+    public MutableLiveData<List<WebserviceCategoryModel>> loadCategoryList() throws IOException {
+        categoryListLiveData.postValue(RetrofitConfig.getRetrofit().create(RetrofitApi.class)
+                .getAllCategories().execute().body());
+        return categoryListLiveData;
     }
-
-    public HashMap<String, List> getProductsAndCategoryList() {
-        HashMap<String, List> productAndCategoryListHashMap
-                = new HashMap<>();
-        try {
-            List<WebserviceProductModel> mostVisitedProductList =
-                    RetrofitConfig.getRetrofit().create(RetrofitApi.class)
-                            .getAllSortedProduct("popularity").execute().body();
-
-            List<WebserviceProductModel> mostRatingProductList =
-                    RetrofitConfig.getRetrofit().create(RetrofitApi.class)
-                            .getAllSortedProduct("rating").execute().body();
-
-            List<WebserviceProductModel> mostNewestProductList =
-                    RetrofitConfig.getRetrofit().create(RetrofitApi.class)
-                            .getAllSortedProduct("date").execute().body();
-            List<WebserviceCategoryModel> allCategories = RetrofitConfig.getRetrofit()
-                    .create(RetrofitApi.class).getAllCategories().execute().body();
-            List<WebserviceProductModel> amazingSuggestion = new ArrayList<>();
-
-            // TODO: 11/10/2019 amazingSuggestionWithTag
-            for (WebserviceProductModel products : mostNewestProductList){
-                if (!products.getRegularPrice().equals(products.getPrice())){
-                    amazingSuggestion.add(products);
+    public MutableLiveData<List<WebserviceCategoryModel>> getCategoryListLiveData(){
+        return categoryListLiveData;
+    }
+    public MutableLiveData<List<WebserviceProductModel>>  getAmazingSuggestionProductListLiveData(int page){
+        RetrofitConfig.getRetrofit().create(RetrofitApi.class).getAllAmazingSuggestionProduct(
+                Const.OrderTag.MOST_NEWEST_PRODUCT , 19 ,page
+        ).enqueue(new Callback<List<WebserviceProductModel>>() {
+            @Override
+            public void onResponse(Call<List<WebserviceProductModel>> call, Response<List<WebserviceProductModel>> response) {
+                if (response.isSuccessful()){
+                    amazingSuggestionProductListLiveData.setValue(response.body());
                 }
             }
-            productAndCategoryListHashMap.put(Const.KeyList.MOST_VISITING_LIST, mostVisitedProductList);
-            productAndCategoryListHashMap.put(Const.KeyList.MOST_RATING_LIST, mostRatingProductList);
-            productAndCategoryListHashMap.put(Const.KeyList.MOST_NEWEST_LIST, mostNewestProductList);
-            productAndCategoryListHashMap.put(Const.KeyList.CATEGORY_LIST, allCategories);
-            productAndCategoryListHashMap.put(Const.KeyList.AMAZING_SUGGESTION , amazingSuggestion);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return productAndCategoryListHashMap;
+
+            @Override
+            public void onFailure(Call<List<WebserviceProductModel>> call, Throwable t) {
+
+            }
+        });
+        return amazingSuggestionProductListLiveData;
+    }
+    public MutableLiveData<List<WebserviceProductModel>>  getMostNewestProductListLiveData(int page){
+        RetrofitConfig.getRetrofit().create(RetrofitApi.class).getAllSortedProduct(Const.OrderTag.MOST_NEWEST_PRODUCT , page)
+                .enqueue(new Callback<List<WebserviceProductModel>>() {
+                    @Override
+                    public void onResponse(Call<List<WebserviceProductModel>> call, Response<List<WebserviceProductModel>> response) {
+                        if (response.isSuccessful()){
+                            mostNewestProductListLiveData.setValue(response.body());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<WebserviceProductModel>> call, Throwable t) {
+
+                    }
+                });
+        return mostNewestProductListLiveData;
+    }
+    public MutableLiveData<List<WebserviceProductModel>>  getMostRatingProductListLiveData(int page){
+        RetrofitConfig.getRetrofit().create(RetrofitApi.class).getAllSortedProduct(Const.OrderTag.MOST_RATING_PRODUCT , page)
+                .enqueue(new Callback<List<WebserviceProductModel>>() {
+                    @Override
+                    public void onResponse(Call<List<WebserviceProductModel>> call, Response<List<WebserviceProductModel>> response) {
+                        if (response.isSuccessful()){
+                            mostRatingProductListLiveData.setValue(response.body());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<WebserviceProductModel>> call, Throwable t) {
+
+                    }
+                });
+        return mostRatingProductListLiveData;
+    }
+    public MutableLiveData<List<WebserviceProductModel>>  getMostVisitingProductListLiveData(int page){
+        RetrofitConfig.getRetrofit().create(RetrofitApi.class).getAllSortedProduct(Const.OrderTag.MOST_VISITING_PRODUCT , page)
+                .enqueue(new Callback<List<WebserviceProductModel>>() {
+                    @Override
+                    public void onResponse(Call<List<WebserviceProductModel>> call, Response<List<WebserviceProductModel>> response) {
+                        if (response.isSuccessful()){
+                            mostVisitingProductListLiveData.setValue(response.body());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<WebserviceProductModel>> call, Throwable t) {
+
+                    }
+                });
+        return mostVisitingProductListLiveData;
     }
 
     public List<WebserviceProductModel> getNextPageProduct(String orderBy, int page) {

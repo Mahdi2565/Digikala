@@ -11,7 +11,13 @@ import retrofit2.http.Query;
 public interface RetrofitApi {
     @GET("products")
     Call<List<WebserviceProductModel>> getAllSortedProduct
-            (@Query("orderby") String sortType);
+            (@Query("orderby") String sortType , @Query("page") int page);
+
+    @GET("products")
+    Call<List<WebserviceProductModel>> getAllAmazingSuggestionProduct
+            (@Query("orderby") String sortType , @Query("tag") int tagId ,
+             @Query("page") int page);
+
     @GET("products")
     Call<List<WebserviceProductModel>> getNextPageSortedProduct
             (@Query("orderby") String sortType , @Query("page") int page);

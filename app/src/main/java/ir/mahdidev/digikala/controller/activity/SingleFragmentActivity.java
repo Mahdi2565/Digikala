@@ -58,6 +58,7 @@ public abstract class SingleFragmentActivity extends AppCompatActivity
 
     @Override
     protected void onDestroy() {
+        if (connectivityReceiver!=null)
         unregisterReceiver(connectivityReceiver);
         super.onDestroy();
     }

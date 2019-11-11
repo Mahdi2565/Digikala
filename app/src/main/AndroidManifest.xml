@@ -22,7 +22,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".controller.activity.MainActivity"></activity>
+        <activity android:name=".controller.activity.MainActivity"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
+            >
+
+        </activity>
 
         <receiver
             android:name=".networkutil.ConnectivityReceiver"

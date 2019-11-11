@@ -312,22 +312,22 @@ public class MainVerticalRecyclerViewAdapter extends RecyclerView.Adapter<MainVe
             switch (orderBy) {
 
                 case Const.OrderTag.MOST_NEWEST_PRODUCT : {
-                    horizontalRecyclerViewAdapterMostNew.setProductList(webserviceProductModels);
+                //    horizontalRecyclerViewAdapterMostNew.setProductList(webserviceProductModels);
                     horizontalRecyclerViewAdapterMostNew.notifyDataSetChanged();
                     break;
                 }
                 case Const.OrderTag.MOST_RATING_PRODUCT: {
-                    horizontalRecyclerViewAdapterMostRate.setProductList(webserviceProductModels);
+                  //  horizontalRecyclerViewAdapterMostRate.setProductList(webserviceProductModels);
                     horizontalRecyclerViewAdapterMostRate.notifyDataSetChanged();
                     break;
                 }
                 case Const.OrderTag.MOST_VISITING_PRODUCT: {
-                    horizontalRecyclerViewAdapterMostVisit.setProductList(webserviceProductModels);
+                //    horizontalRecyclerViewAdapterMostVisit.setProductList(webserviceProductModels);
                     horizontalRecyclerViewAdapterMostVisit.notifyDataSetChanged();
                     break;
                 }
                 case Const.AMAZING_SUGGESTION_ORDER :{
-                    horizontalRecyclerViewAdapterAmazingSuggestion.setProductList(amazingSuggestion);
+                 //   horizontalRecyclerViewAdapterAmazingSuggestion.setProductList(amazingSuggestion);
                     horizontalRecyclerViewAdapterAmazingSuggestion.notifyDataSetChanged();
                     break;
                 }

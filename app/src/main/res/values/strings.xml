@@ -13,4 +13,10 @@
     <string name="most_rating">پرامتیازترین‌ها</string>
     <string name="most_newest">جدیدترین‌ها</string>
     <string name="full_list">لیست کامل</string>
+    <string name="users_comment">نظرات کاربران</string>
+    <string name="garantee_text">گارانتی اصالت و سلامت فیزیکی کالا</string>
+    <string name="sale_digikala">فروش توسط دیجی‌کالا</string>
+    <string name="price_sample">260000 تومان</string>
+    <string name="add_to_basket">افزودن به سبد خرید</string>
+    <string name="related_product">محصولات مشابه</string>
 </resources>

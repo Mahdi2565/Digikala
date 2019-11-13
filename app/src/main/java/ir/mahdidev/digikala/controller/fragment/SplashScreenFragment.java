@@ -82,13 +82,13 @@ public class SplashScreenFragment extends Fragment {
         @Override
         protected void onPostExecute(MutableLiveData<List<WebserviceCategoryModel>> listHashMap) {
             super.onPostExecute(listHashMap);
-            if (listHashMap.getValue()!=null){
-                startActivity(MainActivity.newIntent(getActivity()));
-                getActivity().finish();
+            try {
+                if (listHashMap.getValue()!=null){
+                    startActivity(MainActivity.newIntent(getActivity()));
+                    getActivity().finish();
+                }
+            }catch (Exception e){
             }
-            //Repository.getInstance().setProductsList(listHashMap);
-          //  if (listHashMap.isEmpty())return;
-
         }
     }
 }

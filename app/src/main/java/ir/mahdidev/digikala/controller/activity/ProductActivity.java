@@ -16,9 +16,7 @@ public class ProductActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
     }
-    public static Intent newIntent(Context context , int ProductId){
-        Intent intent = new Intent(context , ProductActivity.class);
-        intent.putExtra(Const.IntentKey.PRODUCT_ID_PRODUCT_ACTIVITY , ProductId);
-        return intent;
+    public static Intent newIntent(Context context ){
+        return new Intent(context , ProductActivity.class);
     }
 }

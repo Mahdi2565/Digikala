@@ -3,7 +3,6 @@ package ir.mahdidev.digikala.controller.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,7 +12,6 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +22,6 @@ import com.smarteist.autoimageslider.SliderView;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -32,14 +29,11 @@ import butterknife.ButterKnife;
 import ir.mahdidev.digikala.R;
 import ir.mahdidev.digikala.adapter.CategoryRecyclerViewAdapter;
 import ir.mahdidev.digikala.adapter.MainHorizontalRecyclerViewAdapter;
-import ir.mahdidev.digikala.adapter.MainVerticalRecyclerViewAdapter;
 import ir.mahdidev.digikala.adapter.SliderAdapter;
 import ir.mahdidev.digikala.controller.activity.ProductActivity;
 import ir.mahdidev.digikala.eventbus.OnProductClickedMessage;
-import ir.mahdidev.digikala.networkmodel.Repository;
 import ir.mahdidev.digikala.networkmodel.category.WebserviceCategoryModel;
 import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
-import ir.mahdidev.digikala.util.Const;
 import ir.mahdidev.digikala.viewmodel.MainFragmentViewModel;
 
 /**
@@ -68,7 +62,6 @@ public class MainFragment extends Fragment {
 
     private SliderAdapter sliderAdapter;
     private MainFragmentViewModel viewModel;
-    private MainVerticalRecyclerViewAdapter adapter;
 
     private CategoryRecyclerViewAdapter categoryRecyclerViewAdapter;
     private MainHorizontalRecyclerViewAdapter amazingSuggestionRecyclerViewAdapter;
@@ -76,14 +69,10 @@ public class MainFragment extends Fragment {
     private MainHorizontalRecyclerViewAdapter ratingProductRecyclerViewAdapter;
     private MainHorizontalRecyclerViewAdapter visitingProductRecyclerViewAdapter;
 
-    private static int visitingPage = 1;
-    private static int newestPage = 1;
-    private static int amazingSuggestionPage = 1;
-    private static int ratingPage = 1;
-    private static boolean configChangeAmazing = false;
-    private static boolean configChangeNewest = false;
-    private static boolean configChangeRating = false;
-    private static boolean configChangeVisiting = false;
+    private int visitingPage = 1;
+    private int newestPage = 1;
+    private int amazingSuggestionPage = 1;
+    private int ratingPage = 1;
 
     public MainFragment() {
         // Required empty public constructor
@@ -99,6 +88,11 @@ public class MainFragment extends Fragment {
     public void onDestroy() {
         EventBus.getDefault().unregister(this);
         super.onDestroy();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     public static MainFragment newInstance() {
@@ -158,21 +152,16 @@ public class MainFragment extends Fragment {
 
                     LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                     if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == webserviceProductModels.size() - 1) {
-                        if (configChangeVisiting) visitingPage = 0;
                         viewModel.getMostVisitingListLiveData(++visitingPage);
                     }
                 }
             });
         }
         else {
-            if (configChangeVisiting){
-                visitingProductRecyclerViewAdapter.updateProductList(webserviceProductModels);
-                visitingProductRecyclerViewAdapter.notifyDataSetChanged();
-                configChangeVisiting = !configChangeVisiting;
-            }else {
+
                 visitingProductRecyclerViewAdapter.setProductList(webserviceProductModels);
                 visitingProductRecyclerViewAdapter.notifyDataSetChanged();
-            }
+
 
         }
     }
@@ -195,21 +184,14 @@ public class MainFragment extends Fragment {
 
                     LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                     if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == webserviceProductModels.size() - 1) {
-                        if (configChangeRating) ratingPage = 0;
                         viewModel.getMostRatingListLiveData(++ratingPage);
                     }
                 }
             });
         }
         else {
-            if (configChangeRating){
-                ratingProductRecyclerViewAdapter.updateProductList(webserviceProductModels);
-                ratingProductRecyclerViewAdapter.notifyDataSetChanged();
-                configChangeRating = !configChangeRating;
-            }else {
                 ratingProductRecyclerViewAdapter.setProductList(webserviceProductModels);
                 ratingProductRecyclerViewAdapter.notifyDataSetChanged();
-            }
 
         }
     }
@@ -232,23 +214,15 @@ public class MainFragment extends Fragment {
 
                     LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                     if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == webserviceProductModels.size() - 1) {
-                        if (configChangeNewest) newestPage = 0;
                         viewModel.getMostNewestListLiveData(++newestPage);
                     }
                 }
             });
         }
         else {
-            if (configChangeNewest){
-                newestProductRecyclerViewAdapter.updateProductList(webserviceProductModels);
-                newestProductRecyclerViewAdapter.notifyDataSetChanged();
-                configChangeNewest = !configChangeNewest;
-            }else {
                 newestProductRecyclerViewAdapter.setProductList(webserviceProductModels);
                 newestProductRecyclerViewAdapter.notifyDataSetChanged();
             }
-
-        }
     }
 
     private void initamazingSuggestionRecyclerView(List<WebserviceProductModel> webserviceProductModels) {
@@ -268,28 +242,23 @@ public class MainFragment extends Fragment {
 
                     LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                     if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == webserviceProductModels.size() - 1) {
-                        if (configChangeAmazing) amazingSuggestionPage = 0;
                         viewModel.getAmazingSuggestionListLiveData(++amazingSuggestionPage);
                     }
                 }
             });
         }
         else {
-            if (configChangeAmazing){
-                amazingSuggestionRecyclerViewAdapter.updateProductList(webserviceProductModels);
-                amazingSuggestionRecyclerViewAdapter.notifyDataSetChanged();
-                configChangeAmazing = !configChangeAmazing;
-            }else {
+
                 amazingSuggestionRecyclerViewAdapter.setProductList(webserviceProductModels);
                 amazingSuggestionRecyclerViewAdapter.notifyDataSetChanged();
             }
 
-        }
+
     }
 
     private void initCategoryRecyclerView(List<WebserviceCategoryModel> webserviceCategoryModels) {
         if (categoryRecyclerViewAdapter==null){
-            categoryRecyclerViewAdapter = new CategoryRecyclerViewAdapter(webserviceCategoryModels , getActivity());
+            categoryRecyclerViewAdapter = new CategoryRecyclerViewAdapter(webserviceCategoryModels , getActivity() , 0);
             categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, true));
             categoryRecyclerView.setAdapter(categoryRecyclerViewAdapter);
         }
@@ -298,17 +267,9 @@ public class MainFragment extends Fragment {
 
     @Subscribe
     public void onProductClicked(OnProductClickedMessage message){
-        Repository.getInstance().setProductId(message.getProductId());
-        Intent intent = ProductActivity.newIntent(getActivity() , message.getProductId());
+        viewModel.setProductId(message.getProductId());
+        Intent intent = ProductActivity.newIntent(getActivity());
         startActivity(intent);
     }
 
-    @Override
-    public void onConfigurationChanged(@NonNull Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        configChangeAmazing = true;
-        configChangeNewest = true;
-        configChangeRating = true;
-        configChangeVisiting = true;
-    }
 }

@@ -18,17 +18,32 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
 
     private List<WebserviceCategoryModel> categoryList;
     private Context context;
+    public static final int FROM_MAIN_FRAGMENT = 0;
+    public static final int FROM_PRODUCT_FRAGMENT = 1;
+    private int adapterLocation ;
 
-    public CategoryRecyclerViewAdapter(List<WebserviceCategoryModel> categoryList, Context context) {
+    public CategoryRecyclerViewAdapter(List<WebserviceCategoryModel> categoryList, Context context ,
+                                       int adapterLocation) {
         this.categoryList = categoryList;
         this.context = context;
+        this.adapterLocation = adapterLocation;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.category_horizontal_recyclerview_item
-        , parent , false));
+        View mainView = null;
+        View productFragmentView;
+        if (adapterLocation==FROM_MAIN_FRAGMENT){
+             mainView = LayoutInflater.from(context).inflate(R.layout.category_horizontal_recyclerview_item
+                    , parent , false);
+            return new ViewHolder(mainView);
+        }else if (adapterLocation==FROM_PRODUCT_FRAGMENT){
+             productFragmentView = LayoutInflater.from(context).inflate(R.layout.category_product_fragmnet_horizontal_recyclerview_item
+                    , parent , false);
+            return new ViewHolder(productFragmentView);
+        }
+        return  new ViewHolder(mainView);
     }
 
     @Override

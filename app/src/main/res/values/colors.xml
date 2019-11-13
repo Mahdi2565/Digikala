@@ -12,5 +12,8 @@
     <color name="strokeCardView">#DADADA</color>
     <color name="priceColor">#66BB6A</color>
     <color name="titleProduct">#535353</color>
-
+    <color name="cardViewBackground">#FAFAFA</color>
+    <color name="productBackGroundColor">#EEEEEE</color>
+    <color name="categoryProductColor">#20A6FF</color>
+    <color name="relateProductTitle">#78909C</color>
 </resources>

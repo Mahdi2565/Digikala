@@ -3,7 +3,6 @@ package ir.mahdidev.digikala.networkmodel;
 import androidx.lifecycle.MutableLiveData;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -27,6 +26,7 @@ public class Repository {
     private MutableLiveData<List<WebserviceProductModel>> mostRatingProductListLiveData = new MutableLiveData<>();
     private MutableLiveData<List<WebserviceProductModel>> mostVisitingProductListLiveData = new MutableLiveData<>();
     private MutableLiveData<Integer> productIdMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<WebserviceProductModel> singleProductMutableLiveData = new MutableLiveData<>();
 
     public static Repository getInstance() {
         if (instance == null) {
@@ -116,23 +116,34 @@ public class Repository {
                 });
         return mostVisitingProductListLiveData;
     }
-
-    public List<WebserviceProductModel> getNextPageProduct(String orderBy, int page) {
-        List<WebserviceProductModel> productModelList = new ArrayList<>();
-
-        try {
-           productModelList =  RetrofitConfig.getRetrofit().create(RetrofitApi.class).getNextPageSortedProduct(orderBy
-                    , page).execute().body();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return productModelList;
-    }
     public void setProductId(int productId){
         productIdMutableLiveData.setValue(productId);
     }
 
     public MutableLiveData<Integer> getProductIdMutableLiveData() {
         return productIdMutableLiveData;
+    }
+    public MutableLiveData<WebserviceProductModel> getSingleProduct(int productId){
+        RetrofitConfig.getRetrofit().create(RetrofitApi.class).getSingleProduct(productId)
+                .enqueue(new Callback<WebserviceProductModel>() {
+                    @Override
+                    public void onResponse(Call<WebserviceProductModel> call, Response<WebserviceProductModel> response) {
+                        if (response.isSuccessful()){
+                            singleProductMutableLiveData.setValue(response.body());
+                        }else {
+                            singleProductMutableLiveData.setValue(null);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<WebserviceProductModel> call, Throwable t) {
+                        singleProductMutableLiveData.setValue(null);
+                    }
+                });
+        return singleProductMutableLiveData;
+    }
+
+    public MutableLiveData<WebserviceProductModel> getSingleProductMutableLiveData() {
+        return singleProductMutableLiveData;
     }
 }

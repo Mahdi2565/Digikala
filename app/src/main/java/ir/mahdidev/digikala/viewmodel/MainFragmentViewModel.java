@@ -34,4 +34,8 @@ public class MainFragmentViewModel extends AndroidViewModel {
     public LiveData<List<WebserviceProductModel>> getMostVisitingListLiveData(int page){
         return repository.getMostVisitingProductListLiveData(page);
     }
+
+    public void setProductId(int productId){
+        repository.setProductId(productId);
+    }
 }

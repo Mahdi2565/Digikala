@@ -24,4 +24,9 @@ public interface RetrofitApi {
     @GET("products/categories")
     Call<List<WebserviceCategoryModel>> getAllCategories();
 
+    @GET("products/categories")
+    Call<List<WebserviceCategoryModel>> getProductCategories(@Query("product") int productId);
+
+    @GET("products")
+    Call<List<WebserviceProductModel>> getRelatedProduct (@Query("include") String... relatedProductId);
 }

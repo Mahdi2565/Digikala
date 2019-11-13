@@ -180,7 +180,7 @@ public class WebserviceProductModel {
     private List<Category> categories = null;
     @SerializedName("tags")
     @Expose
-    private List<Object> tags = null;
+    private List<Tag> tags ;
     @SerializedName("images")
     @Expose
     private List<Image> images = null;
@@ -662,11 +662,12 @@ public class WebserviceProductModel {
         this.categories = categories;
     }
 
-    public List<Object> getTags() {
+
+    public List<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(List<Object> tags) {
+    public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
 

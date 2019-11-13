@@ -30,6 +30,7 @@ public class NoInternetConnectionActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         checkNetworkTxtFunction();
         tryAgainBtnFunction();
+        // TODO: 11/13/2019 Problem Open multi NoInternetConnectionActivity its for singleFragmentACtivity!!!
     }
 
     private void tryAgainBtnFunction() {

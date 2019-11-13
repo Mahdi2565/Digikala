@@ -1,7 +1,6 @@
 package ir.mahdidev.digikala.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +15,12 @@ import java.util.List;
 import ir.mahdidev.digikala.R;
 import ir.mahdidev.digikala.networkmodel.category.WebserviceCategoryModel;
 
-public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderViewHolder> {
+public class SliderCategoryAdapter extends SliderViewAdapter<SliderCategoryAdapter.SliderViewHolder> {
 
     private List<WebserviceCategoryModel> categoryList;
     private Context context;
 
-    public SliderAdapter(List<WebserviceCategoryModel> categoryList, Context context) {
+    public SliderCategoryAdapter(List<WebserviceCategoryModel> categoryList, Context context) {
         this.categoryList = categoryList;
         this.context = context;
         for (int i = 0 ; i <this.categoryList.size() ; i++){

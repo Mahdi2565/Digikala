@@ -27,4 +27,7 @@ public class Const {
     public static final String SPLASH_SCREEN_FRAGMENT_TAG = "splash_screen_fragment_tag";
     public static final String MAIN_FRAGMENT_TAG = "main_fragment_tag";
     public static final String AMAZING_SUGGESTION_ORDER = "amazing_suggestion";
+    public static final int DISCOUNT_TAG = 19 ;
+    public static final int FROM_MAIN_FRAGMENT = 0;
+    public static final int FROM_PRODUCT_FRAGMENT = 1;
 }

@@ -26,7 +26,9 @@ public class Repository {
     private MutableLiveData<List<WebserviceProductModel>> mostRatingProductListLiveData = new MutableLiveData<>();
     private MutableLiveData<List<WebserviceProductModel>> mostVisitingProductListLiveData = new MutableLiveData<>();
     private MutableLiveData<Integer> productIdMutableLiveData = new MutableLiveData<>();
-    private MutableLiveData<WebserviceProductModel> singleProductMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<WebserviceProductModel> singleProductMutableLiveData ;
+    private MutableLiveData<List<WebserviceCategoryModel>> productCategoriesMutableLiveData ;
+    private MutableLiveData<List<WebserviceProductModel>>  relatedProductMutableLiveData;
 
     public static Repository getInstance() {
         if (instance == null) {
@@ -124,6 +126,7 @@ public class Repository {
         return productIdMutableLiveData;
     }
     public MutableLiveData<WebserviceProductModel> getSingleProduct(int productId){
+        singleProductMutableLiveData = new MutableLiveData<>();
         RetrofitConfig.getRetrofit().create(RetrofitApi.class).getSingleProduct(productId)
                 .enqueue(new Callback<WebserviceProductModel>() {
                     @Override
@@ -131,13 +134,13 @@ public class Repository {
                         if (response.isSuccessful()){
                             singleProductMutableLiveData.setValue(response.body());
                         }else {
-                            singleProductMutableLiveData.setValue(null);
+                            singleProductMutableLiveData = null;
                         }
                     }
 
                     @Override
                     public void onFailure(Call<WebserviceProductModel> call, Throwable t) {
-                        singleProductMutableLiveData.setValue(null);
+                        singleProductMutableLiveData = null;
                     }
                 });
         return singleProductMutableLiveData;
@@ -146,4 +149,42 @@ public class Repository {
     public MutableLiveData<WebserviceProductModel> getSingleProductMutableLiveData() {
         return singleProductMutableLiveData;
     }
+    public MutableLiveData<List<WebserviceCategoryModel>> getProductCategories(int productId){
+        productCategoriesMutableLiveData = new MutableLiveData<>();
+        RetrofitConfig.getRetrofit().create(RetrofitApi.class)
+                .getProductCategories(productId)
+                .enqueue(new Callback<List<WebserviceCategoryModel>>() {
+                    @Override
+                    public void onResponse(Call<List<WebserviceCategoryModel>> call, Response<List<WebserviceCategoryModel>> response) {
+                        if (response.isSuccessful()){
+                            productCategoriesMutableLiveData.setValue(response.body());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<WebserviceCategoryModel>> call, Throwable t) {
+
+                    }
+                });
+        return productCategoriesMutableLiveData;
+    }
+    public MutableLiveData<List<WebserviceProductModel>>  getRelatedProduct(String... relatedProductIds){
+        relatedProductMutableLiveData = new MutableLiveData<>();
+        RetrofitConfig.getRetrofit().create(RetrofitApi.class).getRelatedProduct(relatedProductIds)
+                .enqueue(new Callback<List<WebserviceProductModel>>() {
+                    @Override
+                    public void onResponse(Call<List<WebserviceProductModel>> call, Response<List<WebserviceProductModel>> response) {
+                        if (response.isSuccessful()){
+                            relatedProductMutableLiveData.setValue(response.body());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<WebserviceProductModel>> call, Throwable t) {
+
+                    }
+                });
+        return relatedProductMutableLiveData;
+    }
+
 }

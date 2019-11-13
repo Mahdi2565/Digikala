@@ -29,11 +29,13 @@ import butterknife.ButterKnife;
 import ir.mahdidev.digikala.R;
 import ir.mahdidev.digikala.adapter.CategoryRecyclerViewAdapter;
 import ir.mahdidev.digikala.adapter.MainHorizontalRecyclerViewAdapter;
-import ir.mahdidev.digikala.adapter.SliderAdapter;
+import ir.mahdidev.digikala.adapter.SliderCategoryAdapter;
 import ir.mahdidev.digikala.controller.activity.ProductActivity;
 import ir.mahdidev.digikala.eventbus.OnProductClickedMessage;
 import ir.mahdidev.digikala.networkmodel.category.WebserviceCategoryModel;
+import ir.mahdidev.digikala.networkmodel.product.Category;
 import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
+import ir.mahdidev.digikala.util.Const;
 import ir.mahdidev.digikala.viewmodel.MainFragmentViewModel;
 
 /**
@@ -60,7 +62,7 @@ public class MainFragment extends Fragment {
     @BindView(R.id.title_visiting_product_horizontal)
     TextView titleVisitingProduct;
 
-    private SliderAdapter sliderAdapter;
+    private SliderCategoryAdapter sliderAdapter;
     private MainFragmentViewModel viewModel;
 
     private CategoryRecyclerViewAdapter categoryRecyclerViewAdapter;
@@ -116,7 +118,7 @@ public class MainFragment extends Fragment {
     }
 
     private void initSliderView( List<WebserviceCategoryModel> categoryModelList) {
-        sliderAdapter = new SliderAdapter( categoryModelList, getActivity());
+        sliderAdapter = new SliderCategoryAdapter( categoryModelList, getActivity());
         sliderView.setSliderAdapter(sliderAdapter);
     }
 
@@ -258,7 +260,7 @@ public class MainFragment extends Fragment {
 
     private void initCategoryRecyclerView(List<WebserviceCategoryModel> webserviceCategoryModels) {
         if (categoryRecyclerViewAdapter==null){
-            categoryRecyclerViewAdapter = new CategoryRecyclerViewAdapter(webserviceCategoryModels , getActivity() , 0);
+            categoryRecyclerViewAdapter = new CategoryRecyclerViewAdapter(webserviceCategoryModels , getActivity() , Const.FROM_MAIN_FRAGMENT);
             categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, true));
             categoryRecyclerView.setAdapter(categoryRecyclerViewAdapter);
         }
@@ -268,6 +270,7 @@ public class MainFragment extends Fragment {
     @Subscribe
     public void onProductClicked(OnProductClickedMessage message){
         viewModel.setProductId(message.getProductId());
+        viewModel.loadSingleProduct(message.getProductId());
         Intent intent = ProductActivity.newIntent(getActivity());
         startActivity(intent);
     }

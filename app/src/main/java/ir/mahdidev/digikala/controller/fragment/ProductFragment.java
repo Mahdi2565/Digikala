@@ -112,12 +112,7 @@ public class ProductFragment extends Fragment {
 
     private void initViewModel() {
         viewModel = ViewModelProviders.of(this).get(ProductViewModel.class);
-
         viewModel.getSingleProductLiveData().observe(this, webserviceProductModel -> {
-            // TODO: 11/13/2019 handle when product not Arrivied
-            if (viewModel.getSingleProductLiveData()==null || viewModel.getProductIdMutableLiveData().getValue()!=null){
-                viewModel.loadSingleProductLiveData(viewModel.getProductIdMutableLiveData().getValue());
-            }
             initprogressBar();
             isAmazingSuggest(webserviceProductModel);
             initSliderView(webserviceProductModel);

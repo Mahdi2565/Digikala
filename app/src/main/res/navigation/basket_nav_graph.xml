@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/basket_nav_graph"
+    app:startDestination="@id/productBasketFragment">
+
+    <fragment
+        android:id="@+id/productBasketFragment"
+        android:name="ir.mahdidev.digikala.controller.fragment.ProductBasketFragment"
+        android:label="fragment_product_basket"
+        tools:layout="@layout/fragment_product_basket" />
+</navigation>

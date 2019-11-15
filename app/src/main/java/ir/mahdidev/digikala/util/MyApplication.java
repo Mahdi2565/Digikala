@@ -9,6 +9,7 @@ import io.github.inflationx.calligraphy3.CalligraphyConfig;
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor;
 import io.github.inflationx.viewpump.ViewPump;
 import ir.mahdidev.digikala.R;
+import ir.mahdidev.digikala.database.RoomConfig;
 import ir.mahdidev.digikala.networkutil.ConnectivityReceiver;
 
 public class MyApplication extends Application {
@@ -20,7 +21,11 @@ public class MyApplication extends Application {
         super.onCreate();
         mInstance = this;
         initFont();
+        initRoomDataBase();
+    }
 
+    private void initRoomDataBase() {
+        RoomConfig.getInstance(this);
     }
 
     private void initFont() {

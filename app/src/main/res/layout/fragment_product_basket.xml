@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".controller.fragment.ProductBasketFragment">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:padding="8dp"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_margin="8dp"
+                android:id="@+id/back_toolbar"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                app:srcCompat="@drawable/ic_clear_black_24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="true" />
+
+            <TextView
+                android:textStyle="bold"
+                android:id="@+id/title_basket_fragment"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                android:text="@string/your_basket"
+                android:layout_toStartOf="@+id/back_toolbar"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+            <ImageView
+                android:padding="8dp"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:id="@+id/basket_img"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/ic_shopping_cart_black_24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="true" />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/cart_badge"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="right|end|top"
+                android:layout_marginEnd="-5dp"
+                android:layout_marginTop="3dp"
+                android:gravity="center"
+                android:padding="3dp"
+                android:textColor="@android:color/white"
+                android:text="12"
+                android:textSize="10sp"/>
+
+
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+    <RelativeLayout
+        android:id="@+id/basket_relative"
+        android:background="@color/white"
+        android:layout_below="@id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/priceColor"
+            android:padding="13dp"
+            android:layout_alignParentEnd="true"
+            android:text="@string/sum_of_basket"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/sum_basket_price"
+            android:textStyle="bold"
+            android:textColor="@color/priceColor"
+            android:padding="13dp"
+            android:text="@string/app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_above="@id/finalize_basket"
+        android:id="@+id/basket_recyclerView"
+        android:layout_below="@id/basket_relative"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:background="@color/priceColor"
+        android:padding="16dp"
+        android:gravity="center"
+        android:id="@+id/finalize_basket"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_marginEnd="4dp"
+            app:srcCompat="@drawable/ic_chevron_left_black_24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/finalize_txt"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:text="@string/finalize_basket"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

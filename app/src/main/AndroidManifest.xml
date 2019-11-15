@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".controller.activity.ProductActivity"></activity>
+        <activity android:name=".controller.activity.ProductBasketActivity"></activity>
+        <activity android:name=".controller.activity.ProductActivity" />
         <activity android:name=".controller.activity.NoInternetConnectionActivity" />
         <activity android:name=".controller.activity.SplashScreenActivity">
             <intent-filter>
@@ -22,11 +23,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".controller.activity.MainActivity"
-            android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
-            >
-
-        </activity>
+        <activity
+            android:name=".controller.activity.MainActivity"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden" />
 
         <receiver
             android:name=".networkutil.ConnectivityReceiver"

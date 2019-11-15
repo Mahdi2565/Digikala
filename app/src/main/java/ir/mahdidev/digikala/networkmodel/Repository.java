@@ -1,5 +1,7 @@
 package ir.mahdidev.digikala.networkmodel;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 
 import java.io.IOException;
@@ -26,9 +28,9 @@ public class Repository {
     private MutableLiveData<List<WebserviceProductModel>> mostRatingProductListLiveData = new MutableLiveData<>();
     private MutableLiveData<List<WebserviceProductModel>> mostVisitingProductListLiveData = new MutableLiveData<>();
     private MutableLiveData<Integer> productIdMutableLiveData = new MutableLiveData<>();
-    private MutableLiveData<WebserviceProductModel> singleProductMutableLiveData ;
-    private MutableLiveData<List<WebserviceCategoryModel>> productCategoriesMutableLiveData ;
-    private MutableLiveData<List<WebserviceProductModel>>  relatedProductMutableLiveData;
+    private MutableLiveData<WebserviceProductModel> singleProductMutableLiveData;
+    private MutableLiveData<List<WebserviceCategoryModel>> productCategoriesMutableLiveData;
+    private MutableLiveData<List<WebserviceProductModel>> relatedProductMutableLiveData;
 
     public static Repository getInstance() {
         if (instance == null) {
@@ -46,16 +48,18 @@ public class Repository {
                 .getAllCategories().execute().body());
         return categoryListLiveData;
     }
-    public MutableLiveData<List<WebserviceCategoryModel>> getCategoryListLiveData(){
+
+    public MutableLiveData<List<WebserviceCategoryModel>> getCategoryListLiveData() {
         return categoryListLiveData;
     }
-    public MutableLiveData<List<WebserviceProductModel>>  getAmazingSuggestionProductListLiveData(int page){
+
+    public MutableLiveData<List<WebserviceProductModel>> getAmazingSuggestionProductListLiveData(int page) {
         RetrofitConfig.getRetrofit().create(RetrofitApi.class).getAllAmazingSuggestionProduct(
-                Const.OrderTag.MOST_NEWEST_PRODUCT , 19 ,page
+                Const.OrderTag.MOST_NEWEST_PRODUCT, 19, page
         ).enqueue(new Callback<List<WebserviceProductModel>>() {
             @Override
             public void onResponse(Call<List<WebserviceProductModel>> call, Response<List<WebserviceProductModel>> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     amazingSuggestionProductListLiveData.setValue(response.body());
                 }
             }
@@ -67,12 +71,13 @@ public class Repository {
         });
         return amazingSuggestionProductListLiveData;
     }
-    public MutableLiveData<List<WebserviceProductModel>>  getMostNewestProductListLiveData(int page){
-        RetrofitConfig.getRetrofit().create(RetrofitApi.class).getAllSortedProduct(Const.OrderTag.MOST_NEWEST_PRODUCT , page)
+
+    public MutableLiveData<List<WebserviceProductModel>> getMostNewestProductListLiveData(int page) {
+        RetrofitConfig.getRetrofit().create(RetrofitApi.class).getAllSortedProduct(Const.OrderTag.MOST_NEWEST_PRODUCT, page)
                 .enqueue(new Callback<List<WebserviceProductModel>>() {
                     @Override
                     public void onResponse(Call<List<WebserviceProductModel>> call, Response<List<WebserviceProductModel>> response) {
-                        if (response.isSuccessful()){
+                        if (response.isSuccessful()) {
                             mostNewestProductListLiveData.setValue(response.body());
                         }
                     }
@@ -84,12 +89,13 @@ public class Repository {
                 });
         return mostNewestProductListLiveData;
     }
-    public MutableLiveData<List<WebserviceProductModel>>  getMostRatingProductListLiveData(int page){
-        RetrofitConfig.getRetrofit().create(RetrofitApi.class).getAllSortedProduct(Const.OrderTag.MOST_RATING_PRODUCT , page)
+
+    public MutableLiveData<List<WebserviceProductModel>> getMostRatingProductListLiveData(int page) {
+        RetrofitConfig.getRetrofit().create(RetrofitApi.class).getAllSortedProduct(Const.OrderTag.MOST_RATING_PRODUCT, page)
                 .enqueue(new Callback<List<WebserviceProductModel>>() {
                     @Override
                     public void onResponse(Call<List<WebserviceProductModel>> call, Response<List<WebserviceProductModel>> response) {
-                        if (response.isSuccessful()){
+                        if (response.isSuccessful()) {
                             mostRatingProductListLiveData.setValue(response.body());
                         }
                     }
@@ -101,12 +107,13 @@ public class Repository {
                 });
         return mostRatingProductListLiveData;
     }
-    public MutableLiveData<List<WebserviceProductModel>>  getMostVisitingProductListLiveData(int page){
-        RetrofitConfig.getRetrofit().create(RetrofitApi.class).getAllSortedProduct(Const.OrderTag.MOST_VISITING_PRODUCT , page)
+
+    public MutableLiveData<List<WebserviceProductModel>> getMostVisitingProductListLiveData(int page) {
+        RetrofitConfig.getRetrofit().create(RetrofitApi.class).getAllSortedProduct(Const.OrderTag.MOST_VISITING_PRODUCT, page)
                 .enqueue(new Callback<List<WebserviceProductModel>>() {
                     @Override
                     public void onResponse(Call<List<WebserviceProductModel>> call, Response<List<WebserviceProductModel>> response) {
-                        if (response.isSuccessful()){
+                        if (response.isSuccessful()) {
                             mostVisitingProductListLiveData.setValue(response.body());
                         }
                     }
@@ -118,28 +125,35 @@ public class Repository {
                 });
         return mostVisitingProductListLiveData;
     }
-    public void setProductId(int productId){
+
+    public void setProductId(int productId) {
         productIdMutableLiveData.setValue(productId);
     }
 
     public MutableLiveData<Integer> getProductIdMutableLiveData() {
         return productIdMutableLiveData;
     }
-    public MutableLiveData<WebserviceProductModel> getSingleProduct(int productId){
+
+    public MutableLiveData<WebserviceProductModel> getSingleProduct(int productId) {
         singleProductMutableLiveData = new MutableLiveData<>();
         RetrofitConfig.getRetrofit().create(RetrofitApi.class).getSingleProduct(productId)
                 .enqueue(new Callback<WebserviceProductModel>() {
                     @Override
                     public void onResponse(Call<WebserviceProductModel> call, Response<WebserviceProductModel> response) {
-                        if (response.isSuccessful()){
+                        if (response.isSuccessful()) {
+                            Log.e("TAG4", "response message " + response.message() + " message code " +
+                                    response.code());
                             singleProductMutableLiveData.setValue(response.body());
-                        }else {
+                        } else {
+                            Log.e("TAG4", "in else response message " + response.message() + " message code " +
+                                    response.code());
                             singleProductMutableLiveData = null;
                         }
                     }
 
                     @Override
                     public void onFailure(Call<WebserviceProductModel> call, Throwable t) {
+                        Log.e("TAG4", "on fail message " + t.getMessage());
                         singleProductMutableLiveData = null;
                     }
                 });
@@ -149,14 +163,15 @@ public class Repository {
     public MutableLiveData<WebserviceProductModel> getSingleProductMutableLiveData() {
         return singleProductMutableLiveData;
     }
-    public MutableLiveData<List<WebserviceCategoryModel>> getProductCategories(int productId){
+
+    public MutableLiveData<List<WebserviceCategoryModel>> getProductCategories(int productId) {
         productCategoriesMutableLiveData = new MutableLiveData<>();
         RetrofitConfig.getRetrofit().create(RetrofitApi.class)
                 .getProductCategories(productId)
                 .enqueue(new Callback<List<WebserviceCategoryModel>>() {
                     @Override
                     public void onResponse(Call<List<WebserviceCategoryModel>> call, Response<List<WebserviceCategoryModel>> response) {
-                        if (response.isSuccessful()){
+                        if (response.isSuccessful()) {
                             productCategoriesMutableLiveData.setValue(response.body());
                         }
                     }
@@ -168,13 +183,14 @@ public class Repository {
                 });
         return productCategoriesMutableLiveData;
     }
-    public MutableLiveData<List<WebserviceProductModel>>  getRelatedProduct(String... relatedProductIds){
+
+    public MutableLiveData<List<WebserviceProductModel>> getRelatedProduct(String... relatedProductIds) {
         relatedProductMutableLiveData = new MutableLiveData<>();
         RetrofitConfig.getRetrofit().create(RetrofitApi.class).getRelatedProduct(relatedProductIds)
                 .enqueue(new Callback<List<WebserviceProductModel>>() {
                     @Override
                     public void onResponse(Call<List<WebserviceProductModel>> call, Response<List<WebserviceProductModel>> response) {
-                        if (response.isSuccessful()){
+                        if (response.isSuccessful()) {
                             relatedProductMutableLiveData.setValue(response.body());
                         }
                     }

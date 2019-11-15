@@ -19,4 +19,7 @@
     <string name="price_sample">260000 تومان</string>
     <string name="add_to_basket">افزودن به سبد خرید</string>
     <string name="related_product">محصولات مشابه</string>
+    <string name="your_basket">سبد خرید شما</string>
+    <string name="sum_of_basket">جمع کل خرید</string>
+    <string name="finalize_basket">خرید خود را نهایی کنید</string>
 </resources>

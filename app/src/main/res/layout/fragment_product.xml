@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"/>
 
     <RelativeLayout
-        android:visibility="gone"
+        android:visibility="visible"
         android:id="@+id/parent_fragment_product"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -44,6 +44,7 @@
                 android:focusable="true" />
 
             <TextView
+                android:textSize="16sp"
                 android:id="@+id/title_product_toolbar"
                 android:textColor="@color/white"
                 android:gravity="center"
@@ -66,8 +67,10 @@
                 android:focusable="true" />
 
             <TextView
+                android:layout_marginStart="20dp"
+                android:background="@drawable/badge_shape"
                 android:visibility="gone"
-                android:id="@+id/cart_badge"
+                android:id="@+id/basket_badge"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="right|end|top"
@@ -288,6 +291,7 @@
                     android:scaleType="fitXY" />
 
                 <ImageView
+                    android:layout_marginStart="8dp"
                     android:id="@+id/small_digikala_logo"
                     android:layout_marginEnd="8dp"
                     android:layout_alignParentEnd="true"
@@ -341,6 +345,7 @@
 
 
                 <LinearLayout
+                    android:id="@+id/add_to_basket"
                     android:orientation="horizontal"
                     android:gravity="center"
                     android:background="@drawable/add_to_basket_shape"

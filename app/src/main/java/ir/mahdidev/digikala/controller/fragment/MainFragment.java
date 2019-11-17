@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.smarteist.autoimageslider.SliderView;
@@ -114,7 +115,6 @@ public class MainFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this , view);
         initViewModel();
-
     }
 
     private void initSliderView( List<WebserviceCategoryModel> categoryModelList) {
@@ -134,6 +134,7 @@ public class MainFragment extends Fragment {
         viewModel.getMostNewestListLiveData(newestPage).observe(this , this::initNewestProductRecyclerView);
         viewModel.getMostRatingListLiveData(ratingPage).observe(this , this::initRatingProductRecyclerView);
         viewModel.getMostVisitingListLiveData(visitingPage).observe(this , this::initVisitingRecyclerView);
+
     }
 
     private void initVisitingRecyclerView(List<WebserviceProductModel> webserviceProductModels) {

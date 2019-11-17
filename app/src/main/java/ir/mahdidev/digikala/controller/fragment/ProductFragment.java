@@ -1,6 +1,7 @@
 package ir.mahdidev.digikala.controller.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,15 +12,14 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -33,6 +33,10 @@ import ir.mahdidev.digikala.R;
 import ir.mahdidev.digikala.adapter.CategoryRecyclerViewAdapter;
 import ir.mahdidev.digikala.adapter.MainHorizontalRecyclerViewAdapter;
 import ir.mahdidev.digikala.adapter.SliderProductAdapter;
+import ir.mahdidev.digikala.controller.activity.ProductBasketActivity;
+import ir.mahdidev.digikala.database.ProductBasketModel;
+import ir.mahdidev.digikala.database.ProductFavoriteModel;
+import ir.mahdidev.digikala.networkmodel.Repository;
 import ir.mahdidev.digikala.networkmodel.category.WebserviceCategoryModel;
 import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
 import ir.mahdidev.digikala.util.Const;
@@ -76,12 +80,21 @@ public class ProductFragment extends Fragment {
     RecyclerView categoryProductRecyclerView;
     @BindView(R.id.related_product_recyclerView)
     RecyclerView relatedProductRecyclerView;
+    @BindView(R.id.add_to_basket)
+    LinearLayout addToBasket;
+    @BindView(R.id.basket_badge)
+    TextView basketBadge;
+    @BindView(R.id.share_product)
+    ImageView shareProduct;
+    @BindView(R.id.favorite_product)
+    ImageView favoriteProduct;
 
     private boolean isAmazingSuggestion = false;
     private ProductViewModel viewModel;
     private SliderProductAdapter sliderProductAdapter;
     private CategoryRecyclerViewAdapter categoryRecyclerViewAdapter;
     private MainHorizontalRecyclerViewAdapter relatedProductsAdapter;
+    private ProductFavoriteModel productFavoriteModel;
     public ProductFragment() {}
 
     public static ProductFragment newInstance() {
@@ -107,7 +120,41 @@ public class ProductFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this , view);
         initViewModel();
+        basketImgFunction();
 
+    }
+
+    private void shareProductFunction(WebserviceProductModel webserviceProductModel) {
+        String shareMessage = webserviceProductModel.getName() + "\n" +
+                "را در " + getString(R.string.digikala_txt) + " ببین" + "\n" +
+                webserviceProductModel.getPermalink();
+        shareProduct.setOnClickListener(view -> {
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_SEND);
+            intent.putExtra(Intent.EXTRA_TEXT , shareMessage);
+            intent.setType("text/plain");
+            startActivity(Intent.createChooser(intent, getResources().getString(R.string.share_via)));
+        });
+    }
+
+    private void basketImgFunction() {
+        basketImg.setOnClickListener(view -> startActivity(ProductBasketActivity.newIntent(getActivity())));
+    }
+
+    private void addToBasketFunction(WebserviceProductModel webserviceProductModel) {
+        addToBasket.setOnClickListener(view -> {
+            ProductBasketModel productBasketModel = Repository.getInstance().getSingleProductBaskerDb(webserviceProductModel.getId());
+            if (productBasketModel !=null ){
+                int productCountupdate = productBasketModel.getProductCount();
+                productBasketModel.setProductCount(++productCountupdate);
+                viewModel.updateBasketDb(productBasketModel);
+            }else {
+                viewModel.insertBasketDb(new ProductBasketModel(webserviceProductModel.getId(),1 , webserviceProductModel.getName() , webserviceProductModel.getShortDescription(),
+                        webserviceProductModel.getImages().get(0).getSrc() , webserviceProductModel.getRegularPrice()
+                        , webserviceProductModel.getPrice()));
+            }
+            startActivity(ProductBasketActivity.newIntent(getActivity()));
+        });
     }
 
     private void initViewModel() {
@@ -119,38 +166,67 @@ public class ProductFragment extends Fragment {
             initTitleDescriptionAndPrice(webserviceProductModel);
             initCategoryRecyclerView(webserviceProductModel);
             initRelatedProductCategoryRecyclerView(webserviceProductModel);
+            addToBasketFunction(webserviceProductModel);
+            shareProductFunction(webserviceProductModel);
+            favoriteProductFunction(webserviceProductModel);
+
+        });
+        viewModel.getProductCount().observe(this , integer -> {
+            if (integer>0){
+                basketBadge.setVisibility(View.VISIBLE);
+                basketBadge.setText(String.valueOf(integer));
+            }else {
+                basketBadge.setVisibility(View.GONE);
+            }
         });
     }
 
+    private void favoriteProductFunction(WebserviceProductModel webserviceProductModel) {
+
+        productFavoriteModel  = viewModel.getSingleProductFavorite(webserviceProductModel.getId());
+        favoriteProduct.setOnClickListener(view -> {
+            productFavoriteModel =
+                    viewModel.getSingleProductFavorite(webserviceProductModel.getId());
+            if (productFavoriteModel ==null){
+                viewModel.insertFavoritetDb(new ProductFavoriteModel(webserviceProductModel.getId(),1 , webserviceProductModel.getName() , webserviceProductModel.getShortDescription(),
+                        webserviceProductModel.getImages().get(0).getSrc() , webserviceProductModel.getRegularPrice()
+                        , webserviceProductModel.getPrice()));
+                favoriteProduct.setImageResource(R.drawable.ic_favorite_black_24dp);
+            }else {
+                viewModel.deleteFavoriteDb(productFavoriteModel);
+                favoriteProduct.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+            }
+        });
+        if (productFavoriteModel==null){
+            favoriteProduct.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+        }else {
+            favoriteProduct.setImageResource(R.drawable.ic_favorite_black_24dp);
+        }
+    }
+
     private void initRelatedProductCategoryRecyclerView(WebserviceProductModel webserviceProductModel) {
-        viewModel.getRelatedProducts(webserviceProductModel.getRelatedIds().toString()).observe(this, new Observer<List<WebserviceProductModel>>() {
-            @Override
-            public void onChanged(List<WebserviceProductModel> webserviceProductModels) {
-                if (relatedProductsAdapter==null){
-                    relatedProductsAdapter = new MainHorizontalRecyclerViewAdapter(webserviceProductModels , getActivity());
-                    relatedProductRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity() , RecyclerView.HORIZONTAL , true));
-                    relatedProductRecyclerView.setAdapter(relatedProductsAdapter);
-                }else {
-                    relatedProductsAdapter.setProductList(webserviceProductModels);
-                    relatedProductsAdapter.notifyDataSetChanged();
-                }
+        viewModel.getRelatedProducts(webserviceProductModel.getRelatedIds().toString()).observe(this, webserviceProductModels -> {
+            if (relatedProductsAdapter==null){
+                relatedProductsAdapter = new MainHorizontalRecyclerViewAdapter(webserviceProductModels , getActivity());
+                relatedProductRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity() , RecyclerView.HORIZONTAL , true));
+                relatedProductRecyclerView.setAdapter(relatedProductsAdapter);
+            }else {
+                relatedProductsAdapter.setProductList(webserviceProductModels);
+                relatedProductsAdapter.notifyDataSetChanged();
             }
         });
     }
 
     private void initCategoryRecyclerView(WebserviceProductModel webserviceProductModel) {
-        viewModel.getProductCategories(webserviceProductModel.getId()).observe(this, new Observer<List<WebserviceCategoryModel>>() {
-            @Override
-            public void onChanged(List<WebserviceCategoryModel> categoryModelList) {
-                if (categoryRecyclerViewAdapter == null){
-                    categoryRecyclerViewAdapter = new CategoryRecyclerViewAdapter(categoryModelList , getActivity() ,
-                            Const.FROM_PRODUCT_FRAGMENT);
-                    categoryProductRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity() , RecyclerView.HORIZONTAL , true));
-                    categoryProductRecyclerView.setAdapter(categoryRecyclerViewAdapter);
-                }else {
-                    categoryRecyclerViewAdapter.setCategoryList(categoryModelList);
-                    categoryRecyclerViewAdapter.notifyDataSetChanged();
-                }
+        viewModel.getProductCategories(webserviceProductModel.getId()).observe(this, categoryModelList -> {
+            if (categoryRecyclerViewAdapter == null){
+                categoryRecyclerViewAdapter = new CategoryRecyclerViewAdapter(categoryModelList , getActivity() ,
+                        Const.FROM_PRODUCT_FRAGMENT);
+                categoryProductRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity() , RecyclerView.HORIZONTAL , true));
+                categoryProductRecyclerView.setAdapter(categoryRecyclerViewAdapter);
+            }else {
+                categoryRecyclerViewAdapter.setCategoryList(categoryModelList);
+                categoryRecyclerViewAdapter.notifyDataSetChanged();
             }
         });
     }

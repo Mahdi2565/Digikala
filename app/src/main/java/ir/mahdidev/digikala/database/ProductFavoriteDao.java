@@ -11,16 +11,17 @@ import java.util.List;
 
 @Dao
 public interface ProductFavoriteDao {
-    @Query("SELECT * FROM product_favorite")
-    LiveData<List<ProductFavoriteDao>> getAllProductFavorite();
 
-    @Query("SELECT * FROM product_favorite WHERE id = :id")
-    ProductFavoriteDao productFavoriteDao(int id);
+    @Query("SELECT * FROM product_favorite")
+    LiveData<List<ProductFavoriteModel>> getAllProductFavorite();
+
+    @Query("SELECT * FROM product_favorite WHERE productId = :productId")
+    ProductFavoriteModel getSingleProduct(int productId);
 
     @Insert
-    void insert(ProductFavoriteDao productFavoriteDao);
+    void insert(ProductFavoriteModel productFavoriteDao);
     @Update
-    void update(ProductFavoriteDao productFavoriteDao);
+    void update(ProductFavoriteModel productFavoriteDao);
     @Delete
-    void delete(ProductFavoriteDao productFavoriteDao);
+    void delete(ProductFavoriteModel productFavoriteDao);
 }

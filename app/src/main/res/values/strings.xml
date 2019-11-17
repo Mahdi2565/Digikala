@@ -22,4 +22,17 @@
     <string name="your_basket">سبد خرید شما</string>
     <string name="sum_of_basket">جمع کل خرید</string>
     <string name="finalize_basket">خرید خود را نهایی کنید</string>
+    <string name="garantee">گارانتی:</string>
+    <string name="digikala_txt">دیجی‌کالا</string>
+    <string name="saler">فروشنده:</string>
+    <string name="count">تعداد:</string>
+    <string name="price">قیمت کل</string>
+    <string name="amazing_suggetstion_price">(-) تخفیف شگفت‌انگیز</string>
+    <string name="final_price">قیمت نهایی</string>
+    <string name="delete">حذف</string>
+    <string name="do_you_want_delete_product_from_basket">آیا مایل به حذف این محصول از سبد خرید هستید؟</string>
+    <string name="yes">بله</string>
+    <string name="no">خیر</string>
+    <string name="empty_basket">سبد خرید شما خالی است!</string>
+    <string name="share_via">اشتراک گذاری با</string>
 </resources>

@@ -14,14 +14,16 @@ public interface ProductBasketDao {
     @Query("SELECT * FROM product_basket")
     LiveData<List<ProductBasketModel>> getAllProductBasket();
 
-    @Query("SELECT * FROM product_basket WHERE id = :id")
-    ProductBasketModel productBasketModel(int id);
+    @Query("SELECT * FROM product_basket WHERE productId = :productId")
+    ProductBasketModel getSingleProduct(int productId);
 
-    @Insert
+    @Insert()
     void insert(ProductBasketModel productBasketModel);
     @Update
     void update(ProductBasketModel productBasketModel);
     @Delete
     void delete(ProductBasketModel productBasketModel);
+    @Query("SELECT count(*) FROM product_basket")
+    LiveData<Integer> getProductCount();
 
 }

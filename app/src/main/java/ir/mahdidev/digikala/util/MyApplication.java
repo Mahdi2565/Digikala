@@ -15,7 +15,7 @@ import ir.mahdidev.digikala.networkutil.ConnectivityReceiver;
 public class MyApplication extends Application {
     private static MyApplication mInstance;
     private NumberFormat nf = NumberFormat.getInstance(new Locale("fa", "IR"));
-
+    private RoomConfig roomDb;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -25,7 +25,11 @@ public class MyApplication extends Application {
     }
 
     private void initRoomDataBase() {
-        RoomConfig.getInstance(this);
+       roomDb = RoomConfig.getInstance(this);
+    }
+
+    public RoomConfig getRoomDb() {
+        return roomDb;
     }
 
     private void initFont() {
@@ -49,4 +53,5 @@ public class MyApplication extends Application {
     public String getPersianNumber(double i){
         return nf.format(i);
     }
+
 }

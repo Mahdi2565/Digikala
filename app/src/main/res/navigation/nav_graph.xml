@@ -9,5 +9,9 @@
         android:id="@+id/productFragment"
         android:name="ir.mahdidev.digikala.controller.fragment.ProductFragment"
         android:label="fragment_product"
-        tools:layout="@layout/fragment_product" />
+        tools:layout="@layout/fragment_product" >
+        <action
+            android:id="@+id/action_productFragment_self"
+            app:destination="@id/productFragment" />
+    </fragment>
 </navigation>

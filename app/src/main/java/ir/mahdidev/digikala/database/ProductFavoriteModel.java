@@ -2,16 +2,11 @@ package ir.mahdidev.digikala.database;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-import androidx.room.TypeConverter;
-import androidx.room.TypeConverters;
 
-import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
-
-@Entity(tableName = "product_basket")
-public class ProductBasketModel {
-
-    public ProductBasketModel(int productId, int productCount, String titleProduct,
-                              String shortDescription, String imageSrc
+@Entity(tableName = "product_favorite")
+public class ProductFavoriteModel {
+    public ProductFavoriteModel(int productId, int productCount, String titleProduct,
+                                String shortDescription, String imageSrc
             , String price, String finalPrice) {
         this.productId = productId;
         this.productCount = productCount;
@@ -32,10 +27,8 @@ public class ProductBasketModel {
     private String price;
     private String finalPrice;
 
-
-
-    public int getProductId() {
-        return productId;
+    public int getProductCount() {
+        return productCount;
     }
 
     public String getTitleProduct() {
@@ -54,7 +47,6 @@ public class ProductBasketModel {
         return price;
     }
 
-
     public String getFinalPrice() {
         return finalPrice;
     }
@@ -62,16 +54,16 @@ public class ProductBasketModel {
     public int getId() {
         return id;
     }
-    public int getProductCount() {
-        return productCount;
-    }
 
-    public void setProductCount(int productCount) {
-        this.productCount = productCount;
+    public int getProductId() {
+        return productId;
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
 }

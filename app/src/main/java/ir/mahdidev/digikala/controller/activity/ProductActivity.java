@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import ir.mahdidev.digikala.R;
 import ir.mahdidev.digikala.util.Const;
 
@@ -18,5 +19,9 @@ public class ProductActivity extends AppCompatActivity {
     }
     public static Intent newIntent(Context context ){
         return new Intent(context , ProductActivity.class);
+    }
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
     }
 }

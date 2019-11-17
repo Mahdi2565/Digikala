@@ -61,11 +61,13 @@
                 android:focusable="true" />
 
             <TextView
+                android:layout_marginStart="20dp"
+                android:background="@drawable/badge_shape"
                 android:visibility="gone"
-                android:id="@+id/cart_badge"
+                android:id="@+id/basket_badge"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_gravity="right|end|top"
+                android:layout_gravity="end|top"
                 android:layout_marginEnd="-5dp"
                 android:layout_marginTop="3dp"
                 android:gravity="center"

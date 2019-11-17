@@ -4,11 +4,14 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -16,6 +19,7 @@ import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import ir.mahdidev.digikala.R;
 import ir.mahdidev.digikala.controller.fragment.MainFragment;
 import ir.mahdidev.digikala.util.Const;
+import ir.mahdidev.digikala.viewmodel.MainFragmentViewModel;
 
 public class MainActivity extends SingleFragmentActivity {
 
@@ -23,6 +27,9 @@ public class MainActivity extends SingleFragmentActivity {
     private NavigationView navigationView;
     private ImageView navigationToggle;
     private DrawerLayout drawerLayout;
+    private MainFragmentViewModel viewModel;
+    private TextView basketBadge;
+    private ImageView basketImg;
 
     @Override
     public Fragment createFragment() {
@@ -49,8 +56,21 @@ public class MainActivity extends SingleFragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
+        initViewModel();
         initToolbar();
 
+    }
+
+    private void initViewModel() {
+        viewModel = ViewModelProviders.of(this).get(MainFragmentViewModel.class);
+        viewModel.getProductCount().observe(this , integer -> {
+            if (integer>0){
+                basketBadge.setVisibility(View.VISIBLE);
+                basketBadge.setText(String.valueOf(integer));
+            }else {
+                basketBadge.setVisibility(View.GONE);
+            }
+        });
     }
 
     private void initView() {
@@ -58,14 +78,14 @@ public class MainActivity extends SingleFragmentActivity {
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         navigationToggle = findViewById(R.id.navigation_drawer_toggle);
+        basketBadge = findViewById(R.id.basket_badge);
+        basketImg   = findViewById(R.id.basket_img);
     }
 
     private void initToolbar() {
         setSupportActionBar(toolbar);
-        navigationToggle.setOnClickListener(view -> {
-            drawerLayout.openDrawer(GravityCompat.END);
-
-        });
+        navigationToggle.setOnClickListener(view -> drawerLayout.openDrawer(GravityCompat.END));
+        basketImg.setOnClickListener(view -> startActivity(ProductBasketActivity.newIntent(this)));
     }
 
     public static Intent newIntent(Context context){

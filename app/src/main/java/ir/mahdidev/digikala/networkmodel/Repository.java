@@ -2,26 +2,29 @@ package ir.mahdidev.digikala.networkmodel;
 
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
+import ir.mahdidev.digikala.database.ProductBasketModel;
+import ir.mahdidev.digikala.database.ProductFavoriteModel;
+import ir.mahdidev.digikala.database.RoomConfig;
 import ir.mahdidev.digikala.networkmodel.category.WebserviceCategoryModel;
 import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
 import ir.mahdidev.digikala.networkutil.RetrofitApi;
 import ir.mahdidev.digikala.networkutil.RetrofitConfig;
 import ir.mahdidev.digikala.util.Const;
+import ir.mahdidev.digikala.util.MyApplication;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Repository {
     public static Repository instance;
-
-    private MutableLiveData<HashMap<String, List>> productsAndCategoryListLiveData =
-            new MutableLiveData<>();
+    private RoomConfig roomConfig;
     private MutableLiveData<List<WebserviceCategoryModel>> categoryListLiveData = new MutableLiveData<>();
     private MutableLiveData<List<WebserviceProductModel>> amazingSuggestionProductListLiveData = new MutableLiveData<>();
     private MutableLiveData<List<WebserviceProductModel>> mostNewestProductListLiveData = new MutableLiveData<>();
@@ -31,6 +34,7 @@ public class Repository {
     private MutableLiveData<WebserviceProductModel> singleProductMutableLiveData;
     private MutableLiveData<List<WebserviceCategoryModel>> productCategoriesMutableLiveData;
     private MutableLiveData<List<WebserviceProductModel>> relatedProductMutableLiveData;
+    private MutableLiveData<List<WebserviceProductModel>> productBasketLiveData;
 
     public static Repository getInstance() {
         if (instance == null) {
@@ -39,8 +43,41 @@ public class Repository {
         return instance;
     }
 
-    public void setProductsList(HashMap<String, List> productsList) {
-        productsAndCategoryListLiveData.setValue(productsList);
+    private Repository(){
+        roomConfig = MyApplication.getInstance().getRoomDb();
+    }
+
+    public LiveData<Integer> getProductBasketCountDb(){
+        return roomConfig.productBasketDao().getProductCount();
+    }
+    public LiveData<List<ProductBasketModel>> getAllProductBasketDb(){
+        return roomConfig.productBasketDao().getAllProductBasket();
+    }
+    public ProductBasketModel getSingleProductBaskerDb(int productId){
+        return roomConfig.productBasketDao().getSingleProduct(productId);
+    }
+    public void insertProductBaskerDb(ProductBasketModel productBasketModel){
+        roomConfig.productBasketDao().insert(productBasketModel);
+    }
+    public void updateProductBaskerDb(ProductBasketModel productBasketModel){
+        roomConfig.productBasketDao().update(productBasketModel);
+    }
+    public void deleteProductBaskerDb(ProductBasketModel productBasketModel){
+        roomConfig.productBasketDao().delete(productBasketModel);
+    }
+
+    public LiveData<List<ProductFavoriteModel>> getAllProductFavoriteDb(){
+        return roomConfig.productFavoriteDao().getAllProductFavorite();
+    }
+    public ProductFavoriteModel getSingleProductFavorite(int productId){
+        return roomConfig.productFavoriteDao().getSingleProduct(productId);
+    }
+
+    public void insertProductFavoriteDb(ProductFavoriteModel productFavoriteModel){
+        roomConfig.productFavoriteDao().insert(productFavoriteModel);
+    }
+    public void deleteProductFavoriteDb(ProductFavoriteModel productFavoriteModel){
+        roomConfig.productFavoriteDao().delete(productFavoriteModel);
     }
 
     public MutableLiveData<List<WebserviceCategoryModel>> loadCategoryList() throws IOException {
@@ -201,6 +238,23 @@ public class Repository {
                     }
                 });
         return relatedProductMutableLiveData;
+    }
+    public MutableLiveData<List<WebserviceProductModel>> getInBasketProduct(String... productId){
+        productBasketLiveData = new MutableLiveData<>();
+        RetrofitConfig.getRetrofit().create(RetrofitApi.class)
+                .getRelatedProduct(productId)
+                .enqueue(new Callback<List<WebserviceProductModel>>() {
+                    @Override
+                    public void onResponse(Call<List<WebserviceProductModel>> call, Response<List<WebserviceProductModel>> response) {
+                        productBasketLiveData.setValue(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<WebserviceProductModel>> call, Throwable t) {
+
+                    }
+                });
+        return productBasketLiveData;
     }
 
 }

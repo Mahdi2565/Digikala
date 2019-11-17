@@ -4,10 +4,13 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
+import ir.mahdidev.digikala.database.ProductBasketModel;
+import ir.mahdidev.digikala.database.ProductFavoriteModel;
 import ir.mahdidev.digikala.networkmodel.Repository;
 import ir.mahdidev.digikala.networkmodel.category.WebserviceCategoryModel;
 import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
@@ -33,5 +36,23 @@ public class ProductViewModel extends AndroidViewModel {
     }
     public MutableLiveData<List<WebserviceProductModel>>  getRelatedProducts(String... relatedProductIds){
      return repository.getRelatedProduct(relatedProductIds);
+    }
+    public LiveData<Integer> getProductCount(){
+        return repository.getProductBasketCountDb();
+    }
+    public void insertBasketDb(ProductBasketModel productBasketModel){
+        repository.insertProductBaskerDb(productBasketModel);
+    }
+    public void updateBasketDb(ProductBasketModel productBasketModel){
+        repository.updateProductBaskerDb(productBasketModel);
+    }
+    public void insertFavoritetDb(ProductFavoriteModel productFavoriteModel){
+        repository.insertProductFavoriteDb(productFavoriteModel);
+    }
+    public void deleteFavoriteDb(ProductFavoriteModel productFavoriteModel){
+        repository.deleteProductFavoriteDb(productFavoriteModel);
+    }
+    public ProductFavoriteModel getSingleProductFavorite(int productId){
+        return repository.getSingleProductFavorite(productId);
     }
 }

@@ -20,6 +20,8 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import ir.mahdidev.digikala.R;
 import ir.mahdidev.digikala.eventbus.OnProductClickedMessage;
 import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
@@ -87,18 +89,19 @@ public class MainHorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Main
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView producImage;
-        private TextView  titleProduct;
-        private TextView  priceRegular;
-        private TextView  salePrice;
-        private MaterialCardView horizontalCardView;
+        @BindView(R.id.product_img_horizontal_recyclerView)
+         ImageView producImage;
+        @BindView(R.id.title_product_horizontal_recyclerView)
+        TextView  titleProduct;
+        @BindView(R.id.price_regular)
+        TextView  priceRegular;
+        @BindView(R.id.sale_price)
+        TextView  salePrice;
+        @BindView(R.id.horizontal_cardView)
+        MaterialCardView horizontalCardView;
         public ViewHolder(@NonNull View itemView ) {
             super(itemView);
-                    producImage = itemView.findViewById(R.id.product_img_horizontal_recyclerView);
-                    titleProduct = itemView.findViewById(R.id.title_product_horizontal_recyclerView);
-                    priceRegular = itemView.findViewById(R.id.price_regular);
-                    salePrice    = itemView.findViewById(R.id.sale_price);
-                    horizontalCardView  = itemView.findViewById(R.id.horizontal_cardView);
+            ButterKnife.bind(this , itemView);
             }
         }
     }

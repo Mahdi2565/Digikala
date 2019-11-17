@@ -7,7 +7,6 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import java.util.HashMap;
 import java.util.List;
 
 import ir.mahdidev.digikala.networkmodel.Repository;
@@ -42,4 +41,8 @@ public class MainFragmentViewModel extends AndroidViewModel {
     public MutableLiveData<WebserviceProductModel> loadSingleProduct(int produtId){
         return repository.getSingleProduct(produtId);
     }
+    public LiveData<Integer> getProductCount(){
+        return repository.getProductBasketCountDb();
+    }
+
 }

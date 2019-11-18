@@ -11,7 +11,12 @@
         android:label="fragment_product"
         tools:layout="@layout/fragment_product" >
         <action
-            android:id="@+id/action_productFragment_self"
-            app:destination="@id/productFragment" />
+            android:id="@+id/action_productFragment_to_commentsFragment"
+            app:destination="@id/commentsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/commentsFragment"
+        android:name="ir.mahdidev.digikala.controller.fragment.CommentsFragment"
+        android:label="fragment_comments"
+        tools:layout="@layout/fragment_comments" />
 </navigation>

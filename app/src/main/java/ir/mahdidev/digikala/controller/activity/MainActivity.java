@@ -1,5 +1,6 @@
 package ir.mahdidev.digikala.controller.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -9,6 +10,8 @@ import androidx.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,7 +24,7 @@ import ir.mahdidev.digikala.controller.fragment.MainFragment;
 import ir.mahdidev.digikala.util.Const;
 import ir.mahdidev.digikala.viewmodel.MainFragmentViewModel;
 
-public class MainActivity extends SingleFragmentActivity {
+public class MainActivity extends SingleFragmentActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private Toolbar toolbar;
     private NavigationView navigationView;
@@ -58,7 +61,12 @@ public class MainActivity extends SingleFragmentActivity {
         initView();
         initViewModel();
         initToolbar();
+        initNavigation();
 
+    }
+
+    private void initNavigation() {
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
     private void initViewModel() {
@@ -101,8 +109,20 @@ public class MainActivity extends SingleFragmentActivity {
             super.onBackPressed();
         }
     }
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
+        @Override
+        protected void attachBaseContext(Context newBase) {
+            super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
+        }
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+            switch (menuItem.getItemId()){
+                case R.id.favorite_product_menu :{
+                    startActivity(FavoriteProductsActivity.newIntent(MainActivity.this));
+                    break;
+                }
+            }
+            drawerLayout.closeDrawers();
+        return false;
     }
 }

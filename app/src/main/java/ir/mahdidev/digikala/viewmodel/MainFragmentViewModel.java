@@ -22,6 +22,9 @@ public class MainFragmentViewModel extends AndroidViewModel {
     public LiveData<List<WebserviceCategoryModel>> getCategoryListLiveData(){
         return repository.getCategoryListLiveData();
     }
+    public void loadCategory(){
+        repository.loadCategoryListFromMainFragment();
+    }
     public LiveData<List<WebserviceProductModel>> getAmazingSuggestionListLiveData(int page){
         return repository.getAmazingSuggestionProductListLiveData(page);
     }
@@ -43,6 +46,9 @@ public class MainFragmentViewModel extends AndroidViewModel {
     }
     public LiveData<Integer> getProductCount(){
         return repository.getProductBasketCountDb();
+    }
+    public LiveData<List<WebserviceProductModel>> getEspecialProducts(){
+        return repository.getEspecialProduct();
     }
 
 }

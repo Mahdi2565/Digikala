@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"/>
 
     <RelativeLayout
-        android:visibility="visible"
+        android:visibility="gone"
         android:id="@+id/parent_fragment_product"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -137,57 +137,56 @@
         android:layout_height="wrap_content">
 
         <RelativeLayout
-            android:background="@color/cardViewBackground"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/cardViewBackground">
 
             <ImageView
-                android:clickable="true"
-                android:background="?attr/selectableItemBackgroundBorderless"
                 android:id="@+id/share_product"
-                android:padding="16dp"
-                app:srcCompat="@drawable/ic_share_black_24dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:focusable="true" />
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="16dp"
+                app:srcCompat="@drawable/ic_share_black_24dp" />
 
             <ImageView
                 android:id="@+id/favorite_product"
-                android:clickable="true"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:padding="16dp"
-                android:layout_toEndOf="@id/share_product"
-                app:srcCompat="@drawable/ic_favorite_border_black_24dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:focusable="true" />
+                android:layout_toEndOf="@id/share_product"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="16dp"
+                app:srcCompat="@drawable/ic_favorite_black_24dp" />
 
             <TextView
+                android:id="@+id/title_product"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/favorite_product"
                 android:layout_alignParentEnd="true"
                 android:gravity="end"
-                android:paddingTop="8dp"
                 android:paddingStart="8dp"
+                android:paddingTop="8dp"
                 android:paddingEnd="8dp"
-                android:id="@+id/title_product"
-                android:textSize="16sp"
-                android:textColor="@color/black"
                 android:text="@string/app_name"
-                android:layout_below="@id/favorite_product"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/short_description"
-                android:gravity="end"
-                android:text="@string/app_name"
-                android:padding="8dp"
-                android:layout_below="@id/title_product"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title_product"
+                android:gravity="end"
+                android:padding="8dp"
+                android:text="@string/app_name" />
 
 
             <ImageView
-                android:visibility="gone"
                 android:id="@+id/amazing_suggestion_logo"
                 android:layout_width="180dp"
                 android:layout_height="50dp"
@@ -197,7 +196,8 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
-                android:src="@drawable/amazing_suggestion_img" />
+                android:src="@drawable/amazing_suggestion_img"
+                android:visibility="gone" />
 
 
         </RelativeLayout>
@@ -218,6 +218,7 @@
 
 
         <RelativeLayout
+            android:id="@+id/user_comments"
             android:background="@color/white"
             android:gravity="center"
             android:padding="8dp"

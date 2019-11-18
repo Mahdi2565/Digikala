@@ -9,6 +9,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -88,6 +90,8 @@ public class ProductFragment extends Fragment {
     ImageView shareProduct;
     @BindView(R.id.favorite_product)
     ImageView favoriteProduct;
+    @BindView(R.id.user_comments)
+    RelativeLayout userComments;
 
     private boolean isAmazingSuggestion = false;
     private ProductViewModel viewModel;
@@ -95,6 +99,7 @@ public class ProductFragment extends Fragment {
     private CategoryRecyclerViewAdapter categoryRecyclerViewAdapter;
     private MainHorizontalRecyclerViewAdapter relatedProductsAdapter;
     private ProductFavoriteModel productFavoriteModel;
+    private NavController navController;
     public ProductFragment() {}
 
     public static ProductFragment newInstance() {
@@ -119,9 +124,18 @@ public class ProductFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this , view);
+        navController = Navigation.findNavController(view);
+
         initViewModel();
         basketImgFunction();
+        userCommentsFunction();
 
+    }
+
+    private void userCommentsFunction( ) {
+        userComments.setOnClickListener(view -> {
+            navController.navigate(R.id.action_productFragment_to_commentsFragment);
+        });
     }
 
     private void shareProductFunction(WebserviceProductModel webserviceProductModel) {
@@ -191,16 +205,16 @@ public class ProductFragment extends Fragment {
                 viewModel.insertFavoritetDb(new ProductFavoriteModel(webserviceProductModel.getId(),1 , webserviceProductModel.getName() , webserviceProductModel.getShortDescription(),
                         webserviceProductModel.getImages().get(0).getSrc() , webserviceProductModel.getRegularPrice()
                         , webserviceProductModel.getPrice()));
-                favoriteProduct.setImageResource(R.drawable.ic_favorite_black_24dp);
+                favoriteProduct.setImageResource(R.drawable.ic_favorite_red_24dp);
             }else {
                 viewModel.deleteFavoriteDb(productFavoriteModel);
-                favoriteProduct.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                favoriteProduct.setImageResource(R.drawable.ic_favorite_black_24dp);
             }
         });
         if (productFavoriteModel==null){
-            favoriteProduct.setImageResource(R.drawable.ic_favorite_border_black_24dp);
-        }else {
             favoriteProduct.setImageResource(R.drawable.ic_favorite_black_24dp);
+        }else {
+            favoriteProduct.setImageResource(R.drawable.ic_favorite_red_24dp);
         }
     }
 

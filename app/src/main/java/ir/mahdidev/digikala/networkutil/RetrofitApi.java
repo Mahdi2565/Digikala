@@ -18,7 +18,9 @@ public interface RetrofitApi {
     Call<List<WebserviceProductModel>> getAllAmazingSuggestionProduct
             (@Query("orderby") String sortType , @Query("tag") int tagId ,
              @Query("page") int page);
-
+    @GET("products")
+    Call<List<WebserviceProductModel>> getEspecialProducts
+            (@Query("tag") int especialTag);
     @GET("products/{id}")
     Call<WebserviceProductModel> getSingleProduct(@Path("id") int productId);
     @GET("products/categories")

@@ -46,11 +46,9 @@ public class SliderProductAdapter  extends SliderViewAdapter<SliderProductAdapte
 
     public class SliderProductViewHolder extends SliderViewAdapter.ViewHolder {
         private ImageView imageViewBackground;
-        private TextView textViewDescription;
         public SliderProductViewHolder(View itemView) {
             super(itemView);
             imageViewBackground = itemView.findViewById(R.id.iv_auto_image_slider);
-            textViewDescription = itemView.findViewById(R.id.tv_auto_image_slider);
         }
     }
 }

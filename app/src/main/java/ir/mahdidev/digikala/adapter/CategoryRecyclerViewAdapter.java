@@ -27,6 +27,11 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
         this.categoryList = categoryList;
         this.context = context;
         this.adapterLocation = adapterLocation;
+        for (int i = 0 ; i<this.categoryList.size() ; i++){
+            if (this.categoryList.get(i).getDescription().isEmpty()){
+                this.categoryList.remove(i);
+            }
+        }
     }
 
     public void setCategoryList(List<WebserviceCategoryModel> categoryList) {

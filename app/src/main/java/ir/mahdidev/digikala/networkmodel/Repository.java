@@ -34,7 +34,7 @@ public class Repository {
     private MutableLiveData<WebserviceProductModel> singleProductMutableLiveData;
     private MutableLiveData<List<WebserviceCategoryModel>> productCategoriesMutableLiveData;
     private MutableLiveData<List<WebserviceProductModel>> relatedProductMutableLiveData;
-    private MutableLiveData<List<WebserviceProductModel>> productBasketLiveData;
+    private MutableLiveData<List<WebserviceProductModel>> especialProductsMutabaleLiveData = new MutableLiveData<>();
 
     public static Repository getInstance() {
         if (instance == null) {
@@ -88,6 +88,22 @@ public class Repository {
 
     public MutableLiveData<List<WebserviceCategoryModel>> getCategoryListLiveData() {
         return categoryListLiveData;
+    }
+    public void loadCategoryListFromMainFragment(){
+        RetrofitConfig.getRetrofit().create(RetrofitApi.class)
+                .getAllCategories().enqueue(new Callback<List<WebserviceCategoryModel>>() {
+            @Override
+            public void onResponse(Call<List<WebserviceCategoryModel>> call, Response<List<WebserviceCategoryModel>> response) {
+                if (response.isSuccessful()){
+                    categoryListLiveData.setValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<WebserviceCategoryModel>> call, Throwable t) {
+
+            }
+        });
     }
 
     public MutableLiveData<List<WebserviceProductModel>> getAmazingSuggestionProductListLiveData(int page) {
@@ -239,14 +255,16 @@ public class Repository {
                 });
         return relatedProductMutableLiveData;
     }
-    public MutableLiveData<List<WebserviceProductModel>> getInBasketProduct(String... productId){
-        productBasketLiveData = new MutableLiveData<>();
-        RetrofitConfig.getRetrofit().create(RetrofitApi.class)
-                .getRelatedProduct(productId)
+    public MutableLiveData<List<WebserviceProductModel>> getEspecialProduct(){
+        especialProductsMutabaleLiveData = new MutableLiveData<>();
+        // TODO: 11/18/2019 ESPECIAL TAG !!
+        RetrofitConfig.getRetrofit().create(RetrofitApi.class).getEspecialProducts(19)
                 .enqueue(new Callback<List<WebserviceProductModel>>() {
                     @Override
                     public void onResponse(Call<List<WebserviceProductModel>> call, Response<List<WebserviceProductModel>> response) {
-                        productBasketLiveData.setValue(response.body());
+                        if (response.isSuccessful()){
+                            especialProductsMutabaleLiveData.setValue(response.body());
+                        }
                     }
 
                     @Override
@@ -254,7 +272,6 @@ public class Repository {
 
                     }
                 });
-        return productBasketLiveData;
+        return especialProductsMutabaleLiveData;
     }
-
 }

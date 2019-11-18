@@ -1,26 +1,25 @@
 package ir.mahdidev.digikala.controller.fragment;
 
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -29,7 +28,6 @@ import butterknife.OnClick;
 import ir.mahdidev.digikala.R;
 import ir.mahdidev.digikala.adapter.ProductBasketAdapterRecyclerView;
 import ir.mahdidev.digikala.database.ProductBasketModel;
-import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
 import ir.mahdidev.digikala.util.MyApplication;
 import ir.mahdidev.digikala.viewmodel.ProductBasketViewModel;
 
@@ -52,9 +50,11 @@ public class ProductBasketFragment extends Fragment {
     RelativeLayout basketLayout;
     @BindView(R.id.empty_basket_txt)
     TextView emptyBasketText;
+    @BindView(R.id.finalize_basket)
+    LinearLayout finalizeBasket;
     private ProductBasketViewModel viewModel;
     private ProductBasketAdapterRecyclerView productBasketAdapterRecyclerView;
-
+    private NavController navController;
     public ProductBasketFragment() {
     }
 
@@ -68,6 +68,7 @@ public class ProductBasketFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+        navController = Navigation.findNavController(view);
         initViewModel();
     }
 
@@ -83,9 +84,11 @@ public class ProductBasketFragment extends Fragment {
             });
            viewModel.getAllBasketProductDb().observe(this , productBasketModels -> {
                if (productBasketModels.isEmpty()){
+                   finalizeBasket.setVisibility(View.GONE);
                    basketLayout.setVisibility(View.GONE);
                    emptyBasketText.setVisibility(View.VISIBLE);
                }else {
+                   finalizeBasket.setVisibility(View.VISIBLE);
                    emptyBasketText.setVisibility(View.GONE);
                    basketLayout.setVisibility(View.VISIBLE);
                }
@@ -105,24 +108,37 @@ public class ProductBasketFragment extends Fragment {
     private void initRecyclerView( List<ProductBasketModel> productBasketModels) {
         if (productBasketAdapterRecyclerView==null){
 
-            productBasketAdapterRecyclerView = new
-                    ProductBasketAdapterRecyclerView(productBasketModels , getActivity());
+            productBasketAdapterRecyclerView = new ProductBasketAdapterRecyclerView(productBasketModels , getActivity());
             productRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             productRecyclerView.setAdapter(productBasketAdapterRecyclerView);
         }else {
             productBasketAdapterRecyclerView.setProductBasketList(productBasketModels);
             productBasketAdapterRecyclerView.notifyDataSetChanged();
         }
-        productBasketAdapterRecyclerView.setProductBasketAdapterInterface(this::createDeleteAlertDialg);
+        productBasketAdapterRecyclerView.setProductBasketAdapterInterface(new ProductBasketAdapterRecyclerView.ProductBasketAdapterInterface() {
+            @Override
+            public void onDeleteProductClicked(Object model) {
+                createDeleteAlertDialog(model);
+            }
+
+            @Override
+            public void onProductPictureClicked(int productId) {
+                // TODO: 11/18/2019 SHARE ELEMENT
+            }
+        });
     }
 
-    private void createDeleteAlertDialg(ProductBasketModel productBasketModel) {
-        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-        alert.setMessage(getResources().getString(R.string.do_you_want_delete_product_from_basket));
-        alert.setPositiveButton(getResources().getString(R.string.yes), (dialogInterface, i) -> viewModel.deleteProduct(productBasketModel));
-        alert.setNegativeButton(getResources().getString(R.string.no),
-                (dialogInterface, i) -> dialogInterface.cancel()
-        );
-        alert.show();
+    private void createDeleteAlertDialog( Object object) {
+
+            AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+            alert.setMessage(getResources().getString(R.string.do_you_want_delete_product_from_basket));
+            alert.setPositiveButton(getResources().getString(R.string.yes),
+                    (dialogInterface, i) -> viewModel.deleteProduct((ProductBasketModel) object));
+            alert.setNegativeButton(getResources().getString(R.string.no),
+                    (dialogInterface, i) -> dialogInterface.cancel()
+            );
+            alert.show();
+
+
     }
 }

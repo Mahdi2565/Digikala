@@ -12,10 +12,10 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.smarteist.autoimageslider.SliderView;
@@ -30,11 +30,11 @@ import butterknife.ButterKnife;
 import ir.mahdidev.digikala.R;
 import ir.mahdidev.digikala.adapter.CategoryRecyclerViewAdapter;
 import ir.mahdidev.digikala.adapter.MainHorizontalRecyclerViewAdapter;
-import ir.mahdidev.digikala.adapter.SliderCategoryAdapter;
+import ir.mahdidev.digikala.adapter.SliderEspecialProductAdapter;
+import ir.mahdidev.digikala.adapter.SliderProductAdapter;
 import ir.mahdidev.digikala.controller.activity.ProductActivity;
 import ir.mahdidev.digikala.eventbus.OnProductClickedMessage;
 import ir.mahdidev.digikala.networkmodel.category.WebserviceCategoryModel;
-import ir.mahdidev.digikala.networkmodel.product.Category;
 import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
 import ir.mahdidev.digikala.util.Const;
 import ir.mahdidev.digikala.viewmodel.MainFragmentViewModel;
@@ -63,7 +63,7 @@ public class MainFragment extends Fragment {
     @BindView(R.id.title_visiting_product_horizontal)
     TextView titleVisitingProduct;
 
-    private SliderCategoryAdapter sliderAdapter;
+    private SliderEspecialProductAdapter sliderAdapter;
     private MainFragmentViewModel viewModel;
 
     private CategoryRecyclerViewAdapter categoryRecyclerViewAdapter;
@@ -71,6 +71,8 @@ public class MainFragment extends Fragment {
     private MainHorizontalRecyclerViewAdapter newestProductRecyclerViewAdapter;
     private MainHorizontalRecyclerViewAdapter ratingProductRecyclerViewAdapter;
     private MainHorizontalRecyclerViewAdapter visitingProductRecyclerViewAdapter;
+
+    private List<WebserviceCategoryModel> categoryList;
 
     private int visitingPage = 1;
     private int newestPage = 1;
@@ -97,7 +99,6 @@ public class MainFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
     public static MainFragment newInstance() {
         Bundle args = new Bundle();
         MainFragment fragment = new MainFragment();
@@ -117,23 +118,22 @@ public class MainFragment extends Fragment {
         initViewModel();
     }
 
-    private void initSliderView( List<WebserviceCategoryModel> categoryModelList) {
-        sliderAdapter = new SliderCategoryAdapter( categoryModelList, getActivity());
+    private void initSliderView( List<WebserviceProductModel> productList) {
+        sliderAdapter = new SliderEspecialProductAdapter(productList, getActivity());
         sliderView.setSliderAdapter(sliderAdapter);
     }
 
     private void initViewModel() {
         viewModel = ViewModelProviders.of(this).get(MainFragmentViewModel.class);
-
-        viewModel.getCategoryListLiveData().observe(this , webserviceCategoryModels ->{
-            initSliderView(webserviceCategoryModels);
-            initCategoryRecyclerView(webserviceCategoryModels);
-
-        });
+        viewModel.getEspecialProducts().observe(this, this::initSliderView);
+        viewModel.getCategoryListLiveData().observe(this , this::initCategoryRecyclerView);
         viewModel.getAmazingSuggestionListLiveData(amazingSuggestionPage).observe(this , this::initamazingSuggestionRecyclerView);
         viewModel.getMostNewestListLiveData(newestPage).observe(this , this::initNewestProductRecyclerView);
         viewModel.getMostRatingListLiveData(ratingPage).observe(this , this::initRatingProductRecyclerView);
         viewModel.getMostVisitingListLiveData(visitingPage).observe(this , this::initVisitingRecyclerView);
+        if (categoryList ==null || categoryList.isEmpty()){
+            viewModel.loadCategory();
+        }
 
     }
 
@@ -260,6 +260,7 @@ public class MainFragment extends Fragment {
     }
 
     private void initCategoryRecyclerView(List<WebserviceCategoryModel> webserviceCategoryModels) {
+        this.categoryList = webserviceCategoryModels;
         if (categoryRecyclerViewAdapter==null){
             categoryRecyclerViewAdapter = new CategoryRecyclerViewAdapter(webserviceCategoryModels , getActivity() , Const.FROM_MAIN_FRAGMENT);
             categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, true));

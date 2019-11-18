@@ -10,6 +10,10 @@
             android:id="@+id/category_menu"
             android:icon="@drawable/ic_list_black_24dp"
             android:title="@string/category_list" />
+        <item
+            android:icon="@drawable/ic_favorite_black_menu_24dp"
+            android:id="@+id/favorite_product_menu"
+            android:title="@string/favorite_list_txt"/>
     </group>
 
     <group

@@ -31,8 +31,11 @@
     <string name="final_price">قیمت نهایی</string>
     <string name="delete">حذف</string>
     <string name="do_you_want_delete_product_from_basket">آیا مایل به حذف این محصول از سبد خرید هستید؟</string>
+    <string name="do_you_want_delete_product_from_favorite">آیا مایل به حذف این محصول از لیست مورد علاقه هستید؟</string>
     <string name="yes">بله</string>
     <string name="no">خیر</string>
     <string name="empty_basket">سبد خرید شما خالی است!</string>
     <string name="share_via">اشتراک گذاری با</string>
+    <string name="favorite_list_txt">لیست محصولات مورد علاقه</string>
+    <string name="no_favorite_product">شما محصول مورد علاقه‌ای ندارید!</string>
 </resources>

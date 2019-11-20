@@ -1,29 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    android:background="@color/productBackGroundColor"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".controller.fragment.CommentsFragment">
-    <TextView
-        android:visibility="gone"
-        android:id="@+id/empty_comment"
-        android:textStyle="bold"
-        android:textColor="@color/relateProductTitle"
-        android:textSize="20sp"
-        android:layout_centerInParent="true"
-        android:text="@string/no_comment"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <ProgressBar
-        android:visibility="visible"
-        android:id="@+id/progress_bar"
-        android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    tools:context=".controller.fragment.CategoryListFragment">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -57,7 +38,7 @@
                 android:textColor="@color/white"
                 android:gravity="center"
                 android:layout_centerVertical="true"
-                android:text="@string/comment_users"
+                android:text="@string/product_category"
                 android:layout_toStartOf="@+id/back_toolbar"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
@@ -65,10 +46,20 @@
         </RelativeLayout>
 
     </androidx.appcompat.widget.Toolbar>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/comments_recyclerView"
+
+    <com.google.android.material.tabs.TabLayout
+        app:tabIndicatorColor="@color/white"
+        app:tabTextColor="@color/white"
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/toolbar"
+        android:layout_marginTop="-4dp"
+        android:background="@color/colorPrimary" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_below="@id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
 </RelativeLayout>

@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import ir.mahdidev.digikala.database.ProductBasketModel;
 import ir.mahdidev.digikala.database.ProductFavoriteModel;
 import ir.mahdidev.digikala.database.RoomConfig;
 import ir.mahdidev.digikala.networkmodel.category.WebserviceCategoryModel;
+import ir.mahdidev.digikala.networkmodel.comment.WebServiceCommentModel;
 import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
 import ir.mahdidev.digikala.networkutil.RetrofitApi;
 import ir.mahdidev.digikala.networkutil.RetrofitConfig;
@@ -35,6 +37,7 @@ public class Repository {
     private MutableLiveData<List<WebserviceCategoryModel>> productCategoriesMutableLiveData;
     private MutableLiveData<List<WebserviceProductModel>> relatedProductMutableLiveData;
     private MutableLiveData<List<WebserviceProductModel>> especialProductsMutabaleLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<WebServiceCommentModel>> commentProductsMutableLiveData = new MutableLiveData<>();
 
     public static Repository getInstance() {
         if (instance == null) {
@@ -95,7 +98,8 @@ public class Repository {
             @Override
             public void onResponse(Call<List<WebserviceCategoryModel>> call, Response<List<WebserviceCategoryModel>> response) {
                 if (response.isSuccessful()){
-                    categoryListLiveData.setValue(response.body());
+                    List<WebserviceCategoryModel> categoryList = new ArrayList<>(response.body());
+                    categoryListLiveData.setValue(categoryList);
                 }
             }
 
@@ -274,4 +278,23 @@ public class Repository {
                 });
         return especialProductsMutabaleLiveData;
     }
+
+    public MutableLiveData<List<WebServiceCommentModel>> getCommentsProduct(int productId){
+        RetrofitConfig.getRetrofit().create(RetrofitApi.class).getProductComment(productId)
+                .enqueue(new Callback<List<WebServiceCommentModel>>() {
+                    @Override
+                    public void onResponse(Call<List<WebServiceCommentModel>> call, Response<List<WebServiceCommentModel>> response) {
+                        if (response.isSuccessful()){
+                            commentProductsMutableLiveData.setValue(response.body());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<WebServiceCommentModel>> call, Throwable t) {
+
+                    }
+                });
+        return commentProductsMutableLiveData;
+    }
+
 }

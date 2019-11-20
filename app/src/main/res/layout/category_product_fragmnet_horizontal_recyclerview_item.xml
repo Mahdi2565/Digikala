@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
+    android:id="@+id/category_cardView"
     android:layout_gravity="end"
     app:cardBackgroundColor="@color/white"
     android:clickable="true"

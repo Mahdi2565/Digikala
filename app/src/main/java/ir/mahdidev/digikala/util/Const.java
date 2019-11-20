@@ -1,23 +1,14 @@
 package ir.mahdidev.digikala.util;
 
 public class Const {
-    public static class IntentKey{
-        public static final String PRODUCT_ID_PRODUCT_ACTIVITY = "product_id_product_activity" ;
-    }
     public static class BundleKey{
-        public static final String PRODUCT_ID_PRODUCT_FRAGMENT = "product_id_product_fragment";
+        public static final String SUB_CATEGORY_ID = "sub_category_id";
+        public static final String PRODUCT_ID_COMMENT = "product_id_comment";
     }
     public static class OrderTag{
         public static final String MOST_VISITING_PRODUCT = "popularity";
         public static final String MOST_RATING_PRODUCT = "rating";
         public static final String MOST_NEWEST_PRODUCT = "date";
-    }
-    public static class KeyList{
-        public static final String AMAZING_SUGGESTION = "amazingSuggestion";
-        public static final String MOST_VISITING_LIST = "mostVisitedProductList";
-        public static final String MOST_RATING_LIST = "mostRatingProductList";
-        public static final String MOST_NEWEST_LIST = "mostNewestProductList";
-        public static final String CATEGORY_LIST = "categoryList";
     }
     public static class RetrofitConst{
         public static final String BASE_URL = "https://woocommerce.maktabsharif.ir/wp-json/wc/v3/";

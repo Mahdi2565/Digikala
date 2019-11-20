@@ -7,10 +7,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import ir.mahdidev.digikala.R;
 import ir.mahdidev.digikala.networkmodel.category.WebserviceCategoryModel;
 import ir.mahdidev.digikala.util.Const;
@@ -27,11 +30,7 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
         this.categoryList = categoryList;
         this.context = context;
         this.adapterLocation = adapterLocation;
-        for (int i = 0 ; i<this.categoryList.size() ; i++){
-            if (this.categoryList.get(i).getDescription().isEmpty()){
-                this.categoryList.remove(i);
-            }
-        }
+        filterCategory();
     }
 
     public void setCategoryList(List<WebserviceCategoryModel> categoryList) {
@@ -59,6 +58,9 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.titleCategory.setText(categoryList.get(position).getName());
+        holder.parentCardView.setOnClickListener(view ->
+                categoryRecyclerViewAdapterInterface
+                        .onCategoryClicked(categoryList.get(position).getId()));
     }
 
     @Override
@@ -68,10 +70,30 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView titleCategory;
+        @BindView(R.id.title_category_horizontal_recyclerView)
+        TextView titleCategory;
+        @BindView(R.id.category_cardView)
+        CardView parentCardView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            titleCategory = itemView.findViewById(R.id.title_category_horizontal_recyclerView);
+            ButterKnife.bind(this , itemView);
+        }
+    }
+    public interface CategoryRecyclerViewAdapterInterface{
+        void onCategoryClicked(int position);
+    }
+    public CategoryRecyclerViewAdapterInterface categoryRecyclerViewAdapterInterface;
+    public void setCategoryRecyclerViewAdapterInterface(
+            CategoryRecyclerViewAdapterInterface categoryRecyclerViewAdapterInterface){
+        this.categoryRecyclerViewAdapterInterface = categoryRecyclerViewAdapterInterface;
+    }
+    private void filterCategory() {
+        for (int i = 0; i < this.categoryList.size(); i++) {
+            if (this.categoryList.get(i).getDescription().isEmpty()
+                    || this.categoryList.get(i)
+                    .getParent() != 0) {
+                this.categoryList.remove(i);
+            }
         }
     }
 }

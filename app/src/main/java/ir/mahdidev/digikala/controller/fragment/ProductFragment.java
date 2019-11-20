@@ -35,6 +35,7 @@ import ir.mahdidev.digikala.R;
 import ir.mahdidev.digikala.adapter.CategoryRecyclerViewAdapter;
 import ir.mahdidev.digikala.adapter.MainHorizontalRecyclerViewAdapter;
 import ir.mahdidev.digikala.adapter.SliderProductAdapter;
+import ir.mahdidev.digikala.controller.activity.CategoryListActivity;
 import ir.mahdidev.digikala.controller.activity.ProductBasketActivity;
 import ir.mahdidev.digikala.database.ProductBasketModel;
 import ir.mahdidev.digikala.database.ProductFavoriteModel;
@@ -124,17 +125,18 @@ public class ProductFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this , view);
+        parentFragmentProduct.setVisibility(View.GONE);
         navController = Navigation.findNavController(view);
-
         initViewModel();
         basketImgFunction();
-        userCommentsFunction();
 
     }
 
-    private void userCommentsFunction( ) {
+    private void userCommentsFunction(WebserviceProductModel webserviceProductModel) {
         userComments.setOnClickListener(view -> {
-            navController.navigate(R.id.action_productFragment_to_commentsFragment);
+            Bundle bundle = new Bundle();
+            bundle.putInt(Const.BundleKey.PRODUCT_ID_COMMENT , webserviceProductModel.getId());
+            navController.navigate(R.id.action_productFragment_to_commentsFragment , bundle);
         });
     }
 
@@ -183,6 +185,7 @@ public class ProductFragment extends Fragment {
             addToBasketFunction(webserviceProductModel);
             shareProductFunction(webserviceProductModel);
             favoriteProductFunction(webserviceProductModel);
+            userCommentsFunction(webserviceProductModel);
 
         });
         viewModel.getProductCount().observe(this , integer -> {
@@ -242,6 +245,9 @@ public class ProductFragment extends Fragment {
                 categoryRecyclerViewAdapter.setCategoryList(categoryModelList);
                 categoryRecyclerViewAdapter.notifyDataSetChanged();
             }
+            categoryRecyclerViewAdapter.setCategoryRecyclerViewAdapterInterface(position -> {
+                startActivity(CategoryListActivity.newIntent(getActivity()));
+            });
         });
     }
 

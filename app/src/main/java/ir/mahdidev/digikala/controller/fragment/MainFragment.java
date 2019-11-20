@@ -32,6 +32,8 @@ import ir.mahdidev.digikala.adapter.CategoryRecyclerViewAdapter;
 import ir.mahdidev.digikala.adapter.MainHorizontalRecyclerViewAdapter;
 import ir.mahdidev.digikala.adapter.SliderEspecialProductAdapter;
 import ir.mahdidev.digikala.adapter.SliderProductAdapter;
+import ir.mahdidev.digikala.controller.activity.CategoryListActivity;
+import ir.mahdidev.digikala.controller.activity.MainActivity;
 import ir.mahdidev.digikala.controller.activity.ProductActivity;
 import ir.mahdidev.digikala.eventbus.OnProductClickedMessage;
 import ir.mahdidev.digikala.networkmodel.category.WebserviceCategoryModel;
@@ -121,6 +123,7 @@ public class MainFragment extends Fragment {
     private void initSliderView( List<WebserviceProductModel> productList) {
         sliderAdapter = new SliderEspecialProductAdapter(productList, getActivity());
         sliderView.setSliderAdapter(sliderAdapter);
+
     }
 
     private void initViewModel() {
@@ -266,6 +269,9 @@ public class MainFragment extends Fragment {
             categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, true));
             categoryRecyclerView.setAdapter(categoryRecyclerViewAdapter);
         }
+        categoryRecyclerViewAdapter.setCategoryRecyclerViewAdapterInterface(position -> {
+            startActivity(CategoryListActivity.newIntent(getActivity()));
+        });
     }
 
 

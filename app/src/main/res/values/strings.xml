@@ -38,4 +38,7 @@
     <string name="share_via">اشتراک گذاری با</string>
     <string name="favorite_list_txt">لیست محصولات مورد علاقه</string>
     <string name="no_favorite_product">شما محصول مورد علاقه‌ای ندارید!</string>
+    <string name="product_category">دسته بندی محصولات</string>
+    <string name="comment_users">نظرات کاربران</string>
+    <string name="no_comment">هیچ نظری برای این محصول ثبت نشده است!</string>
 </resources>

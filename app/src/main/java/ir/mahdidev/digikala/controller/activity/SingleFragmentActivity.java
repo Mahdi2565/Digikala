@@ -54,12 +54,11 @@ public abstract class SingleFragmentActivity extends AppCompatActivity
         MyApplication.getInstance().setConnectivityListener(this);
     }
 
-
-
     @Override
-    protected void onDestroy() {
+    protected void onStop() {
         if (connectivityReceiver!=null)
-        unregisterReceiver(connectivityReceiver);
-        super.onDestroy();
+            unregisterReceiver(connectivityReceiver);
+        super.onStop();
     }
+
 }

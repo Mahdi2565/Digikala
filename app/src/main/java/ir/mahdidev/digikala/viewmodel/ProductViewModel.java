@@ -13,6 +13,7 @@ import ir.mahdidev.digikala.database.ProductBasketModel;
 import ir.mahdidev.digikala.database.ProductFavoriteModel;
 import ir.mahdidev.digikala.networkmodel.Repository;
 import ir.mahdidev.digikala.networkmodel.category.WebserviceCategoryModel;
+import ir.mahdidev.digikala.networkmodel.comment.WebServiceCommentModel;
 import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
 
 public class ProductViewModel extends AndroidViewModel {
@@ -54,5 +55,8 @@ public class ProductViewModel extends AndroidViewModel {
     }
     public ProductFavoriteModel getSingleProductFavorite(int productId){
         return repository.getSingleProductFavorite(productId);
+    }
+    public LiveData<List<WebServiceCommentModel>> getCommentsProduct(int productId){
+        return repository.getCommentsProduct(productId);
     }
 }

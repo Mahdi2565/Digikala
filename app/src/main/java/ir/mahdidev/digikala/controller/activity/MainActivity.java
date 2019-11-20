@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -21,10 +23,13 @@ import com.google.android.material.navigation.NavigationView;
 import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import ir.mahdidev.digikala.R;
 import ir.mahdidev.digikala.controller.fragment.MainFragment;
+import ir.mahdidev.digikala.networkutil.ConnectivityReceiver;
 import ir.mahdidev.digikala.util.Const;
+import ir.mahdidev.digikala.util.MyApplication;
 import ir.mahdidev.digikala.viewmodel.MainFragmentViewModel;
 
-public class MainActivity extends SingleFragmentActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends SingleFragmentActivity implements NavigationView.OnNavigationItemSelectedListener{
+
 
     private Toolbar toolbar;
     private NavigationView navigationView;
@@ -62,7 +67,6 @@ public class MainActivity extends SingleFragmentActivity implements NavigationVi
         initViewModel();
         initToolbar();
         initNavigation();
-
     }
 
     private void initNavigation() {
@@ -119,6 +123,10 @@ public class MainActivity extends SingleFragmentActivity implements NavigationVi
             switch (menuItem.getItemId()){
                 case R.id.favorite_product_menu :{
                     startActivity(FavoriteProductsActivity.newIntent(MainActivity.this));
+                    break;
+                }
+                case R.id.basket_menu : {
+                    startActivity(ProductBasketActivity.newIntent(MainActivity.this));
                     break;
                 }
             }

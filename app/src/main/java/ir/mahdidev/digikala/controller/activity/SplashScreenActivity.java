@@ -10,7 +10,7 @@ import ir.mahdidev.digikala.controller.fragment.SplashScreenFragment;
 import ir.mahdidev.digikala.networkutil.ConnectivityReceiver;
 import ir.mahdidev.digikala.util.Const;
 
-public class SplashScreenActivity extends SingleFragmentActivity implements ConnectivityReceiver.ConnectivityReceiverListener {
+public class SplashScreenActivity extends SingleFragmentActivity {
 
     @Override
     public Fragment createFragment() {

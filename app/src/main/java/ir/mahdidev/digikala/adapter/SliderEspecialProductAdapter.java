@@ -9,9 +9,12 @@ import android.widget.ImageView;
 import com.smarteist.autoimageslider.SliderViewAdapter;
 import com.squareup.picasso.Picasso;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
 import ir.mahdidev.digikala.R;
+import ir.mahdidev.digikala.eventbus.OnProductClickedMessage;
 import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
 
 public class SliderEspecialProductAdapter  extends SliderViewAdapter<SliderEspecialProductAdapter.SliderViewHolder> {
@@ -34,6 +37,9 @@ public class SliderEspecialProductAdapter  extends SliderViewAdapter<SliderEspec
     public void onBindViewHolder(SliderViewHolder viewHolder, int position) {
         Picasso.get().load(productList.get(position).getImages().get(0).getSrc())
                 .placeholder(R.drawable.digikala_place_holder).into(viewHolder.imageViewBackground);
+        viewHolder.imageViewBackground.setOnClickListener(view -> {
+            EventBus.getDefault().post(new OnProductClickedMessage(productList.get(position).getId()));
+        });
     }
 
     @Override

@@ -16,7 +16,6 @@ public class CategoryListViewpagerAdapter extends FragmentPagerAdapter {
     public CategoryListViewpagerAdapter(List<WebserviceCategoryModel> categoryList , @NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
         this.categoryList = categoryList;
-        filterCategory();
     }
     @NonNull
     @Override
@@ -33,14 +32,5 @@ public class CategoryListViewpagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         return categoryList.get(position).getName();
-    }
-    private void filterCategory() {
-        for (int i = 0; i < this.categoryList.size(); i++) {
-            if (this.categoryList.get(i).getDescription().isEmpty()
-                    || this.categoryList.get(i)
-                    .getParent() != 0) {
-                this.categoryList.remove(i);
-            }
-        }
     }
 }

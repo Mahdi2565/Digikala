@@ -69,17 +69,19 @@ public class SubCategoryListFragment extends Fragment {
 
     private void initViewModel() {
         viewModel = ViewModelProviders.of(this).get(CategoryListViewModel.class);
-        viewModel.getAllCategory().observe(this, categoryModelList -> {
-
-            List<WebserviceCategoryModel> categoryList = new ArrayList<>();
-            for (int i = 0; i < categoryModelList.size(); i++) {
-                Log.e("TAG4" , categoryModelList.get(i).getName());
-                if (categoryModelList.get(i).getParent() == categoryId) {
-                    categoryList.add(categoryModelList.get(i));
-                }
+            List<WebserviceCategoryModel> subCategoryList = new ArrayList<>();
+            if (viewModel.getAllCategory().getValue() !=null){
+                getSubCategory(viewModel.getAllCategory().getValue(), subCategoryList);
+                initRecyclerView(subCategoryList);
             }
-            initRecyclerView(categoryList);
-        });
+    }
+
+    private void getSubCategory(List<WebserviceCategoryModel> categoryList, List<WebserviceCategoryModel> subCategoryList) {
+        for (int i = 0; i < categoryList.size(); i++) {
+            if (categoryList.get(i).getParent() == categoryId) {
+                subCategoryList.add(categoryList.get(i));
+            }
+        }
     }
 
     private void initRecyclerView(List<WebserviceCategoryModel> categoryModelList) {

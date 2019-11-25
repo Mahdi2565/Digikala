@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
+import ir.mahdidev.digikala.eventbus.ListProductData;
 import ir.mahdidev.digikala.networkmodel.Repository;
 import ir.mahdidev.digikala.networkmodel.category.WebserviceCategoryModel;
 import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
@@ -50,5 +51,7 @@ public class MainFragmentViewModel extends AndroidViewModel {
     public LiveData<List<WebserviceProductModel>> getEspecialProducts(){
         return repository.getEspecialProduct();
     }
-
+    public void setProductsListData(ListProductData listData){
+        repository.setListProductData(listData);
+    }
 }

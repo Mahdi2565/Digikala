@@ -7,12 +7,12 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import ir.mahdidev.digikala.database.ProductBasketModel;
 import ir.mahdidev.digikala.database.ProductFavoriteModel;
 import ir.mahdidev.digikala.database.RoomConfig;
+import ir.mahdidev.digikala.eventbus.ListProductData;
 import ir.mahdidev.digikala.networkmodel.category.WebserviceCategoryModel;
 import ir.mahdidev.digikala.networkmodel.comment.WebServiceCommentModel;
 import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
@@ -25,7 +25,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Repository {
-    public static Repository instance;
+    private static Repository instance;
     private RoomConfig roomConfig;
     private MutableLiveData<List<WebserviceCategoryModel>> categoryListLiveData = new MutableLiveData<>();
     private MutableLiveData<List<WebserviceProductModel>> amazingSuggestionProductListLiveData = new MutableLiveData<>();
@@ -38,6 +38,8 @@ public class Repository {
     private MutableLiveData<List<WebserviceProductModel>> relatedProductMutableLiveData;
     private MutableLiveData<List<WebserviceProductModel>> especialProductsMutabaleLiveData = new MutableLiveData<>();
     private MutableLiveData<List<WebServiceCommentModel>> commentProductsMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<WebserviceProductModel>> sortProductsListMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<ListProductData> listProductDataMutableLiveData = new MutableLiveData<>();
 
     public static Repository getInstance() {
         if (instance == null) {
@@ -296,5 +298,47 @@ public class Repository {
                 });
         return commentProductsMutableLiveData;
     }
+    public MutableLiveData<List<WebserviceProductModel>> getSortedProductList(int categoryId , String orderBy
+            , String order , String search , int page){
+        if (categoryId==0){
+            RetrofitConfig.getRetrofit().create(RetrofitApi.class).getsortedProductsList(order ,
+                    orderBy , page , search).enqueue(new Callback<List<WebserviceProductModel>>() {
+                @Override
+                public void onResponse(Call<List<WebserviceProductModel>> call, Response<List<WebserviceProductModel>> response) {
+                    if (response.isSuccessful()){
+                        sortProductsListMutableLiveData.setValue(response.body());
+                    }
+                }
 
+                @Override
+                public void onFailure(Call<List<WebserviceProductModel>> call, Throwable t) {
+
+                }
+            });
+        }else {
+            RetrofitConfig.getRetrofit().create(RetrofitApi.class).getsortedProductsListWithCategory(categoryId ,order ,
+                    orderBy , page , search).enqueue(new Callback<List<WebserviceProductModel>>() {
+                @Override
+                public void onResponse(Call<List<WebserviceProductModel>> call, Response<List<WebserviceProductModel>> response) {
+                    if (response.isSuccessful()){
+                        sortProductsListMutableLiveData.setValue(response.body());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<WebserviceProductModel>> call, Throwable t) {
+
+                }
+            });
+        }
+        return sortProductsListMutableLiveData;
+    }
+    public MutableLiveData<ListProductData> setListProductData(ListProductData listProductData){
+        listProductDataMutableLiveData.setValue(listProductData);
+        return listProductDataMutableLiveData;
+    }
+
+    public MutableLiveData<ListProductData> getListProductDataMutableLiveData() {
+        return listProductDataMutableLiveData;
+    }
 }

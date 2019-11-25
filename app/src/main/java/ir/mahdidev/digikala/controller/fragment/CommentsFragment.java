@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -46,6 +47,8 @@ public class CommentsFragment extends Fragment {
     ProgressBar progressBar;
     @BindView(R.id.empty_comment)
     TextView emptyComment;
+    @BindView(R.id.parent_relative)
+    RelativeLayout parentRelative ;
 
     public CommentsFragment() {
     }
@@ -79,11 +82,14 @@ public class CommentsFragment extends Fragment {
 
     private void initViewModel() {
         viewModel = ViewModelProviders.of(this).get(ProductViewModel.class);
+        parentRelative.setVisibility(View.GONE);
         viewModel.getCommentsProduct(productId).observe(this, webServiceCommentModels -> {
             if (webServiceCommentModels.isEmpty()){
                 emptyComment.setVisibility(View.VISIBLE);
+                parentRelative.setVisibility(View.GONE);
             }else {
                 emptyComment.setVisibility(View.GONE);
+                parentRelative.setVisibility(View.VISIBLE);
             }
             progressBar.setVisibility(View.GONE);
           initRecyclerView(webServiceCommentModels);

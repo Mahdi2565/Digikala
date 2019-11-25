@@ -42,7 +42,7 @@
             android:layout_below="@id/title_product_horizontal_recyclerView"
             android:id="@+id/seperator"
             android:src="@color/strokeCardView"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="fitXY" />
 

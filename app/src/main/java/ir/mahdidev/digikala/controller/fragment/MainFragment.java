@@ -2,7 +2,6 @@ package ir.mahdidev.digikala.controller.fragment;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,7 +11,6 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +21,7 @@ import com.smarteist.autoimageslider.SliderView;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -31,10 +30,10 @@ import ir.mahdidev.digikala.R;
 import ir.mahdidev.digikala.adapter.CategoryRecyclerViewAdapter;
 import ir.mahdidev.digikala.adapter.MainHorizontalRecyclerViewAdapter;
 import ir.mahdidev.digikala.adapter.SliderEspecialProductAdapter;
-import ir.mahdidev.digikala.adapter.SliderProductAdapter;
 import ir.mahdidev.digikala.controller.activity.CategoryListActivity;
-import ir.mahdidev.digikala.controller.activity.MainActivity;
 import ir.mahdidev.digikala.controller.activity.ProductActivity;
+import ir.mahdidev.digikala.controller.activity.ProductsListActivity;
+import ir.mahdidev.digikala.eventbus.ListProductData;
 import ir.mahdidev.digikala.eventbus.OnProductClickedMessage;
 import ir.mahdidev.digikala.networkmodel.category.WebserviceCategoryModel;
 import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
@@ -64,6 +63,12 @@ public class MainFragment extends Fragment {
     TextView titleRatingProduct;
     @BindView(R.id.title_visiting_product_horizontal)
     TextView titleVisitingProduct;
+    @BindView(R.id.newest_show_more)
+    TextView newestShowMore;
+    @BindView(R.id.rating_show_more)
+    TextView ratingShowMore;
+    @BindView(R.id.visiting_show_more)
+    TextView visitingShowMore;
 
     private SliderEspecialProductAdapter sliderAdapter;
     private MainFragmentViewModel viewModel;
@@ -142,6 +147,11 @@ public class MainFragment extends Fragment {
 
     private void initVisitingRecyclerView(List<WebserviceProductModel> webserviceProductModels) {
         titleVisitingProduct.setText(getResources().getString(R.string.most_visiting));
+        visitingShowMore.setOnClickListener(view -> {
+            viewModel.setProductsListData(new ListProductData("پربازدیدترین محصولات" ,
+                    Const.OrderTag.MOST_VISITING_PRODUCT , "desc" , ""));
+            startActivity(ProductsListActivity.newIntent(getActivity()));
+        });
         if (visitingProductRecyclerViewAdapter == null){
             visitingProductRecyclerViewAdapter = new MainHorizontalRecyclerViewAdapter(webserviceProductModels , getActivity());
             visiting_productRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, true));
@@ -174,6 +184,11 @@ public class MainFragment extends Fragment {
 
     private void initRatingProductRecyclerView(List<WebserviceProductModel> webserviceProductModels) {
         titleRatingProduct.setText(getResources().getString(R.string.most_rating));
+        ratingShowMore.setOnClickListener(view -> {
+            viewModel.setProductsListData(new ListProductData("پرامتیازترین محصولات" ,
+                    Const.OrderTag.MOST_RATING_PRODUCT , "desc" , ""));
+            startActivity(ProductsListActivity.newIntent(getActivity()));
+        });
         if (ratingProductRecyclerViewAdapter == null){
             ratingProductRecyclerViewAdapter = new MainHorizontalRecyclerViewAdapter(webserviceProductModels , getActivity());
             ratingProductRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, true));
@@ -204,6 +219,11 @@ public class MainFragment extends Fragment {
 
     private void initNewestProductRecyclerView(List<WebserviceProductModel> webserviceProductModels) {
             titleNewestproduct.setText(getResources().getString(R.string.most_newest));
+        newestShowMore.setOnClickListener(view -> {
+            viewModel.setProductsListData(new ListProductData("جدیدترین محصولات" ,
+                    Const.OrderTag.MOST_NEWEST_PRODUCT , "desc" , ""));
+            startActivity(ProductsListActivity.newIntent(getActivity()));
+        });
         if (newestProductRecyclerViewAdapter == null){
             newestProductRecyclerViewAdapter = new MainHorizontalRecyclerViewAdapter(webserviceProductModels , getActivity());
             newestProductRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, true));
@@ -264,8 +284,10 @@ public class MainFragment extends Fragment {
 
     private void initCategoryRecyclerView(List<WebserviceCategoryModel> webserviceCategoryModels) {
         this.categoryList = webserviceCategoryModels;
+        List<WebserviceCategoryModel> categoryModelList = new ArrayList<>();
+        filterCategory(webserviceCategoryModels , categoryModelList);
         if (categoryRecyclerViewAdapter==null){
-            categoryRecyclerViewAdapter = new CategoryRecyclerViewAdapter(webserviceCategoryModels , getActivity() , Const.FROM_MAIN_FRAGMENT);
+            categoryRecyclerViewAdapter = new CategoryRecyclerViewAdapter(categoryModelList, getActivity() , Const.FROM_MAIN_FRAGMENT);
             categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, true));
             categoryRecyclerView.setAdapter(categoryRecyclerViewAdapter);
         }
@@ -279,8 +301,13 @@ public class MainFragment extends Fragment {
     public void onProductClicked(OnProductClickedMessage message){
         viewModel.setProductId(message.getProductId());
         viewModel.loadSingleProduct(message.getProductId());
-        Intent intent = ProductActivity.newIntent(getActivity());
-        startActivity(intent);
+        startActivity(ProductActivity.newIntent(getActivity()));
     }
-
+    private void filterCategory(List<WebserviceCategoryModel> categoryModelList, List<WebserviceCategoryModel> categoryList) {
+        for (WebserviceCategoryModel categoryModel : categoryModelList){
+            if (categoryModel.getParent()==0){
+                categoryList.add(categoryModel);
+            }
+        }
+    }
 }

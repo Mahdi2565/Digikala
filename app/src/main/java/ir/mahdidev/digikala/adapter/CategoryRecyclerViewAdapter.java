@@ -1,6 +1,7 @@
 package ir.mahdidev.digikala.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,6 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
 
     private List<WebserviceCategoryModel> categoryList;
     private Context context;
-
     private int adapterLocation ;
 
     public CategoryRecyclerViewAdapter(List<WebserviceCategoryModel> categoryList, Context context ,
@@ -30,7 +30,6 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
         this.categoryList = categoryList;
         this.context = context;
         this.adapterLocation = adapterLocation;
-        filterCategory();
     }
 
     public void setCategoryList(List<WebserviceCategoryModel> categoryList) {
@@ -87,13 +86,5 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
             CategoryRecyclerViewAdapterInterface categoryRecyclerViewAdapterInterface){
         this.categoryRecyclerViewAdapterInterface = categoryRecyclerViewAdapterInterface;
     }
-    private void filterCategory() {
-        for (int i = 0; i < this.categoryList.size(); i++) {
-            if (this.categoryList.get(i).getDescription().isEmpty()
-                    || this.categoryList.get(i)
-                    .getParent() != 0) {
-                this.categoryList.remove(i);
-            }
-        }
-    }
+
 }

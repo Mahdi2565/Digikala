@@ -10,12 +10,14 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -63,10 +65,20 @@ public class CategoryListFragment extends Fragment {
     }
 
     private void initViewPager(List<WebserviceCategoryModel> categoryModelList) {
-     categoryListViewpagerAdapter = new CategoryListViewpagerAdapter(categoryModelList
+     List<WebserviceCategoryModel> categoryList = new ArrayList<>();
+        filterCategory(categoryModelList, categoryList);
+        categoryListViewpagerAdapter = new CategoryListViewpagerAdapter(categoryList
              , getChildFragmentManager() ,FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
      viewPager.setAdapter(categoryListViewpagerAdapter);
      viewPager.setOffscreenPageLimit(3);
      tabLayout.setupWithViewPager(viewPager);
+    }
+
+    private void filterCategory(List<WebserviceCategoryModel> categoryModelList, List<WebserviceCategoryModel> categoryList) {
+        for (WebserviceCategoryModel categoryModel : categoryModelList){
+            if (categoryModel.getParent()==0){
+                categoryList.add(categoryModel);
+            }
+        }
     }
 }

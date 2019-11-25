@@ -30,12 +30,19 @@ public interface RetrofitApi {
     @GET("products/categories")
     Call<List<WebserviceCategoryModel>> getProductCategories(@Query("product") int productId);
 
-    @GET("products/categories")
-    Call<List<WebserviceCategoryModel>> getAllSubCategories(@Query("parent") int categoryId);
-
     @GET("products")
     Call<List<WebserviceProductModel>> getRelatedProduct (@Query("include") String... relatedProductId);
 
     @GET("products/reviews")
     Call<List<WebServiceCommentModel>> getProductComment (@Query("product") int productId);
+    @GET("products")
+    Call<List<WebserviceProductModel>> getsortedProductsListWithCategory
+            (@Query("category") int category
+     , @Query("order") String order , @Query("orderby") String orderBy , @Query("page") int page
+    , @Query("search") String search);
+    @GET("products")
+    Call<List<WebserviceProductModel>> getsortedProductsList
+            (@Query("order") String order ,
+             @Query("orderby") String orderBy , @Query("page") int page
+    , @Query("search") String search);
 }

@@ -93,6 +93,8 @@ public class ProductFragment extends Fragment {
     ImageView favoriteProduct;
     @BindView(R.id.user_comments)
     RelativeLayout userComments;
+    @BindView(R.id.related_product_txt)
+    TextView relatedProductTxt;
 
     private boolean isAmazingSuggestion = false;
     private ProductViewModel viewModel;
@@ -223,6 +225,9 @@ public class ProductFragment extends Fragment {
 
     private void initRelatedProductCategoryRecyclerView(WebserviceProductModel webserviceProductModel) {
         viewModel.getRelatedProducts(webserviceProductModel.getRelatedIds().toString()).observe(this, webserviceProductModels -> {
+            if (webserviceProductModels.isEmpty()){
+                relatedProductTxt.setVisibility(View.GONE);
+            }else relatedProductTxt.setVisibility(View.VISIBLE);
             if (relatedProductsAdapter==null){
                 relatedProductsAdapter = new MainHorizontalRecyclerViewAdapter(webserviceProductModels , getActivity());
                 relatedProductRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity() , RecyclerView.HORIZONTAL , true));

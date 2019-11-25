@@ -1,6 +1,7 @@
 package ir.mahdidev.digikala.util;
 
 import android.app.Application;
+import android.graphics.fonts.FontFamily;
 
 import java.text.NumberFormat;
 import java.util.Locale;

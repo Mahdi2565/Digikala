@@ -41,4 +41,7 @@
     <string name="product_category">دسته بندی محصولات</string>
     <string name="comment_users">نظرات کاربران</string>
     <string name="no_comment">هیچ نظری برای این محصول ثبت نشده است!</string>
+    <string name="filter_txt">فیلتر کردن</string>
+    <string name="example_filter">رنگ، نوع، قیمت و ...</string>
+    <string name="sort_txt">مرتب سازی</string>
 </resources>

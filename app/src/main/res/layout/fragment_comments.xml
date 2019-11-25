@@ -7,6 +7,12 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".controller.fragment.CommentsFragment">
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
     <TextView
         android:visibility="gone"
         android:id="@+id/empty_comment"
@@ -17,12 +23,6 @@
         android:text="@string/no_comment"
         android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <ProgressBar
-        android:visibility="visible"
-        android:id="@+id/progress_bar"
-        android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -65,10 +65,18 @@
         </RelativeLayout>
 
     </androidx.appcompat.widget.Toolbar>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/comments_recyclerView"
+
+    <RelativeLayout
         android:layout_below="@id/toolbar"
+        android:id="@+id/parent_relative"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/comments_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </RelativeLayout>
+
 
 </RelativeLayout>

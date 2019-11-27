@@ -37,7 +37,7 @@ public class MyApplication extends Application {
         ViewPump.init(ViewPump.builder()
                 .addInterceptor(new CalligraphyInterceptor(
                         new CalligraphyConfig.Builder()
-                                .setDefaultFontPath("byekan_font.ttf")
+                                .setDefaultFontPath("iran_sans_light.ttf")
                                 .setFontAttrId(R.attr.fontPath)
                                 .build()))
                 .build());

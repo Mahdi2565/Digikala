@@ -1,9 +1,15 @@
 package ir.mahdidev.digikala.util;
 
 public class Const {
+    public static class IntentKey{
+        public static final String PRODUCT_LIST_DATA_INTENT_KEY = "ir.mahdidev.digikala_product_list_data_intnet_key";
+        public static final String CATEGORY_POSITION_INTENT_KEY = "ir.mahdidev.digikala_category_position_intent_key";
+    }
     public static class BundleKey{
         public static final String SUB_CATEGORY_ID = "sub_category_id";
         public static final String PRODUCT_ID_COMMENT = "product_id_comment";
+        public static final String PRODUCT_LIST_DATA_BUNDLE_KEY = "product_list_data_bundle_key";
+        public static final String CATEGORY_POSITION_BUNDLE_KEY = "category_position_bundle_key";
     }
     public static class OrderTag{
         public static final String MOST_VISITING_PRODUCT = "popularity";

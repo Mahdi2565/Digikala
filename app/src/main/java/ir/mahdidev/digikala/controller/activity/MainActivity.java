@@ -3,6 +3,7 @@ package ir.mahdidev.digikala.controller.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
+import androidx.core.view.MenuItemCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -10,9 +11,11 @@ import androidx.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,6 +26,7 @@ import com.google.android.material.navigation.NavigationView;
 import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import ir.mahdidev.digikala.R;
 import ir.mahdidev.digikala.controller.fragment.MainFragment;
+import ir.mahdidev.digikala.eventbus.ListProductData;
 import ir.mahdidev.digikala.networkutil.ConnectivityReceiver;
 import ir.mahdidev.digikala.util.Const;
 import ir.mahdidev.digikala.util.MyApplication;
@@ -38,6 +42,7 @@ public class MainActivity extends SingleFragmentActivity implements NavigationVi
     private MainFragmentViewModel viewModel;
     private TextView basketBadge;
     private ImageView basketImg;
+    private TextView basketNavigationViewBadge;
 
     @Override
     public Fragment createFragment() {
@@ -69,6 +74,14 @@ public class MainActivity extends SingleFragmentActivity implements NavigationVi
         initNavigation();
     }
 
+    private void initBasketBadge(int basketBadge) {
+        basketNavigationViewBadge=(TextView) (navigationView.getMenu().findItem(R.id.basket_menu).getActionView());
+        basketNavigationViewBadge.setGravity(Gravity.CENTER_VERTICAL);
+        basketNavigationViewBadge.setTextColor(getResources().getColor(R.color.black));
+        basketNavigationViewBadge.setTextSize(16);
+        basketNavigationViewBadge.setText(MyApplication.getInstance().getPersianNumber(basketBadge));
+    }
+
     private void initNavigation() {
         navigationView.setNavigationItemSelectedListener(this);
     }
@@ -79,6 +92,7 @@ public class MainActivity extends SingleFragmentActivity implements NavigationVi
             if (integer>0){
                 basketBadge.setVisibility(View.VISIBLE);
                 basketBadge.setText(String.valueOf(integer));
+                initBasketBadge(integer);
             }else {
                 basketBadge.setVisibility(View.GONE);
             }
@@ -127,6 +141,25 @@ public class MainActivity extends SingleFragmentActivity implements NavigationVi
                 }
                 case R.id.basket_menu : {
                     startActivity(ProductBasketActivity.newIntent(MainActivity.this));
+                    break;
+                }
+                case R.id.category_menu:{
+                    startActivity(CategoryListActivity.newIntent(MainActivity.this , 0));
+                    break;
+                }
+                case R.id.most_newest_menu:{
+                    startActivity(ProductsListActivity.newIntent(MainActivity.this,new ListProductData("جدیدترین محصولات" ,
+                            Const.OrderTag.MOST_NEWEST_PRODUCT , "desc" , "")));
+                    break;
+                }
+                case R.id.most_rating_menu:{
+                    startActivity(ProductsListActivity.newIntent(MainActivity.this,new ListProductData("پرامتیازترین محصولات" ,
+                            Const.OrderTag.MOST_RATING_PRODUCT , "desc" , "")));
+                    break;
+                }
+                case R.id.most_visited_menu:{
+                    startActivity(ProductsListActivity.newIntent(MainActivity.this,new ListProductData("پربازدیدترین محصولات" ,
+                            Const.OrderTag.MOST_VISITING_PRODUCT , "desc" , "")));
                     break;
                 }
             }

@@ -148,9 +148,8 @@ public class MainFragment extends Fragment {
     private void initVisitingRecyclerView(List<WebserviceProductModel> webserviceProductModels) {
         titleVisitingProduct.setText(getResources().getString(R.string.most_visiting));
         visitingShowMore.setOnClickListener(view -> {
-            viewModel.setProductsListData(new ListProductData("پربازدیدترین محصولات" ,
-                    Const.OrderTag.MOST_VISITING_PRODUCT , "desc" , ""));
-            startActivity(ProductsListActivity.newIntent(getActivity()));
+            startActivity(ProductsListActivity.newIntent(getActivity(),new ListProductData("پربازدیدترین محصولات" ,
+                    Const.OrderTag.MOST_VISITING_PRODUCT , "desc" , "")));
         });
         if (visitingProductRecyclerViewAdapter == null){
             visitingProductRecyclerViewAdapter = new MainHorizontalRecyclerViewAdapter(webserviceProductModels , getActivity());
@@ -185,9 +184,8 @@ public class MainFragment extends Fragment {
     private void initRatingProductRecyclerView(List<WebserviceProductModel> webserviceProductModels) {
         titleRatingProduct.setText(getResources().getString(R.string.most_rating));
         ratingShowMore.setOnClickListener(view -> {
-            viewModel.setProductsListData(new ListProductData("پرامتیازترین محصولات" ,
-                    Const.OrderTag.MOST_RATING_PRODUCT , "desc" , ""));
-            startActivity(ProductsListActivity.newIntent(getActivity()));
+            startActivity(ProductsListActivity.newIntent(getActivity(),new ListProductData("پرامتیازترین محصولات" ,
+                    Const.OrderTag.MOST_RATING_PRODUCT , "desc" , "")));
         });
         if (ratingProductRecyclerViewAdapter == null){
             ratingProductRecyclerViewAdapter = new MainHorizontalRecyclerViewAdapter(webserviceProductModels , getActivity());
@@ -220,9 +218,8 @@ public class MainFragment extends Fragment {
     private void initNewestProductRecyclerView(List<WebserviceProductModel> webserviceProductModels) {
             titleNewestproduct.setText(getResources().getString(R.string.most_newest));
         newestShowMore.setOnClickListener(view -> {
-            viewModel.setProductsListData(new ListProductData("جدیدترین محصولات" ,
-                    Const.OrderTag.MOST_NEWEST_PRODUCT , "desc" , ""));
-            startActivity(ProductsListActivity.newIntent(getActivity()));
+            startActivity(ProductsListActivity.newIntent(getActivity(),new ListProductData("جدیدترین محصولات" ,
+                    Const.OrderTag.MOST_NEWEST_PRODUCT , "desc" , "")));
         });
         if (newestProductRecyclerViewAdapter == null){
             newestProductRecyclerViewAdapter = new MainHorizontalRecyclerViewAdapter(webserviceProductModels , getActivity());
@@ -291,8 +288,8 @@ public class MainFragment extends Fragment {
             categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, true));
             categoryRecyclerView.setAdapter(categoryRecyclerViewAdapter);
         }
-        categoryRecyclerViewAdapter.setCategoryRecyclerViewAdapterInterface(position -> {
-            startActivity(CategoryListActivity.newIntent(getActivity()));
+        categoryRecyclerViewAdapter.setCategoryRecyclerViewAdapterInterface((position ,webserviceCategoryModel) -> {
+            startActivity(CategoryListActivity.newIntent(getActivity() ,position));
         });
     }
 

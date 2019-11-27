@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
+import ir.mahdidev.digikala.eventbus.ListProductData;
 import ir.mahdidev.digikala.networkmodel.Repository;
 import ir.mahdidev.digikala.networkmodel.category.WebserviceCategoryModel;
 

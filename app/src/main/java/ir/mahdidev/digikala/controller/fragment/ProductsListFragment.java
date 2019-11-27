@@ -10,9 +10,12 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -29,6 +32,8 @@ import ir.mahdidev.digikala.adapter.ProductsListRecyclerViewAdapter;
 import ir.mahdidev.digikala.controller.activity.ProductBasketActivity;
 import ir.mahdidev.digikala.eventbus.ListProductData;
 import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
+import ir.mahdidev.digikala.util.Const;
+import ir.mahdidev.digikala.util.MyApplication;
 import ir.mahdidev.digikala.viewmodel.ProductsListViewModel;
 
 /**
@@ -46,18 +51,33 @@ public class ProductsListFragment extends Fragment {
     TextView basketBadge;
     @BindView(R.id.products_list_recyclerView)
     RecyclerView productsListRecyclerView;
-
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
+    @BindView(R.id.empty_list)
+    TextView emptyList;
+    @BindView(R.id.basket_img)
+    ImageView basketImg;
     public ProductsListFragment() {
     }
     private ListProductData listProductData;
     private ProductsListViewModel viewModel;
     private ProductsListRecyclerViewAdapter productsListRecyclerViewAdapter;
+    private int productListPage = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_products_list, container, false);
     }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() !=null){
+            listProductData = (ListProductData) getArguments().getSerializable(Const.BundleKey.PRODUCT_LIST_DATA_BUNDLE_KEY);
+        }
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -72,13 +92,12 @@ public class ProductsListFragment extends Fragment {
     }
 
     private void basketBadgeFunction() {
-        basketBadge.setOnClickListener(view ->
+        basketImg.setOnClickListener(view ->
                 startActivity(ProductBasketActivity.newIntent(getActivity())));
     }
 
     private void initViewModel() {
         viewModel = ViewModelProviders.of(this).get(ProductsListViewModel.class);
-        listProductData = viewModel.listProductData();
         viewModel.getProductCount().observe(this, integer -> {
             if (integer>0){
                 basketBadge.setVisibility(View.VISIBLE);
@@ -87,9 +106,10 @@ public class ProductsListFragment extends Fragment {
                 basketBadge.setVisibility(View.GONE);
             }
         });
-        viewModel.getAllSortedProductsList(listProductData.getCategoryId() , listProductData.getOrderBy() ,
-                listProductData.getOrder() , listProductData.getSearch() , 1).observe(this,
+
+        viewModel.getAllSortedProductsList(listProductData , productListPage).observe(this,
                 webserviceProductModels -> {
+                    progressBar.setVisibility(View.GONE);
                     initRecyclerView(webserviceProductModels);
                 });
     }
@@ -99,6 +119,29 @@ public class ProductsListFragment extends Fragment {
             productsListRecyclerViewAdapter = new ProductsListRecyclerViewAdapter(webserviceProductModels , getActivity());
             productsListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             productsListRecyclerView.setAdapter(productsListRecyclerViewAdapter);
+        }else {
+            productsListRecyclerViewAdapter.setProductList(webserviceProductModels);
+            productsListRecyclerViewAdapter.notifyDataSetChanged();
         }
+        if (productsListRecyclerViewAdapter.getProductsList().isEmpty()){
+            emptyList.setVisibility(View.VISIBLE);
+        }
+
+        productsListRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == webserviceProductModels.size() - 1) {
+                    viewModel.getAllSortedProductsList(listProductData,++productListPage);
+                }
+            }
+        });
     }
 }

@@ -1,8 +1,10 @@
 package ir.mahdidev.digikala.eventbus;
 
-public class ListProductData {
+import java.io.Serializable;
+
+public class ListProductData implements Serializable {
     private String toolbarTitle;
-    private int categoryId ;
+    private int categoryId  ;
     private String orderBy;
     private String order;
     private String search;
@@ -13,6 +15,9 @@ public class ListProductData {
         this.orderBy = orderBy;
         this.order = order;
         this.search = search;
+    }
+
+    public ListProductData() {
     }
 
     public ListProductData(String toolbarTitle, String orderBy, String order, String search) {

@@ -26,6 +26,7 @@ import butterknife.OnClick;
 import ir.mahdidev.digikala.R;
 import ir.mahdidev.digikala.adapter.CategoryListViewpagerAdapter;
 import ir.mahdidev.digikala.networkmodel.category.WebserviceCategoryModel;
+import ir.mahdidev.digikala.util.Const;
 import ir.mahdidev.digikala.viewmodel.CategoryListViewModel;
 
 /**
@@ -44,12 +45,21 @@ public class CategoryListFragment extends Fragment {
 
     private CategoryListViewpagerAdapter categoryListViewpagerAdapter;
     private CategoryListViewModel viewModel;
+    private int categoryPosition;
     public CategoryListFragment() {
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_category_list, container, false);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() !=null){
+            categoryPosition = getArguments().getInt(Const.BundleKey.CATEGORY_POSITION_BUNDLE_KEY);
+        }
     }
 
     @Override
@@ -72,6 +82,7 @@ public class CategoryListFragment extends Fragment {
      viewPager.setAdapter(categoryListViewpagerAdapter);
      viewPager.setOffscreenPageLimit(3);
      tabLayout.setupWithViewPager(viewPager);
+             viewPager.setCurrentItem(categoryPosition ,true);
     }
 
     private void filterCategory(List<WebserviceCategoryModel> categoryModelList, List<WebserviceCategoryModel> categoryList) {

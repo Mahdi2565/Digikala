@@ -44,4 +44,5 @@
     <string name="filter_txt">فیلتر کردن</string>
     <string name="example_filter">رنگ، نوع، قیمت و ...</string>
     <string name="sort_txt">مرتب سازی</string>
+    <string name="empty_product_list">لیست محصولات خالی است!</string>
 </resources>

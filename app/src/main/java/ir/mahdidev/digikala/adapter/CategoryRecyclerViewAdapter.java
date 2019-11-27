@@ -57,9 +57,11 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.titleCategory.setText(categoryList.get(position).getName());
-        holder.parentCardView.setOnClickListener(view ->
-                categoryRecyclerViewAdapterInterface
-                        .onCategoryClicked(categoryList.get(position).getId()));
+        holder.parentCardView.setOnClickListener(view ->{
+
+                categoryRecyclerViewAdapterInterface.onCategoryClicked(position, categoryList.get(position));
+
+    });
     }
 
     @Override
@@ -79,7 +81,7 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
         }
     }
     public interface CategoryRecyclerViewAdapterInterface{
-        void onCategoryClicked(int position);
+        void onCategoryClicked(int position , WebserviceCategoryModel webserviceCategoryModel);
     }
     public CategoryRecyclerViewAdapterInterface categoryRecyclerViewAdapterInterface;
     public void setCategoryRecyclerViewAdapterInterface(

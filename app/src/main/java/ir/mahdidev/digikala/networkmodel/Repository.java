@@ -282,6 +282,7 @@ public class Repository {
     }
 
     public MutableLiveData<List<WebServiceCommentModel>> getCommentsProduct(int productId){
+        commentProductsMutableLiveData = new MutableLiveData<>();
         RetrofitConfig.getRetrofit().create(RetrofitApi.class).getProductComment(productId)
                 .enqueue(new Callback<List<WebServiceCommentModel>>() {
                     @Override
@@ -300,6 +301,7 @@ public class Repository {
     }
     public MutableLiveData<List<WebserviceProductModel>> getSortedProductList(int categoryId , String orderBy
             , String order , String search , int page){
+        if (page==1) sortProductsListMutableLiveData = new MutableLiveData<>();
         if (categoryId==0){
             RetrofitConfig.getRetrofit().create(RetrofitApi.class).getsortedProductsList(order ,
                     orderBy , page , search).enqueue(new Callback<List<WebserviceProductModel>>() {
@@ -327,18 +329,9 @@ public class Repository {
 
                 @Override
                 public void onFailure(Call<List<WebserviceProductModel>> call, Throwable t) {
-
                 }
             });
         }
         return sortProductsListMutableLiveData;
-    }
-    public MutableLiveData<ListProductData> setListProductData(ListProductData listProductData){
-        listProductDataMutableLiveData.setValue(listProductData);
-        return listProductDataMutableLiveData;
-    }
-
-    public MutableLiveData<ListProductData> getListProductDataMutableLiveData() {
-        return listProductDataMutableLiveData;
     }
 }

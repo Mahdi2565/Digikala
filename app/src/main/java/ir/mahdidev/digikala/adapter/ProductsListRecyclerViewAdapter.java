@@ -37,6 +37,10 @@ public class ProductsListRecyclerViewAdapter extends RecyclerView.Adapter<Produc
         this.productsList.addAll(productsList);
     }
 
+    public List<WebserviceProductModel> getProductsList() {
+        return productsList;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

@@ -46,6 +46,9 @@ public class SubCategoryListRecyclerViewAdapter extends RecyclerView.Adapter<Sub
         holder.SubCategoryTitle.setText(categoryList.get(position).getName());
         Picasso.get().load(categoryList.get(position).getImage().getSrc()).placeholder
                 (R.drawable.digikala_place_holder).into(holder.subCategoryImage);
+        holder.parentLayout.setOnClickListener(view -> {
+            subCategoryAdapterInterface.onCategoryClicked(categoryList.get(position));
+        });
     }
 
     @Override
@@ -64,5 +67,12 @@ public class SubCategoryListRecyclerViewAdapter extends RecyclerView.Adapter<Sub
             super(itemView);
             ButterKnife.bind(this , itemView);
         }
+    }
+    public interface SubCategoryAdapterInterface{
+        void onCategoryClicked(WebserviceCategoryModel webserviceCategoryModel);
+    }
+    public SubCategoryAdapterInterface subCategoryAdapterInterface;
+    public void setSubCategoryAdapterInterface(SubCategoryAdapterInterface subCategoryAdapterInterface){
+        this.subCategoryAdapterInterface = subCategoryAdapterInterface;
     }
 }

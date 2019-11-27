@@ -51,7 +51,4 @@ public class MainFragmentViewModel extends AndroidViewModel {
     public LiveData<List<WebserviceProductModel>> getEspecialProducts(){
         return repository.getEspecialProduct();
     }
-    public void setProductsListData(ListProductData listData){
-        repository.setListProductData(listData);
-    }
 }

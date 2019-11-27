@@ -23,6 +23,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ir.mahdidev.digikala.R;
 import ir.mahdidev.digikala.adapter.SubCategoryListRecyclerViewAdapter;
+import ir.mahdidev.digikala.controller.activity.ProductsListActivity;
+import ir.mahdidev.digikala.eventbus.ListProductData;
 import ir.mahdidev.digikala.networkmodel.category.WebserviceCategoryModel;
 import ir.mahdidev.digikala.util.Const;
 import ir.mahdidev.digikala.viewmodel.CategoryListViewModel;
@@ -88,11 +90,16 @@ public class SubCategoryListFragment extends Fragment {
         if (subCategoryListRecyclerViewAdapter==null){
             subCategoryListRecyclerViewAdapter = new SubCategoryListRecyclerViewAdapter(categoryModelList
                     , getActivity());
-            subCategoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            subCategoryRecyclerView.setAdapter(subCategoryListRecyclerViewAdapter);
         }else {
             subCategoryListRecyclerViewAdapter.setCategoryList(categoryModelList);
             subCategoryListRecyclerViewAdapter.notifyDataSetChanged();
         }
+        subCategoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        subCategoryRecyclerView.setAdapter(subCategoryListRecyclerViewAdapter);
+        subCategoryListRecyclerViewAdapter.setSubCategoryAdapterInterface(webserviceCategoryModel -> {
+            startActivity(ProductsListActivity.newIntent(getActivity(),new ListProductData(webserviceCategoryModel.getName() ,
+                    webserviceCategoryModel.getId() , Const.OrderTag.MOST_NEWEST_PRODUCT , "desc" ,
+                    "")));
+        });
     }
 }

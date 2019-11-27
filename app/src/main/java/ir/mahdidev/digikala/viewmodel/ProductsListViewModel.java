@@ -21,11 +21,8 @@ public class ProductsListViewModel extends AndroidViewModel {
     public LiveData<Integer> getProductCount(){
         return repository.getProductBasketCountDb();
     }
-    public LiveData<List<WebserviceProductModel>> getAllSortedProductsList (int categoryId , String orderBy
-            , String order , String search , int page){
-        return repository.getSortedProductList(categoryId , orderBy , order , search , page);
-    }
-    public ListProductData listProductData (){
-        return repository.getListProductDataMutableLiveData().getValue();
+    public LiveData<List<WebserviceProductModel>> getAllSortedProductsList (ListProductData listProductData, int page){
+        return repository.getSortedProductList(listProductData.getCategoryId()
+                , listProductData.getOrderBy(), listProductData.getOrder(), listProductData.getSearch() , page);
     }
 }

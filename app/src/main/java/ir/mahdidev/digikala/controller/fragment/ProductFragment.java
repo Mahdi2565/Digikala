@@ -37,8 +37,10 @@ import ir.mahdidev.digikala.adapter.MainHorizontalRecyclerViewAdapter;
 import ir.mahdidev.digikala.adapter.SliderProductAdapter;
 import ir.mahdidev.digikala.controller.activity.CategoryListActivity;
 import ir.mahdidev.digikala.controller.activity.ProductBasketActivity;
+import ir.mahdidev.digikala.controller.activity.ProductsListActivity;
 import ir.mahdidev.digikala.database.ProductBasketModel;
 import ir.mahdidev.digikala.database.ProductFavoriteModel;
+import ir.mahdidev.digikala.eventbus.ListProductData;
 import ir.mahdidev.digikala.networkmodel.Repository;
 import ir.mahdidev.digikala.networkmodel.category.WebserviceCategoryModel;
 import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
@@ -195,7 +197,7 @@ public class ProductFragment extends Fragment {
                 basketBadge.setVisibility(View.VISIBLE);
                 basketBadge.setText(String.valueOf(integer));
             }else {
-                basketBadge.setVisibility(View.GONE);
+                basketBadge.setVisibility(View.INVISIBLE);
             }
         });
     }
@@ -250,8 +252,10 @@ public class ProductFragment extends Fragment {
                 categoryRecyclerViewAdapter.setCategoryList(categoryModelList);
                 categoryRecyclerViewAdapter.notifyDataSetChanged();
             }
-            categoryRecyclerViewAdapter.setCategoryRecyclerViewAdapterInterface(position -> {
-                startActivity(CategoryListActivity.newIntent(getActivity()));
+            categoryRecyclerViewAdapter.setCategoryRecyclerViewAdapterInterface((position, webserviceCategoryModel) -> {
+                startActivity(ProductsListActivity.newIntent(getActivity()
+                        , new ListProductData(webserviceCategoryModel.getName() , webserviceCategoryModel.getId()
+                         ,Const.OrderTag.MOST_NEWEST_PRODUCT , "desc" , "")));
             });
         });
     }

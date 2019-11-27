@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     android:background="@color/productBackGroundColor"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -8,6 +8,23 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".controller.fragment.ProductsListFragment">
+    <ProgressBar
+        android:visibility="visible"
+        android:layout_centerInParent="true"
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/empty_list"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:text="@string/empty_product_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -70,27 +87,30 @@
                     android:layout_height="wrap_content"
                     android:focusable="true" />
 
+
                 <TextView
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="18dp"
                     android:background="@drawable/badge_shape"
-                    android:visibility="gone"
+                    android:visibility="invisible"
                     android:id="@+id/basket_badge"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:layout_gravity="end|top"
                     android:layout_marginEnd="-5dp"
-                    android:layout_marginTop="3dp"
+                    android:layout_marginTop="6dp"
                     android:gravity="center"
                     android:padding="3dp"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/colorPrimary"
                     android:text="0"
+                    android:textStyle="bold"
                     android:textSize="10sp"/>
-
 
             </RelativeLayout>
 
         </androidx.appcompat.widget.Toolbar>
     <androidx.cardview.widget.CardView
+        android:id="@+id/sort_filter_card"
+        android:layout_below="@id/toolbar"
         app:cardElevation="8dp"
         android:background="@color/white"
         android:layout_width="match_parent"
@@ -182,8 +202,9 @@
 
     </androidx.cardview.widget.CardView>
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@id/sort_filter_card"
         android:id="@+id/products_list_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-</LinearLayout>
+</RelativeLayout>

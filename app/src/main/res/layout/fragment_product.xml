@@ -43,17 +43,19 @@
                 android:focusable="true" />
 
             <TextView
-                android:layout_toEndOf="@id/basket_img"
-                android:gravity="center_vertical"
+                android:layout_marginStart="8dp"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/basket_badge"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textSize="16sp"
                 android:id="@+id/title_product_toolbar"
                 android:textColor="@color/white"
                 android:text="@string/app_name"
+                android:textAlignment="textEnd"
                 android:layout_toStartOf="@+id/back_toolbar"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
             <ImageView
                 android:padding="8dp"
                 android:clickable="true"
@@ -67,19 +69,20 @@
                 android:focusable="true" />
 
             <TextView
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="18dp"
                 android:background="@drawable/badge_shape"
-                android:visibility="gone"
+                android:visibility="invisible"
                 android:id="@+id/basket_badge"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
                 android:layout_gravity="end|top"
                 android:layout_marginEnd="-5dp"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="6dp"
                 android:gravity="center"
                 android:padding="3dp"
-                android:textColor="@android:color/white"
+                android:textColor="@color/colorPrimary"
                 android:text="0"
+                android:textStyle="bold"
                 android:textSize="10sp"/>
 
 

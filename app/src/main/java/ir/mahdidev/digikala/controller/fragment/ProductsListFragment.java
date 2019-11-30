@@ -29,7 +29,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ir.mahdidev.digikala.R;
 import ir.mahdidev.digikala.adapter.ProductsListRecyclerViewAdapter;
+import ir.mahdidev.digikala.controller.activity.MainActivity;
 import ir.mahdidev.digikala.controller.activity.ProductBasketActivity;
+import ir.mahdidev.digikala.controller.activity.SearchActivity;
 import ir.mahdidev.digikala.eventbus.ListProductData;
 import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
 import ir.mahdidev.digikala.util.Const;
@@ -57,6 +59,8 @@ public class ProductsListFragment extends Fragment {
     TextView emptyList;
     @BindView(R.id.basket_img)
     ImageView basketImg;
+    @BindView(R.id.search_img)
+    ImageView searchImg;
     public ProductsListFragment() {
     }
     private ListProductData listProductData;
@@ -85,6 +89,12 @@ public class ProductsListFragment extends Fragment {
         initViewModel();
         initToolbar();
         basketBadgeFunction();
+        searchImgFunction();
+    }
+
+    private void searchImgFunction() {
+        searchImg.setOnClickListener(view ->
+                startActivity(SearchActivity.newIntent(getActivity())));
     }
 
     private void initToolbar() {

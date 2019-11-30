@@ -9,5 +9,14 @@
         android:id="@+id/productBasketFragment"
         android:name="ir.mahdidev.digikala.controller.fragment.ProductBasketFragment"
         android:label="fragment_product_basket"
-        tools:layout="@layout/fragment_product_basket" />
+        tools:layout="@layout/fragment_product_basket" >
+        <action
+            android:id="@+id/action_productBasketFragment_to_productFragment2"
+            app:destination="@id/productFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/productFragment2"
+        android:name="ir.mahdidev.digikala.controller.fragment.ProductFragment"
+        android:label="fragment_product"
+        tools:layout="@layout/fragment_product" />
 </navigation>

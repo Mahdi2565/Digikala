@@ -15,7 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +30,7 @@ import ir.mahdidev.digikala.R;
 import ir.mahdidev.digikala.adapter.ProductBasketAdapterRecyclerView;
 import ir.mahdidev.digikala.database.ProductBasketModel;
 import ir.mahdidev.digikala.database.ProductFavoriteModel;
+import ir.mahdidev.digikala.eventbus.OnProductClickedMessage;
 import ir.mahdidev.digikala.viewmodel.ProductFavoriteViewModel;
 
 /**
@@ -90,7 +94,7 @@ public class FavoriteProductFragment extends Fragment {
 
             @Override
             public void onProductPictureClicked(int productId) {
-
+                EventBus.getDefault().post(new OnProductClickedMessage(productId));
             }
         });
     }

@@ -33,7 +33,6 @@
             android:id="@+id/category_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
         <ImageView
             android:layout_below="@+id/category_recyclerView"
             android:src="@drawable/amazing_suggestion_img"
@@ -47,8 +46,6 @@
             android:layout_alignParentEnd="true"
             android:layout_width="150dp"
             android:layout_height="50dp" />
-
-
         <androidx.recyclerview.widget.RecyclerView
             android:layout_below="@+id/amazing_suggestion_img"
             android:id="@+id/amazing_siggestion_recyclerView"

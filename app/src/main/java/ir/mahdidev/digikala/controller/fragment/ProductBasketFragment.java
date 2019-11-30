@@ -10,15 +10,19 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.FragmentNavigator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -28,6 +32,7 @@ import butterknife.OnClick;
 import ir.mahdidev.digikala.R;
 import ir.mahdidev.digikala.adapter.ProductBasketAdapterRecyclerView;
 import ir.mahdidev.digikala.database.ProductBasketModel;
+import ir.mahdidev.digikala.eventbus.OnProductClickedMessage;
 import ir.mahdidev.digikala.util.MyApplication;
 import ir.mahdidev.digikala.viewmodel.ProductBasketViewModel;
 
@@ -106,15 +111,16 @@ public class ProductBasketFragment extends Fragment {
            });
      }
     private void initRecyclerView( List<ProductBasketModel> productBasketModels) {
-        if (productBasketAdapterRecyclerView==null){
+        if (productBasketAdapterRecyclerView == null) {
 
-            productBasketAdapterRecyclerView = new ProductBasketAdapterRecyclerView(productBasketModels , getActivity());
-            productRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            productRecyclerView.setAdapter(productBasketAdapterRecyclerView);
-        }else {
+            productBasketAdapterRecyclerView = new ProductBasketAdapterRecyclerView(productBasketModels, getActivity());
+
+        } else {
             productBasketAdapterRecyclerView.setProductBasketList(productBasketModels);
             productBasketAdapterRecyclerView.notifyDataSetChanged();
         }
+        productRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        productRecyclerView.setAdapter(productBasketAdapterRecyclerView);
         productBasketAdapterRecyclerView.setProductBasketAdapterInterface(new ProductBasketAdapterRecyclerView.ProductBasketAdapterInterface() {
             @Override
             public void onDeleteProductClicked(Object model) {
@@ -123,11 +129,10 @@ public class ProductBasketFragment extends Fragment {
 
             @Override
             public void onProductPictureClicked(int productId) {
-                // TODO: 11/18/2019 SHARE ELEMENT
+                EventBus.getDefault().post(new OnProductClickedMessage(productId));
             }
         });
     }
-
     private void createDeleteAlertDialog( Object object) {
 
             AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());

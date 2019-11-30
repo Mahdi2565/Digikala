@@ -116,7 +116,7 @@
             app:sliderIndicatorPadding="3dp"
             app:sliderIndicatorRadius="1.3dp"
             app:sliderIndicatorSelectedColor="@color/colorPrimary"
-            app:sliderIndicatorUnselectedColor="#FFF" >
+            app:sliderIndicatorUnselectedColor="#FFF">
 
             <ImageView
                 android:visibility="gone"

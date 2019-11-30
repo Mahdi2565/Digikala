@@ -43,6 +43,7 @@ public class MainActivity extends SingleFragmentActivity implements NavigationVi
     private TextView basketBadge;
     private ImageView basketImg;
     private TextView basketNavigationViewBadge;
+    private ImageView searchImg;
 
     @Override
     public Fragment createFragment() {
@@ -72,6 +73,12 @@ public class MainActivity extends SingleFragmentActivity implements NavigationVi
         initViewModel();
         initToolbar();
         initNavigation();
+        searchImgFunction();
+    }
+
+    private void searchImgFunction() {
+        searchImg.setOnClickListener(view ->
+                startActivity(SearchActivity.newIntent(MainActivity.this)));
     }
 
     private void initBasketBadge(int basketBadge) {
@@ -106,6 +113,7 @@ public class MainActivity extends SingleFragmentActivity implements NavigationVi
         navigationToggle = findViewById(R.id.navigation_drawer_toggle);
         basketBadge = findViewById(R.id.basket_badge);
         basketImg   = findViewById(R.id.basket_img);
+        searchImg   = findViewById(R.id.search_img);
     }
 
     private void initToolbar() {

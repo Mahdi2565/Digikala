@@ -2,6 +2,8 @@ package ir.mahdidev.digikala.adapter;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +62,11 @@ public class ProductBasketAdapterRecyclerView<T> extends RecyclerView.Adapter {
                     .placeholder(R.drawable.digikala_place_holder)
                     .into(holder.productImg);
             holder.titleProduct.setText(productBasketModel.getTitleProduct());
-            holder.shortDescriptionProduct.setText(productBasketModel.getShortDescription());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                holder.shortDescriptionProduct.setText(Html.fromHtml(productBasketModel.getShortDescription(), Html.FROM_HTML_MODE_COMPACT));
+            } else {
+                holder.shortDescriptionProduct.setText(Html.fromHtml(productBasketModel.getShortDescription()));
+            }
             holder.productCount.setText(MyApplication.getInstance()
                     .getPersianNumber(productBasketModel.getProductCount()));
             String regularPrice = MyApplication.getInstance()
@@ -96,7 +102,11 @@ public class ProductBasketAdapterRecyclerView<T> extends RecyclerView.Adapter {
                     .placeholder(R.drawable.digikala_place_holder)
                     .into(holder.productImg);
             holder.titleProduct.setText(productFavorite.getTitleProduct());
-            holder.shortDescriptionProduct.setText(productFavorite.getShortDescription());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                holder.shortDescriptionProduct.setText(Html.fromHtml(productFavorite.getShortDescription(), Html.FROM_HTML_MODE_COMPACT));
+            } else {
+                holder.shortDescriptionProduct.setText(Html.fromHtml(productFavorite.getShortDescription()));
+            }
             holder.productCount.setText(MyApplication.getInstance()
                     .getPersianNumber(productFavorite.getProductCount()));
             String regularPrice = MyApplication.getInstance()

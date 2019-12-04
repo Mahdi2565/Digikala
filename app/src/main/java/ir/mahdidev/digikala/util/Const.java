@@ -10,11 +10,13 @@ public class Const {
         public static final String PRODUCT_ID_COMMENT = "product_id_comment";
         public static final String PRODUCT_LIST_DATA_BUNDLE_KEY = "product_list_data_bundle_key";
         public static final String CATEGORY_POSITION_BUNDLE_KEY = "category_position_bundle_key";
+        public static final String PRODUCT_LIST_DATA_TO_SORT_FRAGMENT_BUNDLE_KEY = "product_data_to_sort_fragment";
     }
     public static class OrderTag{
         public static final String MOST_VISITING_PRODUCT = "popularity";
         public static final String MOST_RATING_PRODUCT = "rating";
         public static final String MOST_NEWEST_PRODUCT = "date";
+        public static final String PRICE_PRODUCT = "price";
     }
     public static class RetrofitConst{
         public static final String BASE_URL = "https://woocommerce.maktabsharif.ir/wp-json/wc/v3/";

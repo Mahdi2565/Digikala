@@ -23,7 +23,6 @@ public class RetrofitConfig {
 
             retrofit = new Retrofit.Builder().baseUrl(Const.RetrofitConst.BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
-                    .client(client)
                     .build();
         }
         return retrofit;

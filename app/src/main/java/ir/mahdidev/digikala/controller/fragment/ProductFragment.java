@@ -2,6 +2,7 @@ package ir.mahdidev.digikala.controller.fragment;
 
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -266,8 +268,13 @@ public class ProductFragment extends Fragment {
             shortDescriptionProduct.setVisibility(View.INVISIBLE);
         }
         titleProduct.setText(webserviceProductModel.getName());
-        shortDescriptionProduct.setText(webserviceProductModel.getShortDescription());
-        descriptionProduct.setText(webserviceProductModel.getDescription());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            shortDescriptionProduct.setText(Html.fromHtml(webserviceProductModel.getShortDescription(), Html.FROM_HTML_MODE_COMPACT));
+            descriptionProduct.setText(Html.fromHtml(webserviceProductModel.getDescription(), Html.FROM_HTML_MODE_COMPACT));
+        } else {
+            shortDescriptionProduct.setText(Html.fromHtml(webserviceProductModel.getShortDescription()));
+            descriptionProduct.setText(Html.fromHtml(webserviceProductModel.getDescription()));
+        }
         if (isAmazingSuggestion){
             regularPrice.setVisibility(View.VISIBLE);
             String regularPriceTxt = MyApplication.getInstance()

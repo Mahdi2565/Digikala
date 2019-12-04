@@ -27,6 +27,26 @@ public class ListProductData implements Serializable {
         this.search = search;
     }
 
+    public void setToolbarTitle(String toolbarTitle) {
+        this.toolbarTitle = toolbarTitle;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public void setOrderBy(String orderBy) {
+        this.orderBy = orderBy;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
+
     public String getToolbarTitle() {
         return toolbarTitle;
     }

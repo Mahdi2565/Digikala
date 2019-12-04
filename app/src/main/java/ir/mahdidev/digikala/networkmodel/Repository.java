@@ -309,6 +309,8 @@ public class Repository {
                 public void onResponse(Call<List<WebserviceProductModel>> call, Response<List<WebserviceProductModel>> response) {
                     if (response.isSuccessful()){
                         sortProductsListMutableLiveData.setValue(response.body());
+                        Log.e("TAG4" , response.body().size()+"");
+
                     }
                 }
 
@@ -324,6 +326,8 @@ public class Repository {
                 public void onResponse(Call<List<WebserviceProductModel>> call, Response<List<WebserviceProductModel>> response) {
                     if (response.isSuccessful()){
                         sortProductsListMutableLiveData.setValue(response.body());
+                        Log.e("TAG4" , response.body().size()+"");
+
                     }
                 }
 

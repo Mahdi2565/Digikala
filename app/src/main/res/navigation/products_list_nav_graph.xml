@@ -9,5 +9,20 @@
         android:id="@+id/productsListFragment"
         android:name="ir.mahdidev.digikala.controller.fragment.ProductsListFragment"
         android:label="fragment_products_list"
-        tools:layout="@layout/fragment_products_list" />
+        tools:layout="@layout/fragment_products_list" >
+        <action
+            android:id="@+id/action_productsListFragment_to_sortProductDialogFragment"
+            app:destination="@id/sortProductDialogFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/sortProductDialogFragment"
+        android:name="ir.mahdidev.digikala.controller.fragment.SortProductDialogFragment"
+        android:label="SortProductDialogFragment" >
+        <action
+            android:id="@+id/action_sortProductDialogFragment_to_productsListFragment"
+            app:destination="@id/productsListFragment"
+            app:popUpTo="@+id/products_list_nav_graph"
+            app:popUpToInclusive="true"
+            />
+    </dialog>
 </navigation>

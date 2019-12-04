@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -61,12 +64,19 @@ public class ProductsListFragment extends Fragment {
     ImageView basketImg;
     @BindView(R.id.search_img)
     ImageView searchImg;
+    @BindView(R.id.sort_relative)
+    RelativeLayout sortRelative;
+    @BindView(R.id.sub_sort_txt)
+    TextView subSortTxt;
     public ProductsListFragment() {
     }
     private ListProductData listProductData;
     private ProductsListViewModel viewModel;
     private ProductsListRecyclerViewAdapter productsListRecyclerViewAdapter;
     private int productListPage = 1;
+    private NavController navController;
+
+    private boolean isListEmpty = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,10 +96,45 @@ public class ProductsListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this , view);
+        progressBar.setVisibility(View.VISIBLE);
+        SortProductDialogFragment.radioChecked = 4;
+        navController = Navigation.findNavController(view);
         initViewModel();
         initToolbar();
         basketBadgeFunction();
         searchImgFunction();
+        sortProductDialog();
+        subSortTxtFunction();
+    }
+
+    private void subSortTxtFunction() {
+        if (listProductData.getOrderBy().equals(Const.OrderTag.MOST_NEWEST_PRODUCT)){
+            subSortTxt.setText(R.string.most_newest);
+            SortProductDialogFragment.radioChecked = 4;
+        }else if (listProductData.getOrderBy().equals(Const.OrderTag.MOST_VISITING_PRODUCT)){
+            SortProductDialogFragment.radioChecked = 2;
+            subSortTxt.setText(R.string.most_visiting);
+        }else if (listProductData.getOrderBy().equals(Const.OrderTag.MOST_RATING_PRODUCT)){
+            SortProductDialogFragment.radioChecked = 3;
+            subSortTxt.setText(R.string.most_rating);
+        }else if (listProductData.getOrderBy().equals(Const.OrderTag.PRICE_PRODUCT) &&
+        listProductData.getOrder().equals("asc")){
+            SortProductDialogFragment.radioChecked = 0;
+            subSortTxt.setText(R.string.price_asc);
+        }else if (listProductData.getOrderBy().equals(Const.OrderTag.PRICE_PRODUCT) &&
+                listProductData.getOrder().equals("desc")){
+            SortProductDialogFragment.radioChecked = 1;
+            subSortTxt.setText(R.string.price_desc);
+        }
+    }
+
+    private void sortProductDialog() {
+        sortRelative.setOnClickListener(view -> {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(Const.BundleKey.PRODUCT_LIST_DATA_TO_SORT_FRAGMENT_BUNDLE_KEY ,
+                    listProductData);
+            navController.navigate(R.id.action_productsListFragment_to_sortProductDialogFragment , bundle);
+        });
     }
 
     private void searchImgFunction() {
@@ -107,6 +152,7 @@ public class ProductsListFragment extends Fragment {
     }
 
     private void initViewModel() {
+
         viewModel = ViewModelProviders.of(this).get(ProductsListViewModel.class);
         viewModel.getProductCount().observe(this, integer -> {
             if (integer>0){
@@ -119,6 +165,9 @@ public class ProductsListFragment extends Fragment {
 
         viewModel.getAllSortedProductsList(listProductData , productListPage).observe(this,
                 webserviceProductModels -> {
+            if (webserviceProductModels.isEmpty()){
+                isListEmpty = true;
+            }
                     progressBar.setVisibility(View.GONE);
                     initRecyclerView(webserviceProductModels);
                 });
@@ -133,8 +182,11 @@ public class ProductsListFragment extends Fragment {
             productsListRecyclerViewAdapter.setProductList(webserviceProductModels);
             productsListRecyclerViewAdapter.notifyDataSetChanged();
         }
+
         if (productsListRecyclerViewAdapter.getProductsList().isEmpty()){
             emptyList.setVisibility(View.VISIBLE);
+        }else {
+            emptyList.setVisibility(View.GONE);
         }
 
         productsListRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -149,6 +201,7 @@ public class ProductsListFragment extends Fragment {
 
                 LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                 if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == webserviceProductModels.size() - 1) {
+                    if (isListEmpty) return;
                     viewModel.getAllSortedProductsList(listProductData,++productListPage);
                 }
             }

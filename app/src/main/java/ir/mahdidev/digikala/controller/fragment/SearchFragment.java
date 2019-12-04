@@ -139,5 +139,6 @@ public class SearchFragment extends Fragment {
         startActivity(ProductsListActivity.newIntent
                 (getActivity(),new ListProductData(searchText ,
                 Const.OrderTag.MOST_VISITING_PRODUCT , "desc" , searchText)));
+        getActivity().finish();
     }
 }

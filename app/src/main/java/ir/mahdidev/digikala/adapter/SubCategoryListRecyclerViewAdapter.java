@@ -29,6 +29,7 @@ public class SubCategoryListRecyclerViewAdapter extends RecyclerView.Adapter<Sub
     public SubCategoryListRecyclerViewAdapter(List<WebserviceCategoryModel> categoryList, Context context) {
         this.categoryList = categoryList;
         this.context = context;
+
     }
     public void setCategoryList(List<WebserviceCategoryModel> categoryList){
         this.categoryList = new ArrayList<>();
@@ -44,8 +45,8 @@ public class SubCategoryListRecyclerViewAdapter extends RecyclerView.Adapter<Sub
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.SubCategoryTitle.setText(categoryList.get(position).getName());
-        Picasso.get().load(categoryList.get(position).getImage().getSrc()).placeholder
-                (R.drawable.digikala_place_holder).into(holder.subCategoryImage);
+            Picasso.get().load(categoryList.get(position).getImage().getSrc()).placeholder
+                    (R.drawable.digikala_place_holder).into(holder.subCategoryImage);
         holder.parentLayout.setOnClickListener(view -> {
             subCategoryAdapterInterface.onCategoryClicked(categoryList.get(position));
         });

@@ -48,4 +48,6 @@
     <string name="image_transaction">product_img_basktet</string>
     <string name="search_in_digikala">جست و جو در دیجی‌کالا...</string>
     <string name="tell_name_your_product">نام کالای مورد نظر خود را بگویید...</string>
+    <string name="price_desc">قیمت از زیاد به کم</string>
+    <string name="price_asc">قیمت از کم به زیاد</string>
 </resources>

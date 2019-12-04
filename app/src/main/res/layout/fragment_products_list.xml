@@ -8,12 +8,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".controller.fragment.ProductsListFragment">
-    <ProgressBar
-        android:visibility="visible"
-        android:layout_centerInParent="true"
-        android:id="@+id/progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+
     <TextView
         android:visibility="gone"
         android:id="@+id/empty_list"
@@ -50,10 +45,10 @@
                     android:focusable="true" />
 
                 <TextView
+                    android:textDirection="rtl"
                     android:layout_centerVertical="true"
-                    android:textAlignment="textEnd"
                     android:id="@+id/title_toolbar"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="-3dp"
                     android:layout_marginEnd="11dp"
@@ -207,5 +202,11 @@
         android:id="@+id/products_list_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+    <ProgressBar
+        android:visibility="visible"
+        android:layout_centerInParent="true"
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </RelativeLayout>

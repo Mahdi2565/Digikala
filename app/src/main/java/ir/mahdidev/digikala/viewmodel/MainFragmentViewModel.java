@@ -15,6 +15,7 @@ import ir.mahdidev.digikala.networkmodel.category.WebserviceCategoryModel;
 import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
 
 public class MainFragmentViewModel extends AndroidViewModel {
+
     private Repository repository;
     public MainFragmentViewModel(@NonNull Application application) {
         super(application);

@@ -1,6 +1,8 @@
 package ir.mahdidev.digikala.adapter;
 
 import android.content.Context;
+import android.os.Build;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +58,11 @@ public class ProductsListRecyclerViewAdapter extends RecyclerView.Adapter<Produc
         holder.titleProduct.setText(productsList.get(position).getName());
         if (!productsList.get(position).getShortDescription().isEmpty()){
             holder.shortDescription.setVisibility(View.VISIBLE);
-            holder.shortDescription.setText(productsList.get(position).getShortDescription());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                holder.shortDescription.setText(Html.fromHtml(productsList.get(position).getShortDescription(), Html.FROM_HTML_MODE_COMPACT));
+            } else {
+                holder.shortDescription.setText(Html.fromHtml(productsList.get(position).getShortDescription()));
+            }
         }else holder.shortDescription.setVisibility(View.INVISIBLE);
 
         if (!productsList.get(position).getRegularPrice().equals(productsList.get(position).getPrice())) {

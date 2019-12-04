@@ -86,6 +86,7 @@ public class WebserviceCategoryModel {
     }
 
     public Image getImage() {
+        if (image==null) image= new Image();
         return image;
     }
 

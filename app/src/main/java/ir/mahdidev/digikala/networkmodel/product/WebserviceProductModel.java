@@ -1,6 +1,8 @@
 
 package ir.mahdidev.digikala.networkmodel.product;
 
+import android.util.Log;
+
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -199,9 +201,7 @@ public class WebserviceProductModel {
     @SerializedName("menu_order")
     @Expose
     private Integer menuOrder;
-    @SerializedName("meta_data")
-    @Expose
-    private List<MetaDatum> metaData = null;
+
     @SerializedName("_links")
     @Expose
     private Links links;
@@ -335,6 +335,7 @@ public class WebserviceProductModel {
     }
 
     public String getRegularPrice() {
+        if (regularPrice.equals("")) return "250";
         return regularPrice;
     }
 
@@ -717,14 +718,6 @@ public class WebserviceProductModel {
 
     public void setMenuOrder(Integer menuOrder) {
         this.menuOrder = menuOrder;
-    }
-
-    public List<MetaDatum> getMetaData() {
-        return metaData;
-    }
-
-    public void setMetaData(List<MetaDatum> metaData) {
-        this.metaData = metaData;
     }
 
     public Links getLinks() {

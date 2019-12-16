@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/customer_nav_graph"
+    app:startDestination="@id/customerInfoFragment">
+    <fragment
+        android:id="@+id/customerInfoFragment"
+        android:name="ir.mahdidev.digikala.controller.fragment.CustomerInfoFragment"
+        android:label="fragment_customer_info"
+        tools:layout="@layout/fragment_customer_info" >
+        <action
+            android:id="@+id/action_customerInfoFragment_to_editCustomerInfoFragment"
+            app:destination="@id/editCustomerInfoFragment" />
+        <action
+            android:id="@+id/action_customerInfoFragment_to_customerOrdersFragment"
+            app:destination="@id/customerOrdersFragment" />
+        <action
+            android:id="@+id/action_customerInfoFragment_to_customerAddressFragment"
+            app:destination="@id/customerAddressFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editCustomerInfoFragment"
+        android:name="ir.mahdidev.digikala.controller.fragment.EditCustomerInfoFragment"
+        android:label="fragment_edit_customer_info"
+        tools:layout="@layout/fragment_edit_customer_info" />
+    <fragment
+        android:id="@+id/customerOrdersFragment"
+        android:name="ir.mahdidev.digikala.controller.fragment.CustomerOrdersFragment"
+        android:label="fragment_customer_orders"
+        tools:layout="@layout/fragment_customer_orders" />
+    <fragment
+        android:id="@+id/customerAddressFragment"
+        android:name="ir.mahdidev.digikala.controller.fragment.CustomerAddressFragment"
+        android:label="fragment_customer_address"
+        tools:layout="@layout/fragment_customer_address" />
+</navigation>

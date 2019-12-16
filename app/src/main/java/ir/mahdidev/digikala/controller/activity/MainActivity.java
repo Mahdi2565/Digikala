@@ -3,22 +3,18 @@ package ir.mahdidev.digikala.controller.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
-import androidx.core.view.MenuItemCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.graphics.Typeface;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
@@ -27,9 +23,10 @@ import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import ir.mahdidev.digikala.R;
 import ir.mahdidev.digikala.controller.fragment.MainFragment;
 import ir.mahdidev.digikala.eventbus.ListProductData;
-import ir.mahdidev.digikala.networkutil.ConnectivityReceiver;
+import ir.mahdidev.digikala.networkmodel.customer.WebServiceCustomerModel;
 import ir.mahdidev.digikala.util.Const;
 import ir.mahdidev.digikala.util.MyApplication;
+import ir.mahdidev.digikala.util.Pref;
 import ir.mahdidev.digikala.viewmodel.MainFragmentViewModel;
 
 public class MainActivity extends SingleFragmentActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -44,6 +41,10 @@ public class MainActivity extends SingleFragmentActivity implements NavigationVi
     private ImageView basketImg;
     private TextView basketNavigationViewBadge;
     private ImageView searchImg;
+    private ImageView loginRegisterImage;
+    private TextView nameCustomer;
+    private ImageView personImage;
+    private RelativeLayout personInfo;
 
     @Override
     public Fragment createFragment() {
@@ -74,6 +75,49 @@ public class MainActivity extends SingleFragmentActivity implements NavigationVi
         initToolbar();
         initNavigation();
         searchImgFunction();
+        personImageFunction();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkCustomerLoggedIn();
+    }
+
+    private void checkCustomerLoggedIn() {
+        WebServiceCustomerModel webServiceCustomerModel = Pref.getCustomerModelFromPref(MainActivity.this);
+        if (webServiceCustomerModel == null){
+            personImage.setVisibility(View.GONE);
+        }else {
+            personImage.setVisibility(View.VISIBLE);
+        }
+        headerNavigationView();
+    }
+
+    private void personImageFunction() {
+        personImage.setOnClickListener(view -> startActivity(CustomerInfoActivity.newIntent(MainActivity.this)));
+    }
+
+    private void headerNavigationView() {
+        View headerLayout = navigationView.getHeaderView(0);
+        loginRegisterImage = headerLayout.findViewById(R.id.loginRegisterImg);
+        nameCustomer = headerLayout.findViewById(R.id.name_customer_txt);
+        loginRegisterImage.setOnClickListener(view ->
+                startActivity(LoginRegisterActivity.newIntent(MainActivity.this)));
+        WebServiceCustomerModel webServiceCustomerModel = Pref.getCustomerModelFromPref(this);
+        personInfo = headerLayout.findViewById(R.id.person_info);
+
+        if (webServiceCustomerModel!=null){
+            String nameTxt = webServiceCustomerModel.getFirstName() + " " + webServiceCustomerModel.getLastName();
+
+            nameCustomer.setText(nameTxt);
+            loginRegisterImage.setVisibility(View.GONE);
+            personInfo.setVisibility(View.VISIBLE);
+        }else {
+            loginRegisterImage.setVisibility(View.VISIBLE);
+            personInfo.setVisibility(View.GONE);
+        }
+
     }
 
     private void searchImgFunction() {
@@ -114,6 +158,7 @@ public class MainActivity extends SingleFragmentActivity implements NavigationVi
         basketBadge = findViewById(R.id.basket_badge);
         basketImg   = findViewById(R.id.basket_img);
         searchImg   = findViewById(R.id.search_img);
+        personImage = findViewById(R.id.person_image);
     }
 
     private void initToolbar() {

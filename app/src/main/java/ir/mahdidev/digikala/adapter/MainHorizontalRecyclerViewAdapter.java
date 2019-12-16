@@ -64,9 +64,10 @@ public class MainHorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Main
                 }else holder.priceRegular.setVisibility(View.GONE);
 
                 holder.titleProduct.setText(productList.get(position).getName());
-                String regularPrice = MyApplication.getInstance()
-                        .getPersianNumber(Double.parseDouble(productList.get(position).getRegularPrice()))
-                        + " تومان";
+             String regularPrice = MyApplication.getInstance()
+                     .getPersianNumber(Double.parseDouble(productList.get(position).getRegularPrice()))
+                     + " تومان";
+
                 holder.priceRegular.setText(regularPrice);
                 String price =  MyApplication.getInstance()
                         .getPersianNumber(Double.parseDouble(productList.get(position).getPrice()))

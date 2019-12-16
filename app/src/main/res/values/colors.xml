@@ -16,4 +16,5 @@
     <color name="productBackGroundColor">#EEEEEE</color>
     <color name="categoryProductColor">#20A6FF</color>
     <color name="relateProductTitle">#78909C</color>
+    <color name="loginDigikalaButton">#1E88E5</color>
 </resources>

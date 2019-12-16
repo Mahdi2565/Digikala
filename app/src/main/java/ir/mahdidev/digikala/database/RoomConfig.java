@@ -10,6 +10,7 @@ import androidx.room.RoomDatabase;
 public abstract class RoomConfig extends RoomDatabase {
     public abstract ProductBasketDao productBasketDao();
     public abstract ProductFavoriteDao productFavoriteDao();
+    public abstract CustomerAddressDao customerAddressDao();
 
     private static volatile RoomConfig instance;
     private static final Object LOCK = new Object();

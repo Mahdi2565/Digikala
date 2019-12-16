@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="ir.mahdidev.digikala">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -13,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".controller.activity.SearchActivity"></activity>
+        <activity android:name=".controller.activity.CustomerInfoActivity"></activity>
+        <activity android:name=".controller.activity.LoginRegisterActivity" />
+        <activity android:name=".controller.activity.SearchActivity" />
         <activity
             android:name=".controller.activity.ProductsListActivity"
             android:configChanges="orientation|screenSize|keyboard|keyboardHidden" />

@@ -300,6 +300,7 @@ public class MainFragment extends Fragment {
         viewModel.loadSingleProduct(message.getProductId());
         startActivity(ProductActivity.newIntent(getActivity()));
     }
+
     private void filterCategory(List<WebserviceCategoryModel> categoryModelList, List<WebserviceCategoryModel> categoryList) {
         for (WebserviceCategoryModel categoryModel : categoryModelList){
             if (categoryModel.getParent()==0){

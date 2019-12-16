@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".controller.fragment.LoginFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:padding="8dp"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_margin="8dp"
+                android:id="@+id/back_toolbar"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                app:srcCompat="@drawable/ic_clear_black_24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="true" />
+
+            <TextView
+                android:textDirection="rtl"
+                android:layout_centerVertical="true"
+                android:id="@+id/title_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="-3dp"
+                android:layout_marginEnd="11dp"
+                android:layout_toStartOf="@+id/back_toolbar"
+                android:layout_toEndOf="@id/search_img"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/login"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:padding="8dp"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_toEndOf="@id/basket_img"
+                android:id="@+id/search_img"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/ic_search_black_24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="true" />
+            <ImageView
+                android:padding="8dp"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:id="@+id/basket_img"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/ic_shopping_cart_black_24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="true" />
+
+
+            <TextView
+                android:layout_marginStart="18dp"
+                android:background="@drawable/badge_shape"
+                android:visibility="invisible"
+                android:id="@+id/basket_badge"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_gravity="end|top"
+                android:layout_marginEnd="-5dp"
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:padding="3dp"
+                android:textColor="@color/colorPrimary"
+                android:text="0"
+                android:textStyle="bold"
+                android:textSize="10sp"/>
+
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_below="@id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_margin="32dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/email_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:inputType="textEmailAddress"
+                    android:id="@+id/email_edt"
+                    android:drawableEnd="@drawable/ic_email_black_24dp"
+                    android:drawablePadding="16dp"
+                    android:hint="@string/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/password_layout"
+                android:layout_marginTop="16dp"
+                android:layout_below="@id/email_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:inputType="textPassword"
+                    android:id="@+id/password_edt"
+                    android:drawableEnd="@drawable/ic_lock_black_24dp"
+                    android:drawablePadding="16dp"
+                    android:hint="@string/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/show_password_checked"
+                android:textColor="@color/grayText"
+                android:layoutDirection="rtl"
+                android:text="@string/show_password"
+                android:layout_marginTop="16dp"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/password_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_marginTop="32dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/show_password_checked"
+                android:text="@string/register_digikala"
+                android:id="@+id/register_txt"
+                android:textColor="@color/priceColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:background="@color/loginDigikalaButton"
+        android:gravity="center"
+        android:id="@+id/loginDigikalaLinear"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="56dp">
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:visibility="gone"
+        android:layout_gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:id="@+id/login_button_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_marginEnd="4dp"
+                app:srcCompat="@drawable/ic_chevron_left_black_24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/finalize_txt"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:text="@string/login_to_digikala"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</RelativeLayout>

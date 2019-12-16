@@ -5,6 +5,9 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +15,9 @@ import java.util.List;
 import ir.mahdidev.digikala.database.ProductBasketModel;
 import ir.mahdidev.digikala.database.ProductFavoriteModel;
 import ir.mahdidev.digikala.database.RoomConfig;
-import ir.mahdidev.digikala.eventbus.ListProductData;
 import ir.mahdidev.digikala.networkmodel.category.WebserviceCategoryModel;
 import ir.mahdidev.digikala.networkmodel.comment.WebServiceCommentModel;
+import ir.mahdidev.digikala.networkmodel.customer.WebServiceCustomerModel;
 import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
 import ir.mahdidev.digikala.networkutil.RetrofitApi;
 import ir.mahdidev.digikala.networkutil.RetrofitConfig;
@@ -39,7 +42,9 @@ public class Repository {
     private MutableLiveData<List<WebserviceProductModel>> especialProductsMutabaleLiveData = new MutableLiveData<>();
     private MutableLiveData<List<WebServiceCommentModel>> commentProductsMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<List<WebserviceProductModel>> sortProductsListMutableLiveData = new MutableLiveData<>();
-    private MutableLiveData<ListProductData> listProductDataMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<WebServiceCustomerModel> registerCustomerMutable;
+    private MutableLiveData<List<WebServiceCustomerModel>> getCustomerMutable;
+    private MutableLiveData<WebServiceCustomerModel> updateCustomerMutable = new MutableLiveData<>();
 
     public static Repository getInstance() {
         if (instance == null) {
@@ -86,8 +91,9 @@ public class Repository {
     }
 
     public MutableLiveData<List<WebserviceCategoryModel>> loadCategoryList() throws IOException {
-        categoryListLiveData.postValue(RetrofitConfig.getRetrofit().create(RetrofitApi.class)
-                .getAllCategories().execute().body());
+        Response<List<WebserviceCategoryModel>> category = RetrofitConfig.getRetrofit().create(RetrofitApi.class)
+                .getAllCategories().execute();
+        categoryListLiveData.postValue(category.body());
         return categoryListLiveData;
     }
 
@@ -114,7 +120,7 @@ public class Repository {
 
     public MutableLiveData<List<WebserviceProductModel>> getAmazingSuggestionProductListLiveData(int page) {
         RetrofitConfig.getRetrofit().create(RetrofitApi.class).getAllAmazingSuggestionProduct(
-                Const.OrderTag.MOST_NEWEST_PRODUCT, 19, page
+                Const.OrderTag.MOST_NEWEST_PRODUCT, Const.DISCOUNT_TAG, page
         ).enqueue(new Callback<List<WebserviceProductModel>>() {
             @Override
             public void onResponse(Call<List<WebserviceProductModel>> call, Response<List<WebserviceProductModel>> response) {
@@ -157,6 +163,7 @@ public class Repository {
                         if (response.isSuccessful()) {
                             mostRatingProductListLiveData.setValue(response.body());
                         }
+
                     }
 
                     @Override
@@ -200,19 +207,14 @@ public class Repository {
                     @Override
                     public void onResponse(Call<WebserviceProductModel> call, Response<WebserviceProductModel> response) {
                         if (response.isSuccessful()) {
-                            Log.e("TAG4", "response message " + response.message() + " message code " +
-                                    response.code());
                             singleProductMutableLiveData.setValue(response.body());
                         } else {
-                            Log.e("TAG4", "in else response message " + response.message() + " message code " +
-                                    response.code());
                             singleProductMutableLiveData = null;
                         }
                     }
 
                     @Override
                     public void onFailure(Call<WebserviceProductModel> call, Throwable t) {
-                        Log.e("TAG4", "on fail message " + t.getMessage());
                         singleProductMutableLiveData = null;
                     }
                 });
@@ -264,7 +266,7 @@ public class Repository {
     public MutableLiveData<List<WebserviceProductModel>> getEspecialProduct(){
         especialProductsMutabaleLiveData = new MutableLiveData<>();
         // TODO: 11/18/2019 ESPECIAL TAG !!
-        RetrofitConfig.getRetrofit().create(RetrofitApi.class).getEspecialProducts(19)
+        RetrofitConfig.getRetrofit().create(RetrofitApi.class).getEspecialProducts(Const.SPECIAL_TAG)
                 .enqueue(new Callback<List<WebserviceProductModel>>() {
                     @Override
                     public void onResponse(Call<List<WebserviceProductModel>> call, Response<List<WebserviceProductModel>> response) {
@@ -337,5 +339,66 @@ public class Repository {
             });
         }
         return sortProductsListMutableLiveData;
+    }
+    public MutableLiveData<WebServiceCustomerModel> registerCustomer (WebServiceCustomerModel webServiceCustomerModel){
+        registerCustomerMutable = new MutableLiveData<>();
+        RetrofitConfig.getRetrofit().create(RetrofitApi.class).registerCustomer(webServiceCustomerModel)
+                .enqueue(new Callback<WebServiceCustomerModel>() {
+                    @Override
+                    public void onResponse(Call<WebServiceCustomerModel> call, Response<WebServiceCustomerModel> response) {
+                        if (response.isSuccessful()){
+                         registerCustomerMutable.setValue(response.body());
+                        }else if (response.code()==400){
+                            registerCustomerMutable.setValue(new WebServiceCustomerModel(400));
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<WebServiceCustomerModel> call, Throwable t) {
+                        registerCustomerMutable.setValue(new WebServiceCustomerModel(t));
+                    }
+                });
+        return registerCustomerMutable;
+    }
+    public MutableLiveData<List<WebServiceCustomerModel>> getCustomer(String email){
+        getCustomerMutable = new MutableLiveData<>();
+        RetrofitConfig.getRetrofit().create(RetrofitApi.class).getCustomer(email)
+                .enqueue(new Callback<List<WebServiceCustomerModel>>() {
+                    @Override
+                    public void onResponse(Call<List<WebServiceCustomerModel>> call, Response<List<WebServiceCustomerModel>> response) {
+                        if (response.isSuccessful()){
+                            getCustomerMutable.setValue(response.body());
+                        }else if (response.code()==400){
+                            List<WebServiceCustomerModel> customerModelList = new ArrayList<>();
+                            customerModelList.add(new WebServiceCustomerModel(400));
+                            getCustomerMutable.setValue(customerModelList);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<WebServiceCustomerModel>> call, Throwable t) {
+                        List<WebServiceCustomerModel> customerModelList = new ArrayList<>();
+                        customerModelList.add(new WebServiceCustomerModel(t));
+                        getCustomerMutable.setValue(customerModelList);
+                    }
+                });
+        return getCustomerMutable;
+    }
+    public MutableLiveData<WebServiceCustomerModel> updateCustomer(WebServiceCustomerModel webServiceCustomerModel){
+        RetrofitConfig.getRetrofit().create(RetrofitApi.class).updateCustomer(webServiceCustomerModel.getId() , webServiceCustomerModel)
+                .enqueue(new Callback<WebServiceCustomerModel>() {
+                    @Override
+                    public void onResponse(Call<WebServiceCustomerModel> call, Response<WebServiceCustomerModel> response) {
+                        if (response.isSuccessful()){
+                            updateCustomerMutable.setValue(response.body());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<WebServiceCustomerModel> call, Throwable t) {
+
+                    }
+                });
+        return updateCustomerMutable;
     }
 }

@@ -1,6 +1,10 @@
 package ir.mahdidev.digikala.util;
 
 public class Const {
+    public class PrefKey{
+        public static final String EMAIL_PREF_KEY = "email_pref_key";
+        public static final String PREFNAME = "DigikalaPref";
+    }
     public static class IntentKey{
         public static final String PRODUCT_LIST_DATA_INTENT_KEY = "ir.mahdidev.digikala_product_list_data_intnet_key";
         public static final String CATEGORY_POSITION_INTENT_KEY = "ir.mahdidev.digikala_category_position_intent_key";
@@ -26,7 +30,8 @@ public class Const {
     public static final String SPLASH_SCREEN_FRAGMENT_TAG = "splash_screen_fragment_tag";
     public static final String MAIN_FRAGMENT_TAG = "main_fragment_tag";
     public static final String AMAZING_SUGGESTION_ORDER = "amazing_suggestion";
-    public static final int DISCOUNT_TAG = 19 ;
+    public static final int DISCOUNT_TAG = 46 ;
+    public static final int SPECIAL_TAG = 48 ;
     public static final int FROM_MAIN_FRAGMENT = 0;
     public static final int FROM_PRODUCT_FRAGMENT = 1;
 }

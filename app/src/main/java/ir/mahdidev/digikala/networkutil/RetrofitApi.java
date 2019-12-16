@@ -4,9 +4,14 @@ import java.util.List;
 
 import ir.mahdidev.digikala.networkmodel.category.WebserviceCategoryModel;
 import ir.mahdidev.digikala.networkmodel.comment.WebServiceCommentModel;
+import ir.mahdidev.digikala.networkmodel.customer.WebServiceCustomerModel;
 import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -46,4 +51,10 @@ public interface RetrofitApi {
             (@Query("order") String order ,
              @Query("orderby") String orderBy , @Query("page") int page
     , @Query("search") String search);
+    @POST("customers")
+    Call<WebServiceCustomerModel> registerCustomer(@Body WebServiceCustomerModel webServiceCustomerModel);
+    @GET("customers")
+    Call<List<WebServiceCustomerModel>> getCustomer(@Query("email") String email);
+    @PUT("customers/{id}")
+    Call<WebServiceCustomerModel> updateCustomer(@Path("id")int customerId , @Body WebServiceCustomerModel webServiceCustomerModel);
 }

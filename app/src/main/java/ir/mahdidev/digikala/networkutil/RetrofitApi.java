@@ -2,6 +2,7 @@ package ir.mahdidev.digikala.networkutil;
 
 import java.util.List;
 
+import ir.mahdidev.digikala.networkmodel.address.WebServiceAddress;
 import ir.mahdidev.digikala.networkmodel.category.WebserviceCategoryModel;
 import ir.mahdidev.digikala.networkmodel.comment.WebServiceCommentModel;
 import ir.mahdidev.digikala.networkmodel.customer.WebServiceCustomerModel;
@@ -57,4 +58,7 @@ public interface RetrofitApi {
     Call<List<WebServiceCustomerModel>> getCustomer(@Query("email") String email);
     @PUT("customers/{id}")
     Call<WebServiceCustomerModel> updateCustomer(@Path("id")int customerId , @Body WebServiceCustomerModel webServiceCustomerModel);
+    @GET("fast-reverse")
+    Call<WebServiceAddress> getCustomerAddress(@Query("lat")String latitude, @Query("lon") String longitude ,
+                                               @Header("x-api-key") String apiKey);
 }

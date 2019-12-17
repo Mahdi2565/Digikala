@@ -33,5 +33,14 @@
         android:id="@+id/customerAddressFragment"
         android:name="ir.mahdidev.digikala.controller.fragment.CustomerAddressFragment"
         android:label="fragment_customer_address"
-        tools:layout="@layout/fragment_customer_address" />
+        tools:layout="@layout/fragment_customer_address" >
+        <action
+            android:id="@+id/action_customerAddressFragment_to_addCustomerAddressFragment"
+            app:destination="@id/addCustomerAddressFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addCustomerAddressFragment"
+        android:name="ir.mahdidev.digikala.controller.fragment.addCustomerAddressFragment"
+        android:label="fragment_add_customer_address"
+        tools:layout="@layout/fragment_add_customer_address" />
 </navigation>

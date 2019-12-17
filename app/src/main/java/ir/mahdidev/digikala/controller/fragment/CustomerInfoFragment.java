@@ -38,7 +38,7 @@ public class CustomerInfoFragment extends Fragment {
     void customerOrdersClicked(){
         navController.navigate(R.id.action_customerInfoFragment_to_customerOrdersFragment);
     }
-    @OnClick(R.id.customer_address)
+    @OnClick(R.id.customer_user_address)
     void customerAddressClicked(){
         navController.navigate(R.id.action_customerInfoFragment_to_customerAddressFragment);
     }

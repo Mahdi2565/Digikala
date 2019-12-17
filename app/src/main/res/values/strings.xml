@@ -71,11 +71,20 @@
     <string name="profile">پروفایل</string>
     <string name="edit_info">ویرایش اطلاعات</string>
     <string name="my_orders">سفارشات من</string>
-    <string name="my_address">آدرس من</string>
     <string name="log_out">خروج</string>
     <string name="edit_customer">ویرایش اطلاعات کاربری</string>
     <string name="enter_customer_info">لطفا اطلاعات کاربری خود را وارد کنید</string>
-    <string name="update_customer">ثبت اطلاعات</string>
+    <string name="register_data">ثبت اطلاعات</string>
     <string name="phone_number">شماره تلفن همراه</string>
     <string name="update_successfully">اطلاعات با موفقیت به‌روز‌رسانی شد</string>
+    <string name="postal_code">کد پستی</string>
+    <string name="post_address">نشانی پستی</string>
+    <string name="title_address">عنوان آدرس</string>
+    <string name="generated_address_by_map">نشانی تولید شده توسط نقشه</string>
+    <string name="register_address">ثبت نشانی</string>
+    <string name="my_address">آدرس من</string>
+    <string name="_continue">ادامه</string>
+    <string name="choose_location">لطفا یک موقعیت انتخاب کنید</string>
+    <string name="select_location">لطفا موقعیت خود را از نقشه انتخاب کنید</string>
+    <string name="select_customer_address">لطفا نشانی خود را وارد کنید</string>
 </resources>

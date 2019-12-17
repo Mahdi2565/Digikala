@@ -18,7 +18,8 @@ allprojects {
     repositories {
         google()
         jcenter()
-        
+        maven { url "https://dl.bintray.com/neshan/neshan-android-sdk" }
+        maven { url 'https://jitpack.io' }
     }
 }
 

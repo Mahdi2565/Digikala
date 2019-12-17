@@ -156,7 +156,7 @@
             <TextView
                 android:textStyle="bold"
                 android:textColor="@color/white"
-                android:text="@string/update_customer"
+                android:text="@string/register_data"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 

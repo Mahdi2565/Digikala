@@ -13,8 +13,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitConfig {
-    public static Retrofit retrofit;
-
+    private static Retrofit retrofit;
+    private static Retrofit mapRetrofit;
     public static Retrofit getRetrofit(){
         if (retrofit==null){
             OkHttpClient client = new OkHttpClient.Builder()
@@ -29,6 +29,17 @@ public class RetrofitConfig {
         }
         return retrofit;
     }
+
+    public static Retrofit getMapRetrofit(){
+        if (mapRetrofit==null){
+            mapRetrofit = new Retrofit.Builder().baseUrl(Const.RetrofitConst.BASE_URL_GEOCODING_MAP_IR)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+        return mapRetrofit;
+    }
+
+
 
     private static class BasicAuthInterceptor implements Interceptor {
 

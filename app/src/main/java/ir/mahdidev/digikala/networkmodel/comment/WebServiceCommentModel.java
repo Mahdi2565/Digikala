@@ -2,7 +2,7 @@ package ir.mahdidev.digikala.networkmodel.comment;
 
 public class WebServiceCommentModel {
 
-    private int id;
+    private Integer id;
     private String date_created;
     private String date_created_gmt;
     private int product_id;
@@ -13,7 +13,35 @@ public class WebServiceCommentModel {
     private int rating;
     private boolean verified;
 
-    public int getId() {
+    public void setVerified(boolean verified) {
+        this.verified = verified;
+    }
+
+    public void setProduct_id(int product_id) {
+        this.product_id = product_id;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setReviewer(String reviewer) {
+        this.reviewer = reviewer;
+    }
+
+    public void setReviewer_email(String reviewer_email) {
+        this.reviewer_email = reviewer_email;
+    }
+
+    public void setReview(String review) {
+        this.review = review;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public Integer getId() {
         return id;
     }
 

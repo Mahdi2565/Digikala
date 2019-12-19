@@ -23,6 +23,7 @@ public class ProductsListViewModel extends AndroidViewModel {
     }
     public LiveData<List<WebserviceProductModel>> getAllSortedProductsList (ListProductData listProductData, int page){
         return repository.getSortedProductList(listProductData.getCategoryId()
-                , listProductData.getOrderBy(), listProductData.getOrder(), listProductData.getSearch() , page);
+                , listProductData.getOrderBy(), listProductData.getOrder(), listProductData.getSearch() , page ,
+                 listProductData.getAttribute() , listProductData.getAttributeTerm());
     }
 }

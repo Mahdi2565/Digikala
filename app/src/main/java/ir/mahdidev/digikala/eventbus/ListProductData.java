@@ -1,6 +1,7 @@
 package ir.mahdidev.digikala.eventbus;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class ListProductData implements Serializable {
     private String toolbarTitle;
@@ -8,6 +9,10 @@ public class ListProductData implements Serializable {
     private String orderBy;
     private String order;
     private String search;
+    private String  attribute;
+    private List<Integer>   attributeTerm;
+
+
 
     public ListProductData(String toolbarTitle, int categoryId, String orderBy, String order, String search) {
         this.toolbarTitle = toolbarTitle;
@@ -25,6 +30,22 @@ public class ListProductData implements Serializable {
         this.orderBy = orderBy;
         this.order = order;
         this.search = search;
+    }
+
+    public String getAttribute() {
+        return attribute;
+    }
+
+    public void setAttribute(String attribute) {
+        this.attribute = attribute;
+    }
+
+    public List<Integer> getAttributeTerm() {
+        return attributeTerm;
+    }
+
+    public void setAttributeTerm(List<Integer> attributeTerm) {
+        this.attributeTerm = attributeTerm;
     }
 
     public void setToolbarTitle(String toolbarTitle) {

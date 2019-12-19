@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true"
+    app:cardCornerRadius="4dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:text="@string/register_digikala"
+            android:padding="16dp"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/name_reviewer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/email_reviewer"
+            android:text="@string/register_digikala"
+            android:textColor="@color/black"
+            android:padding="16dp"
+            android:textSize="16sp"
+            android:layout_below="@id/name_reviewer"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+            <SeekBar
+                android:id="@+id/rate_review"
+                android:max="5"
+                android:layout_margin="4dp"
+                android:layout_below="@id/email_reviewer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/review_layout"
+            android:hint="@string/your_review"
+            android:layout_below="@id/rate_review"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/review_edt"
+                android:inputType="textLongMessage"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/register_review"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            app:cornerRadius="4dp"
+            android:text="@string/register_comment"
+            app:backgroundTint="@color/colorPrimary"
+            android:layout_below="@id/review_layout"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"/>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

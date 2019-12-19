@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_productsListFragment_to_sortProductDialogFragment"
             app:destination="@id/sortProductDialogFragment" />
+        <action
+            android:id="@+id/action_productsListFragment_to_filterProductsFragment"
+            app:destination="@id/filterProductsFragment" />
     </fragment>
     <dialog
         android:id="@+id/sortProductDialogFragment"
@@ -25,4 +28,16 @@
             app:popUpToInclusive="true"
             />
     </dialog>
+    <fragment
+        android:id="@+id/filterProductsFragment"
+        android:name="ir.mahdidev.digikala.controller.fragment.FilterProductsFragment"
+        android:label="fragment_filter_products"
+        tools:layout="@layout/fragment_filter_products" >
+        <action
+            android:id="@+id/action_filterProductsFragment_to_productsListFragment"
+            app:destination="@id/productsListFragment"
+            app:popUpTo="@+id/products_list_nav_graph"
+            app:popUpToInclusive="true"
+            />
+    </fragment>
 </navigation>

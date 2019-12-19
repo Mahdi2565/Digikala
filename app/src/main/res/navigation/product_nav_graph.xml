@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/productFragment">
+
+    <fragment
+        android:id="@+id/productFragment"
+        android:name="ir.mahdidev.digikala.controller.fragment.ProductFragment"
+        android:label="fragment_product"
+        tools:layout="@layout/fragment_product" >
+        <action
+            android:id="@+id/action_productFragment_to_commentsFragment"
+            app:destination="@id/commentsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/commentsFragment"
+        android:name="ir.mahdidev.digikala.controller.fragment.CommentsFragment"
+        android:label="fragment_comments"
+        tools:layout="@layout/fragment_comments" >
+        <action
+            android:id="@+id/action_commentsFragment_to_addCommentDialogFragment"
+            app:destination="@id/addCommentDialogFragment" />
+        <action
+            android:id="@+id/action_commentsFragment_self"
+            app:destination="@id/commentsFragment"
+            app:popUpTo="@id/commentsFragment"
+            app:popUpToInclusive="true"
+            />
+    </fragment>
+    <dialog
+        android:id="@+id/addCommentDialogFragment"
+        android:name="ir.mahdidev.digikala.controller.fragment.AddCommentDialogFragment"
+        android:label="add_comment_dialog_fragment"
+        tools:layout="@layout/add_comment_dialog_fragment">
+        <action
+            android:id="@+id/action_addCommentDialogFragment_to_commentsFragment"
+            app:destination="@id/commentsFragment"
+            app:popUpTo="@id/commentsFragment"
+            app:popUpToInclusive="true"
+            />
+    </dialog>
+</navigation>

@@ -11,16 +11,23 @@ import java.util.List;
 
 import ir.mahdidev.digikala.database.ProductBasketModel;
 import ir.mahdidev.digikala.database.ProductFavoriteModel;
+import ir.mahdidev.digikala.networkmodel.CustomerRepository;
 import ir.mahdidev.digikala.networkmodel.Repository;
+import ir.mahdidev.digikala.networkmodel.attribute.WebServiceAttribute;
+import ir.mahdidev.digikala.networkmodel.attributeterm.WebServiceAttributeTerm;
 import ir.mahdidev.digikala.networkmodel.category.WebserviceCategoryModel;
 import ir.mahdidev.digikala.networkmodel.comment.WebServiceCommentModel;
 import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
+import okhttp3.ResponseBody;
 
 public class ProductViewModel extends AndroidViewModel {
     private Repository repository;
+    private CustomerRepository customerRepository;
+
     public ProductViewModel(@NonNull Application application) {
         super(application);
         repository = Repository.getInstance();
+        customerRepository = CustomerRepository.getInstance();
     }
 
     public MutableLiveData<Integer> getProductIdMutableLiveData() {
@@ -58,5 +65,17 @@ public class ProductViewModel extends AndroidViewModel {
     }
     public LiveData<List<WebServiceCommentModel>> getCommentsProduct(int productId){
         return repository.getCommentsProduct(productId);
+    }
+    public LiveData<WebServiceCommentModel> sendCustomerComment(WebServiceCommentModel webServiceCommentModel){
+        return customerRepository.sendCustomerComment(webServiceCommentModel);
+    }
+    public LiveData<WebServiceCommentModel> deleteCustomerComment(int commentId){
+        return customerRepository.deleteComment(commentId);
+    }
+    public LiveData<List<WebServiceAttribute>> getAllAttributes(){
+        return repository.getAllAttributes();
+    }
+    public LiveData<List<WebServiceAttributeTerm>> getAllAttributeTerm(int attributeId){
+        return repository.getAllAttributeTerms(attributeId);
     }
 }

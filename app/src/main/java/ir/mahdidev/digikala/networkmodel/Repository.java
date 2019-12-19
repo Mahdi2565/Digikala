@@ -1,12 +1,7 @@
 package ir.mahdidev.digikala.networkmodel;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,6 +10,8 @@ import java.util.List;
 import ir.mahdidev.digikala.database.ProductBasketModel;
 import ir.mahdidev.digikala.database.ProductFavoriteModel;
 import ir.mahdidev.digikala.database.RoomConfig;
+import ir.mahdidev.digikala.networkmodel.attribute.WebServiceAttribute;
+import ir.mahdidev.digikala.networkmodel.attributeterm.WebServiceAttributeTerm;
 import ir.mahdidev.digikala.networkmodel.category.WebserviceCategoryModel;
 import ir.mahdidev.digikala.networkmodel.comment.WebServiceCommentModel;
 import ir.mahdidev.digikala.networkmodel.customer.WebServiceCustomerModel;
@@ -45,6 +42,8 @@ public class Repository {
     private MutableLiveData<WebServiceCustomerModel> registerCustomerMutable;
     private MutableLiveData<List<WebServiceCustomerModel>> getCustomerMutable;
     private MutableLiveData<WebServiceCustomerModel> updateCustomerMutable = new MutableLiveData<>();
+    private MutableLiveData<List<WebServiceAttribute>> attributeProductsMutable;
+    private MutableLiveData<List<WebServiceAttributeTerm>> attributeTermProductsMutable;
 
     public static Repository getInstance() {
         if (instance == null) {
@@ -196,6 +195,7 @@ public class Repository {
         productIdMutableLiveData.setValue(productId);
     }
 
+
     public MutableLiveData<Integer> getProductIdMutableLiveData() {
         return productIdMutableLiveData;
     }
@@ -302,16 +302,15 @@ public class Repository {
         return commentProductsMutableLiveData;
     }
     public MutableLiveData<List<WebserviceProductModel>> getSortedProductList(int categoryId , String orderBy
-            , String order , String search , int page){
+            , String order , String search , int page , String attribute , List<Integer> attributeTerm){
         if (page==1) sortProductsListMutableLiveData = new MutableLiveData<>();
         if (categoryId==0){
             RetrofitConfig.getRetrofit().create(RetrofitApi.class).getsortedProductsList(order ,
-                    orderBy , page , search).enqueue(new Callback<List<WebserviceProductModel>>() {
+                    orderBy , page , search , attribute , attributeTerm).enqueue(new Callback<List<WebserviceProductModel>>() {
                 @Override
                 public void onResponse(Call<List<WebserviceProductModel>> call, Response<List<WebserviceProductModel>> response) {
                     if (response.isSuccessful()){
                         sortProductsListMutableLiveData.setValue(response.body());
-                        Log.e("TAG4" , response.body().size()+"");
 
                     }
                 }
@@ -323,12 +322,11 @@ public class Repository {
             });
         }else {
             RetrofitConfig.getRetrofit().create(RetrofitApi.class).getsortedProductsListWithCategory(categoryId ,order ,
-                    orderBy , page , search).enqueue(new Callback<List<WebserviceProductModel>>() {
+                    orderBy , page , search, attribute , attributeTerm).enqueue(new Callback<List<WebserviceProductModel>>() {
                 @Override
                 public void onResponse(Call<List<WebserviceProductModel>> call, Response<List<WebserviceProductModel>> response) {
                     if (response.isSuccessful()){
                         sortProductsListMutableLiveData.setValue(response.body());
-                        Log.e("TAG4" , response.body().size()+"");
 
                     }
                 }
@@ -400,5 +398,41 @@ public class Repository {
                     }
                 });
         return updateCustomerMutable;
+    }
+    public MutableLiveData<List<WebServiceAttribute>> getAllAttributes(){
+        attributeProductsMutable = new MutableLiveData<>();
+        RetrofitConfig.getRetrofit().create(RetrofitApi.class).getAllAttributes().enqueue(new Callback<List<WebServiceAttribute>>() {
+            @Override
+            public void onResponse(Call<List<WebServiceAttribute>> call, Response<List<WebServiceAttribute>> response) {
+                if (response.isSuccessful()){
+                    attributeProductsMutable.setValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<WebServiceAttribute>> call, Throwable t) {
+
+            }
+        });
+        return attributeProductsMutable;
+    }
+
+    public MutableLiveData<List<WebServiceAttributeTerm>> getAllAttributeTerms(int attributeId){
+        attributeTermProductsMutable = new MutableLiveData<>();
+        RetrofitConfig.getRetrofit().create(RetrofitApi.class).getAllAttributeTerms(attributeId)
+                .enqueue(new Callback<List<WebServiceAttributeTerm>>() {
+                    @Override
+                    public void onResponse(Call<List<WebServiceAttributeTerm>> call, Response<List<WebServiceAttributeTerm>> response) {
+                        if (response.isSuccessful()){
+                            attributeTermProductsMutable.setValue(response.body());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<WebServiceAttributeTerm>> call, Throwable t) {
+
+                    }
+                });
+        return attributeTermProductsMutable;
     }
 }

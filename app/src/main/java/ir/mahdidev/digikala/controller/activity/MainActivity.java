@@ -109,7 +109,6 @@ public class MainActivity extends SingleFragmentActivity implements NavigationVi
 
         if (webServiceCustomerModel!=null){
             String nameTxt = webServiceCustomerModel.getFirstName() + " " + webServiceCustomerModel.getLastName();
-
             nameCustomer.setText(nameTxt);
             loginRegisterImage.setVisibility(View.GONE);
             personInfo.setVisibility(View.VISIBLE);
@@ -117,6 +116,10 @@ public class MainActivity extends SingleFragmentActivity implements NavigationVi
             loginRegisterImage.setVisibility(View.VISIBLE);
             personInfo.setVisibility(View.GONE);
         }
+
+        personInfo.setOnClickListener(view -> {
+              startActivity(CustomerInfoActivity.newIntent(MainActivity.this));
+        });
 
     }
 

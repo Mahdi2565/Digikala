@@ -1,29 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    android:background="@color/productBackGroundColor"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".controller.fragment.CommentsFragment">
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    tools:context=".controller.fragment.FilterProductsFragment">
 
-    <TextView
-        android:visibility="gone"
-        android:id="@+id/empty_comment"
-        android:textStyle="bold"
-        android:textColor="@color/relateProductTitle"
-        android:textSize="20sp"
-        android:layout_centerInParent="true"
-        android:text="@string/no_comment"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -53,11 +35,10 @@
                 android:textStyle="bold"
                 android:maxLines="1"
                 android:textSize="16sp"
-                android:id="@+id/title_product_toolbar"
                 android:textColor="@color/white"
                 android:gravity="center"
                 android:layout_centerVertical="true"
-                android:text="@string/comment_users"
+                android:text="@string/filter_product"
                 android:layout_toStartOf="@+id/back_toolbar"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
@@ -66,26 +47,44 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <RelativeLayout
+
+    <LinearLayout
         android:layout_below="@id/toolbar"
-        android:id="@+id/parent_relative"
+        android:layout_above="@id/filter_btn"
+        android:weightSum="1"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/comments_recyclerView"
+            android:id="@+id/attributes_term_recyclerView"
+            android:layout_weight="0.4"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-    </RelativeLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        app:srcCompat="@drawable/ic_add_black_24dp"
-        app:backgroundTint="@color/colorPrimary"
-        android:layout_margin="16dp"
-        android:id="@+id/add_comment_fab"
-        android:layout_alignParentEnd="true"
+        <androidx.recyclerview.widget.RecyclerView
+            android:background="@color/attributeBackgroundColor"
+            android:id="@+id/attributes_recyclerView"
+            android:layout_weight="0.6"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:background="@color/loginDigikalaButton"
+        android:gravity="center"
+        android:id="@+id/filter_btn"
         android:layout_alignParentBottom="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
+        android:layout_width="match_parent"
+        android:layout_height="56dp">
+            <TextView
+                android:id="@+id/finalize_txt"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:text="@string/_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
 </RelativeLayout>

@@ -1,6 +1,7 @@
 package ir.mahdidev.digikala.controller.fragment;
 
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -25,6 +26,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.nio.file.Path;
 import java.util.List;
 
 import butterknife.BindView;
@@ -68,6 +70,8 @@ public class ProductsListFragment extends Fragment {
     RelativeLayout sortRelative;
     @BindView(R.id.sub_sort_txt)
     TextView subSortTxt;
+    @BindView(R.id.filter_relative)
+    RelativeLayout filterRelative;
     public ProductsListFragment() {
     }
     private ListProductData listProductData;
@@ -105,6 +109,16 @@ public class ProductsListFragment extends Fragment {
         searchImgFunction();
         sortProductDialog();
         subSortTxtFunction();
+        filterFunction();
+    }
+
+    private void filterFunction() {
+        filterRelative.setOnClickListener(view ->{
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(Const.BundleKey.PRODUCT_LIST_DATA_BUNDLE_KEY , listProductData);
+            navController.navigate(R.id.action_productsListFragment_to_filterProductsFragment , bundle);
+                });
+
     }
 
     private void subSortTxtFunction() {

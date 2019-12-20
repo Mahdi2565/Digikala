@@ -14,7 +14,10 @@ import ir.mahdidev.digikala.networkmodel.CustomerRepository;
 import ir.mahdidev.digikala.networkmodel.Repository;
 import ir.mahdidev.digikala.networkmodel.address.WebServiceAddress;
 import ir.mahdidev.digikala.networkmodel.comment.WebServiceCommentModel;
+import ir.mahdidev.digikala.networkmodel.coupon.WebServiceCoupon;
 import ir.mahdidev.digikala.networkmodel.customer.WebServiceCustomerModel;
+import ir.mahdidev.digikala.networkmodel.order.WebServiceOrder;
+import ir.mahdidev.digikala.networkutil.RetrofitConfig;
 
 public class CustomerViewModel extends AndroidViewModel {
     private Repository repository;
@@ -55,5 +58,11 @@ public class CustomerViewModel extends AndroidViewModel {
     }
     public void clearCustomerAddress(){
         customerRepository.clearAddressData();
+    }
+    public LiveData<List<WebServiceOrder>> getAllOrders(int customerId){
+        return customerRepository.getAllOrders(customerId);
+    }
+    public LiveData<List<WebServiceCoupon>> verifyCoupon(String couponCode){
+        return customerRepository.verifyCoupon(couponCode);
     }
 }

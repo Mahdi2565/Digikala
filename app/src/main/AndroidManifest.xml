@@ -16,19 +16,40 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".controller.activity.MapActivity"></activity>
-        <activity android:name=".controller.activity.CustomerInfoActivity" />
-        <activity android:name=".controller.activity.LoginRegisterActivity" />
-        <activity android:name=".controller.activity.SearchActivity" />
+        <activity android:name=".controller.activity.MapActivity"
+            android:launchMode="singleTask"></activity>
+        <activity android:name=".controller.activity.CustomerInfoActivity"
+            android:launchMode="singleTask"
+            />
+        <activity android:name=".controller.activity.LoginRegisterActivity"
+            android:launchMode="singleTask"
+            />
+        <activity android:name=".controller.activity.SearchActivity"
+            android:launchMode="singleTask"
+            />
         <activity
+            android:launchMode="singleTask"
             android:name=".controller.activity.ProductsListActivity"
             android:configChanges="orientation|screenSize|keyboard|keyboardHidden" />
-        <activity android:name=".controller.activity.CategoryListActivity" />
-        <activity android:name=".controller.activity.FavoriteProductsActivity" />
-        <activity android:name=".controller.activity.ProductBasketActivity" />
-        <activity android:name=".controller.activity.ProductActivity" />
-        <activity android:name=".controller.activity.NoInternetConnectionActivity" />
-        <activity android:name=".controller.activity.SplashScreenActivity">
+        <activity android:name=".controller.activity.CategoryListActivity"
+            android:launchMode="singleTask"
+            />
+        <activity android:name=".controller.activity.FavoriteProductsActivity"
+            android:launchMode="singleTask"
+            />
+        <activity android:name=".controller.activity.ProductBasketActivity"
+            android:launchMode="singleTask"
+            />
+        <activity android:name=".controller.activity.ProductActivity"
+            android:launchMode="singleTask"
+            />
+        <activity android:name=".controller.activity.NoInternetConnectionActivity"
+            android:launchMode="singleTask"
+            />
+        <activity android:name=".controller.activity.SplashScreenActivity"
+            android:launchMode="singleTask"
+            >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,6 +57,7 @@
             </intent-filter>
         </activity>
         <activity
+            android:launchMode="singleTask"
             android:name=".controller.activity.MainActivity"
             android:configChanges="orientation|screenSize|keyboard|keyboardHidden" />
 

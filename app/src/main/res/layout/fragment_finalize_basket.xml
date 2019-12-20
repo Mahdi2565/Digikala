@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".controller.fragment.FinalizeBasketFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:padding="8dp"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_margin="8dp"
+                android:id="@+id/back_toolbar"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                app:srcCompat="@drawable/ic_arrow_forward_black_24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="true" />
+
+
+            <TextView
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                android:text="@string/send_order"
+                android:layout_toStartOf="@+id/back_toolbar"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_below="@id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:text="@string/customer_address"
+                android:id="@+id/customer_address"
+                android:padding="16dp"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_below="@id/customer_address"
+                android:id="@+id/customer_address_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:text="@string/products"
+                android:id="@+id/products_txt"
+                android:padding="16dp"
+                android:layout_below="@id/customer_address_recyclerView"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/products_recyclerView"
+                android:layout_below="@id/products_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:weightSum="6"
+                android:orientation="horizontal"
+                android:id="@+id/copons_linear"
+                android:layout_below="@id/products_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_margin="8dp"
+                    android:layout_weight="5.7"
+                    android:id="@+id/coupons_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:hint="@string/enter_coupons"
+                        android:id="@+id/coupons_edt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:id="@+id/register_coupons"
+                    android:text="@string/register_coupons"
+                    android:textColor="@color/white"
+                    android:layout_margin="4dp"
+                    android:layout_weight="0.3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_margin="8dp"
+                android:id="@+id/description_order_layout"
+                android:hint="@string/description_order"
+                android:layout_below="@id/copons_linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:inputType="textMultiLine"
+                    android:id="@+id/order_note_edt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_below="@id/description_order_layout"
+                android:orientation="horizontal"
+                android:background="@color/priceColor"
+                android:gravity="center"
+                android:id="@+id/register_order"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="56dp">
+                <TextView
+                    android:id="@+id/finalize_txt"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:text="@string/register_order"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

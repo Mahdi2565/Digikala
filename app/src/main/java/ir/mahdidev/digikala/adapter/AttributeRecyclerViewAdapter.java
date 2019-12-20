@@ -49,18 +49,7 @@ public class AttributeRecyclerViewAdapter extends RecyclerView.Adapter<Attribute
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         WebServiceAttribute attribute = attributeList.get(position);
         holder.attributeText.setText(attribute.getName());
-        holder.parentAttribute.setOnClickListener(view ->{
-            attributeAdapterInterface.onAttributeClicked(attribute.getId());
-            if(lastSelectedPosition > 0) {
-                attributeList.get(lastSelectedPosition).setSelected(false);
-            }
-            attribute.setSelected(!attribute.isSelected());
-            holder.parentAttribute.setBackgroundColor(attribute.isSelected() ? Color.WHITE :
-                    context.getResources().getColor(R.color.attributeBackgroundColor));
-            holder.attributeText.setTextColor(attribute.isSelected()? context.getResources().getColor(R.color.attributeBackgroundColor):
-                    context.getResources().getColor(R.color.white));
-            lastSelectedPosition = holder.getAdapterPosition();
-        });
+
     }
 
     @Override
@@ -76,6 +65,20 @@ public class AttributeRecyclerViewAdapter extends RecyclerView.Adapter<Attribute
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this , itemView);
+            parentAttribute.setOnClickListener(view ->{
+                WebServiceAttribute attribute = attributeList.get(getAdapterPosition());
+
+                lastSelectedPosition = getAdapterPosition();
+                notifyDataSetChanged();
+                attributeAdapterInterface.onAttributeClicked(attribute.getId());
+
+                attribute.setSelected(!attribute.isSelected());
+                parentAttribute.setBackgroundColor(attribute.isSelected() ? Color.WHITE :
+                        context.getResources().getColor(R.color.attributeBackgroundColor));
+                attributeText.setTextColor(attribute.isSelected()? context.getResources().getColor(R.color.attributeBackgroundColor):
+                        context.getResources().getColor(R.color.white));
+                lastSelectedPosition =getAdapterPosition();
+            });
         }
     }
     public interface AttributeAdapterInterface{

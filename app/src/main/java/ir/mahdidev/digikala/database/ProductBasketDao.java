@@ -25,5 +25,6 @@ public interface ProductBasketDao {
     void delete(ProductBasketModel productBasketModel);
     @Query("SELECT count(*) FROM product_basket")
     LiveData<Integer> getProductCount();
-
+    @Query("DELETE FROM product_basket")
+    void deleteAllRows();
 }

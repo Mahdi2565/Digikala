@@ -50,6 +50,11 @@ public class LineItem {
     @Expose
     private Integer price;
 
+    public LineItem(Integer productId, Integer quantity) {
+        this.productId = productId;
+        this.quantity = quantity;
+    }
+
     public Integer getId() {
         return id;
     }

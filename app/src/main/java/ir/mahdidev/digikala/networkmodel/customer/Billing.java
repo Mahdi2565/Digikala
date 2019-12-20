@@ -14,7 +14,7 @@ public class Billing {
     private String lastName;
     @SerializedName("company")
     @Expose
-    private String company;
+    private String latLong;
     @SerializedName("address_1")
     @Expose
     private String address1;
@@ -47,6 +47,19 @@ public class Billing {
         this.phone = phone;
     }
 
+    public Billing(String firstName, String lastName, String latLong, String address1, String address2, String city, String state, String postcode, String country, String email, String phone) {        this.firstName = firstName;
+        this.lastName = lastName;
+        this.latLong = latLong;
+        this.address1 = address1;
+        this.address2 = address2;
+        this.city = city;
+        this.state = state;
+        this.postcode = postcode;
+        this.country = country;
+        this.email = email;
+        this.phone = phone;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -63,12 +76,12 @@ public class Billing {
         this.lastName = lastName;
     }
 
-    public String getCompany() {
-        return company;
+    public String getLatLong() {
+        return latLong;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
+    public void setLatLong(String latLong) {
+        this.latLong = latLong;
     }
 
     public String getAddress1() {

@@ -1,5 +1,7 @@
 package ir.mahdidev.digikala.networkmodel;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -33,7 +35,7 @@ public class Repository {
     private MutableLiveData<List<WebserviceProductModel>> mostRatingProductListLiveData = new MutableLiveData<>();
     private MutableLiveData<List<WebserviceProductModel>> mostVisitingProductListLiveData = new MutableLiveData<>();
     private MutableLiveData<Integer> productIdMutableLiveData = new MutableLiveData<>();
-    private MutableLiveData<WebserviceProductModel> singleProductMutableLiveData;
+    private MutableLiveData<WebserviceProductModel> singleProductMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<List<WebserviceCategoryModel>> productCategoriesMutableLiveData;
     private MutableLiveData<List<WebserviceProductModel>> relatedProductMutableLiveData;
     private MutableLiveData<List<WebserviceProductModel>> especialProductsMutabaleLiveData = new MutableLiveData<>();
@@ -44,6 +46,7 @@ public class Repository {
     private MutableLiveData<WebServiceCustomerModel> updateCustomerMutable = new MutableLiveData<>();
     private MutableLiveData<List<WebServiceAttribute>> attributeProductsMutable;
     private MutableLiveData<List<WebServiceAttributeTerm>> attributeTermProductsMutable;
+    private MutableLiveData<WebServiceCommentModel> updateCommentMutable;
 
     public static Repository getInstance() {
         if (instance == null) {
@@ -73,6 +76,9 @@ public class Repository {
     }
     public void deleteProductBaskerDb(ProductBasketModel productBasketModel){
         roomConfig.productBasketDao().delete(productBasketModel);
+    }
+    public void deleteAllRows(){
+        roomConfig.productBasketDao().deleteAllRows();
     }
 
     public LiveData<List<ProductFavoriteModel>> getAllProductFavoriteDb(){
@@ -434,5 +440,23 @@ public class Repository {
                     }
                 });
         return attributeTermProductsMutable;
+    }
+    public MutableLiveData<WebServiceCommentModel> updateComment(WebServiceCommentModel webServiceCommentModel){
+        updateCommentMutable = new MutableLiveData<>();
+        RetrofitConfig.getRetrofit().create(RetrofitApi.class).updateComment(webServiceCommentModel.getId() ,webServiceCommentModel)
+                .enqueue(new Callback<WebServiceCommentModel>() {
+                    @Override
+                    public void onResponse(Call<WebServiceCommentModel> call, Response<WebServiceCommentModel> response) {
+                        if (response.isSuccessful()){
+                            updateCommentMutable.setValue(response.body());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<WebServiceCommentModel> call, Throwable t) {
+
+                    }
+                });
+        return updateCommentMutable;
     }
 }

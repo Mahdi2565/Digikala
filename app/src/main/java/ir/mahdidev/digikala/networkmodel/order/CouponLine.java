@@ -19,6 +19,12 @@ public class CouponLine {
     @SerializedName("discount_tax")
     @Expose
     private String discountTax;
+
+    public CouponLine( String code, String discount) {
+        this.code = code;
+        this.discount = discount;
+    }
+
     public Integer getId() {
         return id;
     }

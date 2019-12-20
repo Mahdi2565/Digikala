@@ -40,15 +40,12 @@ public class MainHorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Main
     public void setProductList(List<WebserviceProductModel> productList ) {
         this.productList.addAll(productList);
     }
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.horizontal_recyclerview_item_price
                         , parent , false));
         }
-
-
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if (productList.get(position).getPrice().equals("")) productList.remove(position);

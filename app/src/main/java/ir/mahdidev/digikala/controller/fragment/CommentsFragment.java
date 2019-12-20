@@ -105,7 +105,9 @@ public class CommentsFragment extends Fragment {
             addCommentFab.show();
 
         addCommentFab.setOnClickListener(view -> {
-            navController.navigate(R.id.action_commentsFragment_to_addCommentDialogFragment);
+            Bundle bundle = new Bundle();
+            bundle.putInt(Const.BundleKey.COMMENT_FRAGMENT_POSITION , Const.COMMENT_FRAGMENT_ADD);
+            navController.navigate(R.id.action_commentsFragment_to_addCommentDialogFragment , bundle);
         });
     }
 
@@ -158,8 +160,10 @@ public class CommentsFragment extends Fragment {
 
             @Override
             public void onEditClicked(WebServiceCommentModel webServiceCommentModel) {
-
-            }
+                Bundle bundle = new Bundle();
+                bundle.putInt(Const.BundleKey.COMMENT_FRAGMENT_POSITION , Const.COMMENT_FRAGMENT_EDIT);
+                bundle.putSerializable(Const.BundleKey.COMMENT_MODEL_BUNDLE_KEY , webServiceCommentModel);
+                navController.navigate(R.id.action_commentsFragment_to_addCommentDialogFragment , bundle);            }
         });
     }
 }

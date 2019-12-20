@@ -12,9 +12,9 @@ public class Shipping {
     @SerializedName("last_name")
     @Expose
     private String lastName;
-    @SerializedName("company")
+    @SerializedName("latLon")
     @Expose
-    private String company;
+    private String latLon;
     @SerializedName("address_1")
     @Expose
     private String address1;
@@ -34,6 +34,23 @@ public class Shipping {
     @Expose
     private String country;
 
+    public Shipping(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public Shipping(String firstName, String lastName, String latLon, String address1, String address2, String city, String state, String postcode, String country) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.latLon = latLon;
+        this.address1 = address1;
+        this.address2 = address2;
+        this.city = city;
+        this.state = state;
+        this.postcode = postcode;
+        this.country = country;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -50,12 +67,12 @@ public class Shipping {
         this.lastName = lastName;
     }
 
-    public String getCompany() {
-        return company;
+    public String getLatLon() {
+        return latLon;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
+    public void setLatLon(String latLon) {
+        this.latLon = latLon;
     }
 
     public String getAddress1() {

@@ -10,17 +10,16 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.FragmentNavigator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -33,7 +32,9 @@ import ir.mahdidev.digikala.R;
 import ir.mahdidev.digikala.adapter.ProductBasketAdapterRecyclerView;
 import ir.mahdidev.digikala.database.ProductBasketModel;
 import ir.mahdidev.digikala.eventbus.OnProductClickedMessage;
+import ir.mahdidev.digikala.networkmodel.customer.WebServiceCustomerModel;
 import ir.mahdidev.digikala.util.MyApplication;
+import ir.mahdidev.digikala.util.Pref;
 import ir.mahdidev.digikala.viewmodel.ProductBasketViewModel;
 
 /**
@@ -45,6 +46,8 @@ public class ProductBasketFragment extends Fragment {
     RecyclerView productRecyclerView;
     @BindView(R.id.basket_badge)
     TextView basketBadge;
+    private WebServiceCustomerModel webServiceCustomerModel;
+
     @OnClick(R.id.back_toolbar)
     void onBackClicked(){
         getActivity().finish();
@@ -64,6 +67,12 @@ public class ProductBasketFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        webServiceCustomerModel = Pref.getCustomerModelFromPref(getActivity());
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_product_basket, container, false);
@@ -75,6 +84,17 @@ public class ProductBasketFragment extends Fragment {
         ButterKnife.bind(this, view);
         navController = Navigation.findNavController(view);
         initViewModel();
+        finalizeFunction();
+    }
+
+    private void finalizeFunction() {
+        finalizeBasket.setOnClickListener(view -> {
+            if (webServiceCustomerModel==null){
+                Toast.makeText(getActivity() , getString(R.string.login_first) , Toast.LENGTH_LONG).show();
+            }else {
+                navController.navigate(R.id.action_productBasketFragment_to_finalizeBasketFragment);
+            }
+        });
     }
 
     private void initViewModel() {

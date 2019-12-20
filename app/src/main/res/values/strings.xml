@@ -94,4 +94,17 @@
     <string name="cant_delete_comment">متاسفانه کامنت شما پاک نشد!</string>
     <string name="_filter">فیلترکن</string>
     <string name="filter_product">فیلترکردن محصول</string>
+    <string name="send_order">ارسال سفارش</string>
+    <string name="products">محصولات</string>
+    <string name="description_order">توضیحات سفارش</string>
+    <string name="register_order">ثبت نهایی سفارش</string>
+    <string name="customer_address">آدرس مشتری</string>
+    <string name="order_history">سوابق سفارش</string>
+    <string name="no_product_ordered">هیچ محصولی سفارش نداده اید</string>
+    <string name="login_first">لطفا ابتدا لاگین کنین</string>
+    <string name="enter_coupons">کوپن خود را وارد کنید</string>
+    <string name="register_coupons">ثبت</string>
+    <string name="publish_comment">کامنت شما منتشر شد</string>
+    <string name="cant_update_comment">متاسفانه کامنت شما به روز رسانی نشد</string>
+    <string name="update_comment">کامنت شما به روز رسانی شد</string>
 </resources>

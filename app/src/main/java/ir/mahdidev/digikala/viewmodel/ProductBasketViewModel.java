@@ -9,13 +9,17 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import ir.mahdidev.digikala.database.ProductBasketModel;
+import ir.mahdidev.digikala.networkmodel.CustomerRepository;
 import ir.mahdidev.digikala.networkmodel.Repository;
+import ir.mahdidev.digikala.networkmodel.order.WebServiceOrder;
 
 public class ProductBasketViewModel extends AndroidViewModel {
     private Repository repository;
+    private CustomerRepository customerRepository;
     public ProductBasketViewModel(@NonNull Application application) {
         super(application);
         repository = Repository.getInstance();
+        customerRepository = CustomerRepository.getInstance();
     }
     public LiveData<Integer> getProductCount(){
         return repository.getProductBasketCountDb();
@@ -26,5 +30,10 @@ public class ProductBasketViewModel extends AndroidViewModel {
     public void deleteProduct(ProductBasketModel productBasketModel){
         repository.deleteProductBaskerDb(productBasketModel);
     }
-
+    public LiveData<WebServiceOrder> sendOrder(WebServiceOrder webServiceOrder){
+        return customerRepository.sendOrder(webServiceOrder);
+    }
+    public void deleteAllProductsRows(){
+        repository.deleteAllRows();
+    }
 }

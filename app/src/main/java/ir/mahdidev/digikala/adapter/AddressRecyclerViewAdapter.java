@@ -4,9 +4,11 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -16,15 +18,20 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ir.mahdidev.digikala.R;
 import ir.mahdidev.digikala.database.CustomerAddressModel;
+import ir.mahdidev.digikala.networkmodel.address.WebServiceAddress;
+import ir.mahdidev.digikala.networkmodel.order.WebServiceOrder;
+import ir.mahdidev.digikala.util.Const;
 
 public class AddressRecyclerViewAdapter extends RecyclerView.Adapter<AddressRecyclerViewAdapter.ViewHolder> {
 
     private List<CustomerAddressModel> addressList;
     private Context context;
+    private int adapterPosition;
 
-    public AddressRecyclerViewAdapter(List<CustomerAddressModel> addressList, Context context) {
+    public AddressRecyclerViewAdapter(List<CustomerAddressModel> addressList, Context context, int adapterPosition) {
         this.addressList = addressList;
         this.context = context;
+        this.adapterPosition = adapterPosition;
     }
 
     public void setAddressList(List<CustomerAddressModel> addressList) {
@@ -32,11 +39,23 @@ public class AddressRecyclerViewAdapter extends RecyclerView.Adapter<AddressRecy
         this.addressList.addAll(addressList);
     }
 
+    public CustomerAddressModel getCustomerAddress(){
+        // TODO: 12/20/2019 getCustomerModelWhenRadioButtonClicked
+        return addressList.get(0);
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.customer_address_item ,
-                parent , false));
+        if (adapterPosition == Const.FROM_ADDRESS_FRAGMENT){
+            View addressFragment = LayoutInflater.from(context).inflate(R.layout.customer_address_item ,
+                    parent , false);
+            return new ViewHolder(addressFragment);
+        }else {
+            View finalFragmnet = LayoutInflater.from(context).inflate(R.layout.address_final_basket_item ,
+                    parent , false);
+            return new ViewHolder(finalFragmnet);
+        }
     }
 
     @Override
@@ -49,8 +68,12 @@ public class AddressRecyclerViewAdapter extends RecyclerView.Adapter<AddressRecy
         holder.customerAddress.setText(address);
         holder.fullCustomerName.setText(fullName);
         holder.customerPhoneNumber.setText(phoneNumber);
-        holder.deleteAddress.setOnClickListener(view ->
-                addressRecyclerViewAdapterInterface.onDeleteAddressClicked(customerAddressModel));
+        if (adapterPosition == Const.FROM_ADDRESS_FRAGMENT){
+            holder.deleteAddress.setOnClickListener(view ->
+                    addressRecyclerViewAdapterInterface.onDeleteAddressClicked(customerAddressModel));
+        }else {
+            holder.selectAddress.setChecked(true);
+        }
     }
 
     @Override
@@ -68,8 +91,12 @@ public class AddressRecyclerViewAdapter extends RecyclerView.Adapter<AddressRecy
         TextView customerAddress;
         @BindView(R.id.customer_phone)
         TextView customerPhoneNumber;
+        @Nullable
         @BindView(R.id.delete_address)
         TextView deleteAddress;
+        @Nullable
+        @BindView(R.id.select_address_radio_button)
+        RadioButton selectAddress;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this , itemView);

@@ -9,7 +9,9 @@ import ir.mahdidev.digikala.networkmodel.attribute.WebServiceAttribute;
 import ir.mahdidev.digikala.networkmodel.attributeterm.WebServiceAttributeTerm;
 import ir.mahdidev.digikala.networkmodel.category.WebserviceCategoryModel;
 import ir.mahdidev.digikala.networkmodel.comment.WebServiceCommentModel;
+import ir.mahdidev.digikala.networkmodel.coupon.WebServiceCoupon;
 import ir.mahdidev.digikala.networkmodel.customer.WebServiceCustomerModel;
+import ir.mahdidev.digikala.networkmodel.order.WebServiceOrder;
 import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -75,5 +77,12 @@ public interface RetrofitApi {
     Call<List<WebServiceAttribute>> getAllAttributes();
     @GET("products/attributes/{id}/terms")
     Call<List<WebServiceAttributeTerm>> getAllAttributeTerms(@Path("id") int attributeId);
-
+    @POST("orders")
+    Call<WebServiceOrder> sendOrder(@Body WebServiceOrder webServiceOrder);
+    @GET("orders")
+    Call<List<WebServiceOrder>> getAllOrders(@Query("customer") int customerId);
+    @GET("coupons")
+    Call<List<WebServiceCoupon>> verifyCouponCode(@Query("code")String couponCode);
+    @PUT("products/reviews/{id}")
+    Call<WebServiceCommentModel> updateComment(@Path("id") int id , @Body WebServiceCommentModel webServiceCommentModel);
 }

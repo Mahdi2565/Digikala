@@ -15,7 +15,9 @@ public class Const {
         public static final String PRODUCT_LIST_DATA_BUNDLE_KEY = "product_list_data_bundle_key";
         public static final String CATEGORY_POSITION_BUNDLE_KEY = "category_position_bundle_key";
         public static final String PRODUCT_LIST_DATA_TO_SORT_FRAGMENT_BUNDLE_KEY = "product_data_to_sort_fragment";
-        public static final String LOCATION_TO_BOTTOM_SHEET = "location_to_bottom_sheet_bundle_key";
+        public static final String COMMENT_FRAGMENT_POSITION = "comment_fragment_position";
+        public static final String COMMENT_MODEL_BUNDLE_KEY = "comment_model_bundle_key";
+
     }
     public static class OrderTag{
         public static final String MOST_VISITING_PRODUCT = "popularity";
@@ -38,4 +40,8 @@ public class Const {
     public static final int SPECIAL_TAG = 48 ;
     public static final int FROM_MAIN_FRAGMENT = 0;
     public static final int FROM_PRODUCT_FRAGMENT = 1;
+    public static final int FROM_ADDRESS_FRAGMENT = 0;
+    public static final int FROM_FINALIZE_BASKET_FRAGMENT = 1;
+    public static final int COMMENT_FRAGMENT_EDIT = 0;
+    public static final int COMMENT_FRAGMENT_ADD = 1;
 }

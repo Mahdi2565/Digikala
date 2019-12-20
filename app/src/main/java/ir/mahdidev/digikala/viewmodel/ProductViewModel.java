@@ -18,6 +18,8 @@ import ir.mahdidev.digikala.networkmodel.attributeterm.WebServiceAttributeTerm;
 import ir.mahdidev.digikala.networkmodel.category.WebserviceCategoryModel;
 import ir.mahdidev.digikala.networkmodel.comment.WebServiceCommentModel;
 import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
+import ir.mahdidev.digikala.networkutil.RetrofitApi;
+import ir.mahdidev.digikala.networkutil.RetrofitConfig;
 import okhttp3.ResponseBody;
 
 public class ProductViewModel extends AndroidViewModel {
@@ -33,49 +35,68 @@ public class ProductViewModel extends AndroidViewModel {
     public MutableLiveData<Integer> getProductIdMutableLiveData() {
         return repository.getProductIdMutableLiveData();
     }
-    public MutableLiveData<WebserviceProductModel> getSingleProductLiveData(){
+
+    public MutableLiveData<WebserviceProductModel> getSingleProductLiveData() {
         return repository.getSingleProductMutableLiveData();
     }
-    public MutableLiveData<WebserviceProductModel> loadSingleProductLiveData(int productId){
+
+    public MutableLiveData<WebserviceProductModel> loadSingleProductLiveData(int productId) {
         return repository.getSingleProduct(productId);
     }
-    public MutableLiveData<List<WebserviceCategoryModel>> getProductCategories(int productId){
+
+    public MutableLiveData<List<WebserviceCategoryModel>> getProductCategories(int productId) {
         return repository.getProductCategories(productId);
     }
-    public MutableLiveData<List<WebserviceProductModel>>  getRelatedProducts(String... relatedProductIds){
-     return repository.getRelatedProduct(relatedProductIds);
+
+    public MutableLiveData<List<WebserviceProductModel>> getRelatedProducts(String... relatedProductIds) {
+        return repository.getRelatedProduct(relatedProductIds);
     }
-    public LiveData<Integer> getProductCount(){
+
+    public LiveData<Integer> getProductCount() {
         return repository.getProductBasketCountDb();
     }
-    public void insertBasketDb(ProductBasketModel productBasketModel){
+
+    public void insertBasketDb(ProductBasketModel productBasketModel) {
         repository.insertProductBaskerDb(productBasketModel);
     }
-    public void updateBasketDb(ProductBasketModel productBasketModel){
+
+    public void updateBasketDb(ProductBasketModel productBasketModel) {
         repository.updateProductBaskerDb(productBasketModel);
     }
-    public void insertFavoritetDb(ProductFavoriteModel productFavoriteModel){
+
+    public void insertFavoritetDb(ProductFavoriteModel productFavoriteModel) {
         repository.insertProductFavoriteDb(productFavoriteModel);
     }
-    public void deleteFavoriteDb(ProductFavoriteModel productFavoriteModel){
+
+    public void deleteFavoriteDb(ProductFavoriteModel productFavoriteModel) {
         repository.deleteProductFavoriteDb(productFavoriteModel);
     }
-    public ProductFavoriteModel getSingleProductFavorite(int productId){
+
+    public ProductFavoriteModel getSingleProductFavorite(int productId) {
         return repository.getSingleProductFavorite(productId);
     }
-    public LiveData<List<WebServiceCommentModel>> getCommentsProduct(int productId){
+
+    public LiveData<List<WebServiceCommentModel>> getCommentsProduct(int productId) {
         return repository.getCommentsProduct(productId);
     }
-    public LiveData<WebServiceCommentModel> sendCustomerComment(WebServiceCommentModel webServiceCommentModel){
+
+    public LiveData<WebServiceCommentModel> sendCustomerComment(WebServiceCommentModel webServiceCommentModel) {
         return customerRepository.sendCustomerComment(webServiceCommentModel);
     }
-    public LiveData<WebServiceCommentModel> deleteCustomerComment(int commentId){
+
+    public LiveData<WebServiceCommentModel> deleteCustomerComment(int commentId) {
         return customerRepository.deleteComment(commentId);
     }
-    public LiveData<List<WebServiceAttribute>> getAllAttributes(){
+
+    public LiveData<List<WebServiceAttribute>> getAllAttributes() {
         return repository.getAllAttributes();
     }
-    public LiveData<List<WebServiceAttributeTerm>> getAllAttributeTerm(int attributeId){
+
+    public LiveData<List<WebServiceAttributeTerm>> getAllAttributeTerm(int attributeId) {
         return repository.getAllAttributeTerms(attributeId);
+    }
+
+    public LiveData<WebServiceCommentModel> updateComment(WebServiceCommentModel webServiceCommentModel) {
+        return repository.updateComment(webServiceCommentModel);
     }
 }

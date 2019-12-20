@@ -28,6 +28,7 @@ import ir.mahdidev.digikala.R;
 import ir.mahdidev.digikala.adapter.AddressRecyclerViewAdapter;
 import ir.mahdidev.digikala.database.CustomerAddressModel;
 import ir.mahdidev.digikala.networkmodel.customer.WebServiceCustomerModel;
+import ir.mahdidev.digikala.util.Const;
 import ir.mahdidev.digikala.util.Pref;
 import ir.mahdidev.digikala.viewmodel.CustomerViewModel;
 
@@ -75,7 +76,7 @@ public class CustomerAddressFragment extends Fragment {
 
     private void initRecyclerView(List<CustomerAddressModel> customerAddressModels) {
         if (addressRecyclerViewAdapter==null){
-            addressRecyclerViewAdapter = new AddressRecyclerViewAdapter(customerAddressModels , getActivity());
+            addressRecyclerViewAdapter = new AddressRecyclerViewAdapter(customerAddressModels , getActivity() , Const.FROM_ADDRESS_FRAGMENT);
         }else {
             addressRecyclerViewAdapter.setAddressList(customerAddressModels);
             addressRecyclerViewAdapter.notifyDataSetChanged();

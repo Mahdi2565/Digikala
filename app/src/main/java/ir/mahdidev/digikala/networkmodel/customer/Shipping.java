@@ -39,6 +39,18 @@ public class Shipping {
         this.lastName = lastName;
     }
 
+    public Shipping(String firstName, String lastName, String latLon, String address1, String address2, String city, String state, String postcode, String country) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.latLon = latLon;
+        this.address1 = address1;
+        this.address2 = address2;
+        this.city = city;
+        this.state = state;
+        this.postcode = postcode;
+        this.country = country;
+    }
+
     public String getFirstName() {
         return firstName;
     }

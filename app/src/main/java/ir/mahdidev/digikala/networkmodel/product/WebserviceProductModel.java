@@ -206,6 +206,8 @@ public class WebserviceProductModel {
     @Expose
     private Links links;
 
+
+
     public Integer getId() {
         return id;
     }

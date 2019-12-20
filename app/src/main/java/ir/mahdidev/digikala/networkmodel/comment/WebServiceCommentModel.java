@@ -1,6 +1,8 @@
 package ir.mahdidev.digikala.networkmodel.comment;
 
-public class WebServiceCommentModel {
+import java.io.Serializable;
+
+public class WebServiceCommentModel implements Serializable {
 
     private Integer id;
     private String date_created;
@@ -12,6 +14,10 @@ public class WebServiceCommentModel {
     private String review;
     private int rating;
     private boolean verified;
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public void setVerified(boolean verified) {
         this.verified = verified;

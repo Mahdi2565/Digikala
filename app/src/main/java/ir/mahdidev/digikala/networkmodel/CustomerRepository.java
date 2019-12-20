@@ -11,6 +11,8 @@ import ir.mahdidev.digikala.database.CustomerAddressModel;
 import ir.mahdidev.digikala.database.RoomConfig;
 import ir.mahdidev.digikala.networkmodel.address.WebServiceAddress;
 import ir.mahdidev.digikala.networkmodel.comment.WebServiceCommentModel;
+import ir.mahdidev.digikala.networkmodel.coupon.WebServiceCoupon;
+import ir.mahdidev.digikala.networkmodel.order.WebServiceOrder;
 import ir.mahdidev.digikala.networkutil.RetrofitApi;
 import ir.mahdidev.digikala.networkutil.RetrofitConfig;
 import ir.mahdidev.digikala.util.Const;
@@ -37,6 +39,9 @@ public class CustomerRepository {
     private MutableLiveData<WebServiceAddress> customerAddressMutable = new MutableLiveData<>();
     private MutableLiveData<WebServiceCommentModel> sendCustomerCommentMutable = new MutableLiveData<>();
     private MutableLiveData<WebServiceCommentModel> deleteCommentMutable;
+    private MutableLiveData<WebServiceOrder> sendOrderMutable;
+    private MutableLiveData<List<WebServiceOrder>> getOrdersMutable;
+    private MutableLiveData<List<WebServiceCoupon>> verifyCouponMutable;
 
     public LiveData<List<CustomerAddressModel>> getAllCustomerAddress(int customerId){
         return roomConfig.customerAddressDao().getAllCustomerAddress(customerId);
@@ -88,7 +93,6 @@ public class CustomerRepository {
                     }
                     @Override
                     public void onFailure(Call<WebServiceCommentModel> call, Throwable t) {
-
                     }
                 });
 
@@ -111,5 +115,58 @@ public class CustomerRepository {
          }
      });
      return deleteCommentMutable;
+    }
+    public MutableLiveData<WebServiceOrder> sendOrder(WebServiceOrder webServiceOrder){
+        sendOrderMutable = new MutableLiveData<>();
+        RetrofitConfig.getRetrofit().create(RetrofitApi.class).sendOrder(webServiceOrder)
+                .enqueue(new Callback<WebServiceOrder>() {
+                    @Override
+                    public void onResponse(Call<WebServiceOrder> call, Response<WebServiceOrder> response) {
+                        if (response.isSuccessful()){
+                            sendOrderMutable.setValue(response.body());
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<WebServiceOrder> call, Throwable t) {
+
+                    }
+                });
+        return sendOrderMutable;
+    }
+    public MutableLiveData<List<WebServiceOrder>> getAllOrders(int customerId){
+        getOrdersMutable = new MutableLiveData<>();
+        RetrofitConfig.getRetrofit().create(RetrofitApi.class).getAllOrders(customerId)
+                .enqueue(new Callback<List<WebServiceOrder>>() {
+                    @Override
+                    public void onResponse(Call<List<WebServiceOrder>> call, Response<List<WebServiceOrder>> response) {
+                        if (response.isSuccessful()){
+                            getOrdersMutable.setValue(response.body());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<WebServiceOrder>> call, Throwable t) {
+
+                    }
+                });
+        return getOrdersMutable;
+    }
+    public MutableLiveData<List<WebServiceCoupon>> verifyCoupon(String couponCode){
+        verifyCouponMutable = new MutableLiveData<>();
+        RetrofitConfig.getRetrofit().create(RetrofitApi.class).verifyCouponCode(couponCode)
+                .enqueue(new Callback<List<WebServiceCoupon>>() {
+                    @Override
+                    public void onResponse(Call<List<WebServiceCoupon>> call, Response<List<WebServiceCoupon>> response) {
+                        if (response.isSuccessful()){
+                            verifyCouponMutable.setValue(response.body());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<WebServiceCoupon>> call, Throwable t) {
+
+                    }
+                });
+        return verifyCouponMutable;
     }
 }

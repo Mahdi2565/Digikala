@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,7 @@ import ir.mahdidev.digikala.eventbus.OnProductClickedMessage;
 import ir.mahdidev.digikala.networkmodel.category.WebserviceCategoryModel;
 import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
 import ir.mahdidev.digikala.util.Const;
+import ir.mahdidev.digikala.util.Pref;
 import ir.mahdidev.digikala.viewmodel.MainFragmentViewModel;
 
 /**
@@ -174,7 +176,7 @@ public class MainFragment extends Fragment {
         }
         else {
 
-                visitingProductRecyclerViewAdapter.setProductList(webserviceProductModels);
+                visitingProductRecyclerViewAdapter.addProductList(webserviceProductModels);
                 visitingProductRecyclerViewAdapter.notifyDataSetChanged();
 
 
@@ -209,18 +211,20 @@ public class MainFragment extends Fragment {
             });
         }
         else {
-                ratingProductRecyclerViewAdapter.setProductList(webserviceProductModels);
+                ratingProductRecyclerViewAdapter.addProductList(webserviceProductModels);
                 ratingProductRecyclerViewAdapter.notifyDataSetChanged();
 
         }
     }
 
     private void initNewestProductRecyclerView(List<WebserviceProductModel> webserviceProductModels) {
+            if (newestPage ==1 && !webserviceProductModels.isEmpty()){
+                saveLastProductIdToPref(webserviceProductModels.get(0).getId());
+            }
             titleNewestproduct.setText(getResources().getString(R.string.most_newest));
-        newestShowMore.setOnClickListener(view -> {
-            startActivity(ProductsListActivity.newIntent(getActivity(),new ListProductData("جدیدترین محصولات" ,
-                    Const.OrderTag.MOST_NEWEST_PRODUCT , "desc" , "")));
-        });
+        newestShowMore.setOnClickListener(view ->
+                startActivity(ProductsListActivity.newIntent(getActivity(),new ListProductData("جدیدترین محصولات" ,
+                Const.OrderTag.MOST_NEWEST_PRODUCT , "desc" , ""))));
         if (newestProductRecyclerViewAdapter == null){
             newestProductRecyclerViewAdapter = new MainHorizontalRecyclerViewAdapter(webserviceProductModels , getActivity());
             newestProductRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, true));
@@ -243,9 +247,13 @@ public class MainFragment extends Fragment {
             });
         }
         else {
-                newestProductRecyclerViewAdapter.setProductList(webserviceProductModels);
+                newestProductRecyclerViewAdapter.addProductList(webserviceProductModels);
                 newestProductRecyclerViewAdapter.notifyDataSetChanged();
             }
+    }
+
+    private void saveLastProductIdToPref(int productId) {
+        Pref.saveLastProductId(getActivity() , productId);
     }
 
     private void initamazingSuggestionRecyclerView(List<WebserviceProductModel> webserviceProductModels) {
@@ -272,7 +280,7 @@ public class MainFragment extends Fragment {
         }
         else {
 
-                amazingSuggestionRecyclerViewAdapter.setProductList(webserviceProductModels);
+                amazingSuggestionRecyclerViewAdapter.addProductList(webserviceProductModels);
                 amazingSuggestionRecyclerViewAdapter.notifyDataSetChanged();
             }
 

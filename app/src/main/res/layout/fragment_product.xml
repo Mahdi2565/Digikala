@@ -43,6 +43,7 @@
                 android:focusable="true" />
 
             <TextView
+                android:textDirection="rtl"
                 android:layout_marginStart="8dp"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@id/basket_badge"
@@ -52,7 +53,6 @@
                 android:id="@+id/title_product_toolbar"
                 android:textColor="@color/white"
                 android:text="@string/app_name"
-                android:textAlignment="textEnd"
                 android:layout_toStartOf="@+id/back_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -406,7 +406,6 @@
                         android:textDirection="rtl"
                         android:id="@+id/description_txt"
                         android:textColor="@color/black"
-                        android:gravity="end"
                         android:text="@string/app_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>

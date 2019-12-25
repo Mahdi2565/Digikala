@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/setting_nav_graph"
+    app:startDestination="@id/settingFragment">
+
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="ir.mahdidev.digikala.controller.fragment.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" >
+        <action
+            android:id="@+id/action_settingFragment_to_newProductNotificationSettingDialogFragment"
+            app:destination="@id/newProductNotificationSettingDialogFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/newProductNotificationSettingDialogFragment"
+        android:name="ir.mahdidev.digikala.controller.fragment.NewProductNotificationSettingDialogFragment"
+        android:label="fragment_new_product_notification_setting_dialog"
+        tools:layout="@layout/fragment_new_product_notification_setting_dialog" />
+</navigation>

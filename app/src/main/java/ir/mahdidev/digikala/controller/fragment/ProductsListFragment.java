@@ -190,12 +190,12 @@ public class ProductsListFragment extends Fragment {
     private void initRecyclerView(List<WebserviceProductModel> webserviceProductModels) {
         if (productsListRecyclerViewAdapter== null){
             productsListRecyclerViewAdapter = new ProductsListRecyclerViewAdapter(webserviceProductModels , getActivity());
-            productsListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            productsListRecyclerView.setAdapter(productsListRecyclerViewAdapter);
         }else {
             productsListRecyclerViewAdapter.setProductList(webserviceProductModels);
             productsListRecyclerViewAdapter.notifyDataSetChanged();
         }
+        productsListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        productsListRecyclerView.setAdapter(productsListRecyclerViewAdapter);
 
         if (productsListRecyclerViewAdapter.getProductsList().isEmpty()){
             emptyList.setVisibility(View.VISIBLE);

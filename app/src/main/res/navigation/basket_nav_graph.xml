@@ -26,5 +26,14 @@
         android:id="@+id/finalizeBasketFragment"
         android:name="ir.mahdidev.digikala.controller.fragment.FinalizeBasketFragment"
         android:label="fragment_finalize_basket"
-        tools:layout="@layout/fragment_finalize_basket" />
+        tools:layout="@layout/fragment_finalize_basket" >
+        <action
+            android:id="@+id/action_finalizeBasketFragment_to_addCustomerAddressFragment2"
+            app:destination="@id/addCustomerAddressFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/addCustomerAddressFragment2"
+        android:name="ir.mahdidev.digikala.controller.fragment.addCustomerAddressFragment"
+        android:label="fragment_add_customer_address"
+        tools:layout="@layout/fragment_add_customer_address" />
 </navigation>

@@ -31,7 +31,7 @@
     </fragment>
     <dialog
         android:id="@+id/addCommentDialogFragment"
-        android:name="ir.mahdidev.digikala.controller.fragment.AddCommentDialogFragment"
+        android:name="ir.mahdidev.digikala.controller.fragment.AddEditCommentDialogFragment"
         android:label="add_comment_dialog_fragment"
         tools:layout="@layout/add_comment_dialog_fragment">
         <action

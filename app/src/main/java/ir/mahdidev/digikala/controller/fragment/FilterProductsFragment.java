@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import org.neshan.vectorelements.Line;
 
@@ -92,11 +93,19 @@ public class FilterProductsFragment extends Fragment {
                 }
             }
             List<Integer> attributeTermList = new ArrayList<>();
-            for (WebServiceAttributeTerm attributeTerm : attributeTermRecyclerViewAdapter.getAttributeTermList()){
-                if (attributeTerm.isSelected()){
-                    attributeTermList.add(attributeTerm.getId());
-                }
+            if (attributeTermRecyclerViewAdapter == null) {
+                Toast.makeText(getActivity(), "لطفا یک ویژگی انتخاب کنید", Toast.LENGTH_SHORT).show();
+                return;
             }
+                for (WebServiceAttributeTerm attributeTerm : attributeTermRecyclerViewAdapter.getAttributeTermList()) {
+                    if (attributeTerm.isSelected()) {
+                        attributeTermList.add(attributeTerm.getId());
+                    }
+                }
+                if (attributeTermList.isEmpty()) {
+                    Toast.makeText(getActivity(), "لطفا یک ویژگی انتخاب کنید", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
             listProductData.setAttribute(attributeTxt);
             listProductData.setAttributeTerm(attributeTermList);

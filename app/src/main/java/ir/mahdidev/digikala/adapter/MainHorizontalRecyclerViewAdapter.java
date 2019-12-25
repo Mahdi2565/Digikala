@@ -37,7 +37,12 @@ public class MainHorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Main
         this.context = context;
     }
 
-    public void setProductList(List<WebserviceProductModel> productList ) {
+    public void setProductList(List<WebserviceProductModel> productList) {
+        this.productList = new ArrayList<>();
+        this.productList.addAll(productList);
+    }
+
+    public void addProductList(List<WebserviceProductModel> productList ) {
         this.productList.addAll(productList);
     }
     @NonNull

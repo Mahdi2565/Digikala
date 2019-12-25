@@ -218,6 +218,10 @@ public class MainActivity extends SingleFragmentActivity implements NavigationVi
                             Const.OrderTag.MOST_VISITING_PRODUCT , "desc" , "")));
                     break;
                 }
+                case R.id.setting_menu :{
+                    startActivity(SettingActivity.newIntent(MainActivity.this));
+                    break;
+                }
             }
             drawerLayout.closeDrawers();
         return false;

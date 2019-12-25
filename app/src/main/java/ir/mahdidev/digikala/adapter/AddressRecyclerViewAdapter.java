@@ -41,7 +41,7 @@ public class AddressRecyclerViewAdapter extends RecyclerView.Adapter<AddressRecy
 
     public CustomerAddressModel getCustomerAddress(){
         // TODO: 12/20/2019 getCustomerModelWhenRadioButtonClicked
-        return addressList.get(0);
+        return addressList.get(addressList.size()-1);
     }
 
     @NonNull

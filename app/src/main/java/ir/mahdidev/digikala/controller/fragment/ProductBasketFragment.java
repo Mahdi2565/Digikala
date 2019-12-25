@@ -30,6 +30,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ir.mahdidev.digikala.R;
 import ir.mahdidev.digikala.adapter.ProductBasketAdapterRecyclerView;
+import ir.mahdidev.digikala.controller.activity.LoginRegisterActivity;
 import ir.mahdidev.digikala.database.ProductBasketModel;
 import ir.mahdidev.digikala.eventbus.OnProductClickedMessage;
 import ir.mahdidev.digikala.networkmodel.customer.WebServiceCustomerModel;
@@ -90,6 +91,8 @@ public class ProductBasketFragment extends Fragment {
     private void finalizeFunction() {
         finalizeBasket.setOnClickListener(view -> {
             if (webServiceCustomerModel==null){
+                startActivity(LoginRegisterActivity.newIntent(getActivity()));
+                getActivity().finish();
                 Toast.makeText(getActivity() , getString(R.string.login_first) , Toast.LENGTH_LONG).show();
             }else {
                 navController.navigate(R.id.action_productBasketFragment_to_finalizeBasketFragment);

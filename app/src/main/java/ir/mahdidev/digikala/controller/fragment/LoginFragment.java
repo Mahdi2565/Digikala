@@ -112,8 +112,7 @@ public class LoginFragment extends Fragment {
                     Pref.saveCustomerModelToPref(getActivity() , webServiceCustomerModels.get(0));
                     Toast.makeText(getActivity() , getString(R.string.login_successfull ) ,
                             Toast.LENGTH_SHORT).show();
-                    startActivity(MainActivity.newIntent(getActivity()));
-                    getActivity().finishAffinity();
+                    getActivity().finish();
                 }else {
                     Toast.makeText(getActivity() , getString(R.string.fix_email)  , Toast.LENGTH_SHORT).show();
                 }

@@ -107,4 +107,24 @@
     <string name="publish_comment">کامنت شما منتشر شد</string>
     <string name="cant_update_comment">متاسفانه کامنت شما به روز رسانی نشد</string>
     <string name="update_comment">کامنت شما به روز رسانی شد</string>
+    <string name="verify_comment">کد تخفیف شما تایید شد</string>
+    <string name="cant_verify_comment">کد تخفیف شما مورد تایید نیست</string>
+    <string name="enter_coupon">لطفا کد تخفیف را وارد کنید</string>
+    <string name="enter_copon">لطفا کوپن خود را وارد کنید</string>
+    <string name="setting">تنظیمات</string>
+    <string name="product_notification">اعلان محصولات</string>
+    <string name="choice_product_notif">زمان اعلان محصولات جدید را انتخاب کنید</string>
+    <string name="channel_name">Newest Products</string>
+    <string name="channel_description">Receiving newest products from this Channel</string>
+    <string name="new_product">محصول جدید</string>
+    <string name="none">هیچ کدام</string>
+    <string name="every_15_min">هر 15 دقیقه</string>
+    <string name="every_3_hours">هر 3 ساعت</string>
+    <string name="every_5_hours">هر 5 ساعت</string>
+    <string name="every_8_hours">هر 8 ساعت</string>
+    <string name="every_12_hours">هر 12 ساعت</string>
+    <string name="register_norif">ثبت</string>
+    <string name="enter_your_time_for_notif">زمان دلخواه خود را به ساعت وارد کنید</string>
+    <string name="choose_your_time">زمان دلخواه خود را انتخاب کنید</string>
+    <string name="hint_custom_notif">به ساعت وارد کنید مثال: 1</string>
 </resources>

@@ -11,45 +11,46 @@
     <application
         android:name=".util.MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/app_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/app_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".controller.activity.MapActivity"
-            android:launchMode="singleTask"></activity>
-        <activity android:name=".controller.activity.CustomerInfoActivity"
-            android:launchMode="singleTask"
-            />
-        <activity android:name=".controller.activity.LoginRegisterActivity"
-            android:launchMode="singleTask"
-            />
-        <activity android:name=".controller.activity.SearchActivity"
-            android:launchMode="singleTask"
+        <activity android:name=".controller.activity.SettingActivity"></activity>
+        <activity
+            android:name=".controller.activity.MapActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".controller.activity.CustomerInfoActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".controller.activity.LoginRegisterActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".controller.activity.SearchActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".controller.activity.ProductsListActivity"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".controller.activity.CategoryListActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".controller.activity.FavoriteProductsActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".controller.activity.ProductBasketActivity"
+            android:launchMode="singleTask" />
+        <activity android:name=".controller.activity.ProductActivity"
+            android:parentActivityName=".controller.activity.MainActivity"
             />
         <activity
-            android:launchMode="singleTask"
-            android:name=".controller.activity.ProductsListActivity"
-            android:configChanges="orientation|screenSize|keyboard|keyboardHidden" />
-        <activity android:name=".controller.activity.CategoryListActivity"
-            android:launchMode="singleTask"
-            />
-        <activity android:name=".controller.activity.FavoriteProductsActivity"
-            android:launchMode="singleTask"
-            />
-        <activity android:name=".controller.activity.ProductBasketActivity"
-            android:launchMode="singleTask"
-            />
-        <activity android:name=".controller.activity.ProductActivity"
-            android:launchMode="singleTask"
-            />
-        <activity android:name=".controller.activity.NoInternetConnectionActivity"
-            android:launchMode="singleTask"
-            />
-        <activity android:name=".controller.activity.SplashScreenActivity"
-            android:launchMode="singleTask"
-            >
-
+            android:name=".controller.activity.NoInternetConnectionActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".controller.activity.SplashScreenActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -57,9 +58,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:launchMode="singleTask"
             android:name=".controller.activity.MainActivity"
-            android:configChanges="orientation|screenSize|keyboard|keyboardHidden" />
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
+            android:launchMode="singleTask" />
 
         <receiver
             android:name=".networkutil.ConnectivityReceiver"

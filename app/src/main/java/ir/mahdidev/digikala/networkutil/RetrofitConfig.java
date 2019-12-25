@@ -1,6 +1,7 @@
 package ir.mahdidev.digikala.networkutil;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import ir.mahdidev.digikala.util.Const;
 import okhttp3.Credentials;
@@ -9,6 +10,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -17,10 +19,19 @@ public class RetrofitConfig {
     private static Retrofit mapRetrofit;
     public static Retrofit getRetrofit(){
         if (retrofit==null){
+            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
             OkHttpClient client = new OkHttpClient.Builder()
                     .addInterceptor(new BasicAuthInterceptor(Const.RetrofitConst.CONSUMER_KEY ,
                             Const.RetrofitConst.CONSUMER_SECRET))
+                    .addInterceptor(logging)
+                    .connectTimeout(1, TimeUnit.MINUTES)
+                    .readTimeout(30, TimeUnit.SECONDS)
+                    .writeTimeout(15, TimeUnit.SECONDS)
                     .build();
+
+
 
             retrofit = new Retrofit.Builder().baseUrl(Const.RetrofitConst.BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
@@ -52,6 +63,8 @@ public class RetrofitConfig {
             this.consumer_key = consumer_key ;
             this.consumer_secret = consumer_secret;
         }
+
+
 
         @Override
         public Response intercept(Chain chain) throws IOException {

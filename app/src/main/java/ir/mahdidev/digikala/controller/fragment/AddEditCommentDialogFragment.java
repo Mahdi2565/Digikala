@@ -4,7 +4,6 @@ import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -35,7 +34,7 @@ import ir.mahdidev.digikala.util.Const;
 import ir.mahdidev.digikala.util.Pref;
 import ir.mahdidev.digikala.viewmodel.ProductViewModel;
 
-public class AddCommentDialogFragment extends DialogFragment {
+public class AddEditCommentDialogFragment extends DialogFragment {
 
     @BindView(R.id.name_reviewer)
     TextView nameReviewer;
@@ -109,7 +108,7 @@ public class AddCommentDialogFragment extends DialogFragment {
             if (fragmentPosition==Const.COMMENT_FRAGMENT_ADD){
                 webServiceCommentModel = new WebServiceCommentModel();
                 setdataToModel();
-                viewModel.sendCustomerComment(webServiceCommentModel).observe(AddCommentDialogFragment.this ,
+                viewModel.sendCustomerComment(webServiceCommentModel).observe(AddEditCommentDialogFragment.this ,
                         webServiceCommentModel1 -> {
                             if (webServiceCommentModel1.getId()!=null){
                                 Toast.makeText(getActivity() , getActivity().getResources().getString(R.string.publish_comment ), Toast.LENGTH_LONG).show();
@@ -118,7 +117,7 @@ public class AddCommentDialogFragment extends DialogFragment {
                         });
             }else {
                 setdataToModel();
-                viewModel.updateComment(webServiceCommentModel).observe(AddCommentDialogFragment.this , commentEditResponse -> {
+                viewModel.updateComment(webServiceCommentModel).observe(AddEditCommentDialogFragment.this , commentEditResponse -> {
                     if (commentEditResponse.getId() == null){
                         Toast.makeText(getActivity() , getActivity().getResources().getString(R.string.cant_update_comment), Toast.LENGTH_LONG).show();
                     }else {

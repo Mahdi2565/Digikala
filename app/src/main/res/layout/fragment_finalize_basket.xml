@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    android:background="#F7F5F5"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -52,11 +54,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <TextView
+                android:layout_gravity="end"
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:text="@string/customer_address"
@@ -66,8 +70,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
+            <ImageView
+                android:id="@+id/add_address_img"
+                android:visibility="gone"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_gravity="center"
+                android:src="@drawable/add_address_pic"
+                android:layout_width="200dp"
+                android:layout_height="180dp"/>
+
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_below="@id/customer_address"
                 android:id="@+id/customer_address_recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -78,14 +90,12 @@
                 android:text="@string/products"
                 android:id="@+id/products_txt"
                 android:padding="16dp"
-                android:layout_below="@id/customer_address_recyclerView"
-                android:layout_alignParentEnd="true"
+                android:layout_gravity="end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/products_recyclerView"
-                android:layout_below="@id/products_txt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -93,7 +103,6 @@
                 android:weightSum="6"
                 android:orientation="horizontal"
                 android:id="@+id/copons_linear"
-                android:layout_below="@id/products_recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputLayout
@@ -155,7 +164,7 @@
 
             </LinearLayout>
 
-        </RelativeLayout>
+        </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
 

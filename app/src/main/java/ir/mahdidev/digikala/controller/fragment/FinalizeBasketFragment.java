@@ -6,18 +6,17 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -35,8 +34,6 @@ import ir.mahdidev.digikala.adapter.MainHorizontalRecyclerViewAdapter;
 import ir.mahdidev.digikala.database.CustomerAddressModel;
 import ir.mahdidev.digikala.database.ProductBasketModel;
 import ir.mahdidev.digikala.networkmodel.coupon.WebServiceCoupon;
-import ir.mahdidev.digikala.networkmodel.customer.Billing;
-import ir.mahdidev.digikala.networkmodel.customer.Shipping;
 import ir.mahdidev.digikala.networkmodel.customer.WebServiceCustomerModel;
 import ir.mahdidev.digikala.networkmodel.order.CouponLine;
 import ir.mahdidev.digikala.networkmodel.order.LineItem;
@@ -47,13 +44,14 @@ import ir.mahdidev.digikala.util.Const;
 import ir.mahdidev.digikala.util.Pref;
 import ir.mahdidev.digikala.viewmodel.CustomerViewModel;
 import ir.mahdidev.digikala.viewmodel.ProductBasketViewModel;
-import ir.mahdidev.digikala.viewmodel.ProductViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class FinalizeBasketFragment extends Fragment {
 
+    @BindView(R.id.add_address_img)
+    ImageView addAddress;
     @BindView(R.id.register_coupons)
     Button registerCoupons;
     @BindView(R.id.coupons_edt)
@@ -104,18 +102,32 @@ public class FinalizeBasketFragment extends Fragment {
         initViewModel();
         applyCoupons();
         sendOrderToServer();
+        addAddressFunction();
+    }
+
+    private void addAddressFunction() {
+        addAddress.setOnClickListener(view -> {
+            navController.navigate(R.id.action_finalizeBasketFragment_to_addCustomerAddressFragment2);
+        });
     }
 
     private void applyCoupons() {
         registerCoupons.setOnClickListener(view -> {
             String codeCoupons = couponsEdt.getText().toString().trim();
+            if (codeCoupons.isEmpty()){
+                Toast.makeText(getActivity() , getActivity().getResources().getString((R.string.enter_copon)) , Toast.LENGTH_LONG).show();
+                return;
+            }
             customerViewModel.verifyCoupon(codeCoupons).observe(this , webServiceCoupons -> {
                 if (!webServiceCoupons.isEmpty()){
-                    Toast.makeText(getActivity() , "کد تخفیف شما تایید شد" , Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity() , getActivity().getResources().getString(R.string.verify_comment ), Toast.LENGTH_LONG).show();
                     for (WebServiceCoupon webServiceCoupon : webServiceCoupons){
                         couponLines.add(new CouponLine( webServiceCoupon.getCode() ,
                                 webServiceCoupon.getAmount()));
                     }
+                }else {
+                    Toast.makeText(getActivity() , getActivity().getResources().getString(R.string.cant_verify_comment ), Toast.LENGTH_LONG).show();
+
                 }
             });
         });
@@ -160,6 +172,15 @@ public class FinalizeBasketFragment extends Fragment {
     }
 
     private void initAddressRecyclerView(List<CustomerAddressModel> customerAddressModels) {
+
+            if (customerAddressModels.isEmpty()){
+                addAddress.setVisibility(View.VISIBLE);
+                customerAddressRecyclerView.setVisibility(View.GONE);
+            }else {
+                addAddress.setVisibility(View.GONE);
+                customerAddressRecyclerView.setVisibility(View.VISIBLE);
+            }
+
         if (addressRecyclerViewAdapter == null){
             addressRecyclerViewAdapter = new AddressRecyclerViewAdapter(customerAddressModels , getActivity() , Const.FROM_FINALIZE_BASKET_FRAGMENT);
         }else {
@@ -173,15 +194,16 @@ public class FinalizeBasketFragment extends Fragment {
     private void iniProductsRecyclerView(List<ProductBasketModel> productBasketModels) {
 
         List<WebserviceProductModel> productModelList = new ArrayList<>();
+        List<Image> images = new ArrayList<>();
         for (ProductBasketModel productBasketModel : productBasketModels){
             listItem.add(new LineItem(productBasketModel.getProductId() , productBasketModel.getProductCount()));
             WebserviceProductModel webserviceProductModel = new WebserviceProductModel();
             webserviceProductModel.setId(productBasketModel.getProductId());
             webserviceProductModel.setName(productBasketModel.getTitleProduct());
             webserviceProductModel.setShortDescription(productBasketModel.getShortDescription());
-            List<Image> images = new ArrayList<>();
             Image image = new Image();
             image.setSrc(productBasketModel.getImageSrc());
+            images.add(image);
             webserviceProductModel.setImages(images);
             webserviceProductModel.setRegularPrice(productBasketModel.getPrice());
             webserviceProductModel.setPrice(productBasketModel.getFinalPrice());

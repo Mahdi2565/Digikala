@@ -1,7 +1,9 @@
 package ir.mahdidev.digikala.util;
 
 import android.app.Application;
-import android.graphics.fonts.FontFamily;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.os.Build;
 
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -23,6 +25,19 @@ public class MyApplication extends Application {
         mInstance = this;
         initFont();
         initRoomDataBase();
+        createNotificationChannel();
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel = new NotificationChannel(Const.NOTIFICATION_CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
     private void initRoomDataBase() {

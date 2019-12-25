@@ -8,7 +8,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -28,8 +27,6 @@ import android.widget.TextView;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderView;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -37,14 +34,12 @@ import ir.mahdidev.digikala.R;
 import ir.mahdidev.digikala.adapter.CategoryRecyclerViewAdapter;
 import ir.mahdidev.digikala.adapter.MainHorizontalRecyclerViewAdapter;
 import ir.mahdidev.digikala.adapter.SliderProductAdapter;
-import ir.mahdidev.digikala.controller.activity.CategoryListActivity;
 import ir.mahdidev.digikala.controller.activity.ProductBasketActivity;
 import ir.mahdidev.digikala.controller.activity.ProductsListActivity;
 import ir.mahdidev.digikala.database.ProductBasketModel;
 import ir.mahdidev.digikala.database.ProductFavoriteModel;
 import ir.mahdidev.digikala.eventbus.ListProductData;
 import ir.mahdidev.digikala.networkmodel.Repository;
-import ir.mahdidev.digikala.networkmodel.category.WebserviceCategoryModel;
 import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
 import ir.mahdidev.digikala.util.Const;
 import ir.mahdidev.digikala.util.MyApplication;
@@ -237,7 +232,7 @@ public class ProductFragment extends Fragment {
                 relatedProductRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity() , RecyclerView.HORIZONTAL , true));
                 relatedProductRecyclerView.setAdapter(relatedProductsAdapter);
             }else {
-                relatedProductsAdapter.setProductList(webserviceProductModels);
+                relatedProductsAdapter.addProductList(webserviceProductModels);
                 relatedProductsAdapter.notifyDataSetChanged();
             }
         });

@@ -4,10 +4,14 @@ public class Const {
     public class PrefKey{
         public static final String EMAIL_PREF_KEY = "email_pref_key";
         public static final String PREFNAME = "DigikalaPref";
+        public static final String PRODUCT_ID_PREF_KEY = "product_id_pref_key";
+        public static final String NOTIF_RADIO_BUTTON_ID = "notif_radio_button_id";
+        public static final String NOTIF_CUSTOM_EDIT_TEXT = "notif_custom_edit_text";
     }
     public static class IntentKey{
         public static final String PRODUCT_LIST_DATA_INTENT_KEY = "ir.mahdidev.digikala_product_list_data_intnet_key";
         public static final String CATEGORY_POSITION_INTENT_KEY = "ir.mahdidev.digikala_category_position_intent_key";
+        public static final String PRODUCT_ID_FORM_NOTIF_TO_PRODUCT_ACTIVITY = "ir.mahdidev.digikala_prdouct_id_from_notif_to_product_activity";
     }
     public static class BundleKey{
         public static final String SUB_CATEGORY_ID = "sub_category_id";
@@ -35,7 +39,9 @@ public class Const {
     }
     public static final String SPLASH_SCREEN_FRAGMENT_TAG = "splash_screen_fragment_tag";
     public static final String MAIN_FRAGMENT_TAG = "main_fragment_tag";
-    public static final String AMAZING_SUGGESTION_ORDER = "amazing_suggestion";
+    public static final String NOTIFICATION_CHANNEL_ID = "newest_products";
+    public static final String PRIODIC_NEW_PRODUCT_TAG = "priodic_new_product_tag";
+    public static final String PERIODIC_NEW_PRODUCT_WORK_MANAGER = "newProductPeriodicWork";
     public static final int DISCOUNT_TAG = 46 ;
     public static final int SPECIAL_TAG = 48 ;
     public static final int FROM_MAIN_FRAGMENT = 0;

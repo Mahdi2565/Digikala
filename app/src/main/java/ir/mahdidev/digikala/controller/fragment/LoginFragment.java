@@ -11,10 +11,13 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -41,12 +44,16 @@ public class LoginFragment extends Fragment {
     TextView registerTxt;
     @BindView(R.id.email_edt)
     TextInputEditText emailEdt;
+    @BindView(R.id.password_edt)
+    TextInputEditText passwordEdt;
     @BindView(R.id.loginDigikalaLinear)
     LinearLayout loginDigikala;
     @BindView(R.id.basket_img)
     ImageView basketImg;
     @BindView(R.id.basket_badge)
     TextView basketBadge;
+    @BindView(R.id.show_password_checked)
+    CheckBox showPasswordChecked;
     @OnClick(R.id.back_toolbar)
     void onBackClicked(){
         getActivity().finish();
@@ -55,6 +62,7 @@ public class LoginFragment extends Fragment {
     void onSearchClicked(){
         startActivity(SearchActivity.newIntent(getActivity()));
     }
+
     public LoginFragment() {
     }
 
@@ -78,6 +86,17 @@ public class LoginFragment extends Fragment {
         registerTxtFunction();
         backImgFunction();
         basketImgFunction();
+        showPasswordCheckedFunction();
+    }
+
+    private void showPasswordCheckedFunction() {
+        showPasswordChecked.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b){
+                passwordEdt.setInputType(InputType.TYPE_CLASS_TEXT);
+            }else {
+                passwordEdt.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            }
+        });
     }
 
     private void basketImgFunction() {

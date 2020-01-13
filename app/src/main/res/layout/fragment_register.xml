@@ -104,6 +104,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputEditText
+                    android:background="@color/white"
                     android:id="@+id/email_edt"
                     android:drawableEnd="@drawable/ic_email_black_24dp"
                     android:drawablePadding="16dp"
@@ -119,6 +120,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputEditText
+                    android:background="@color/white"
                     android:id="@+id/username_edt"
                     android:drawableEnd="@drawable/ic_person_white_24dp"
                     android:drawablePadding="16dp"
@@ -134,6 +136,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputEditText
+                    android:background="@color/white"
                     android:id="@+id/first_name_edt"
                     android:drawableEnd="@drawable/ic_person_white_24dp"
                     android:drawablePadding="16dp"
@@ -149,6 +152,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputEditText
+                    android:background="@color/white"
                     android:id="@+id/last_name_edt"
                     android:drawableEnd="@drawable/ic_person_white_24dp"
                     android:drawablePadding="16dp"
@@ -164,6 +168,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputEditText
+                    android:background="@color/white"
                     android:id="@+id/password_edt"
                     android:drawableEnd="@drawable/ic_lock_black_24dp"
                     android:drawablePadding="16dp"

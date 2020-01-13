@@ -101,6 +101,7 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:background="@color/white"
                 android:id="@+id/first_name_edt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -116,6 +117,7 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:background="@color/white"
                 android:id="@+id/last_name_edt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -131,6 +133,7 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:background="@color/white"
                 android:id="@+id/phone_number_edt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>

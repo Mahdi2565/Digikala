@@ -5,32 +5,30 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.adapter.FragmentViewHolder;
 
 import java.util.List;
 
 import ir.mahdidev.digikala.controller.fragment.SubCategoryListFragment;
 import ir.mahdidev.digikala.networkmodel.category.WebserviceCategoryModel;
 
-public class CategoryListViewpagerAdapter extends FragmentPagerAdapter {
+public class CategoryListViewpagerAdapter extends FragmentStateAdapter {
     private List<WebserviceCategoryModel> categoryList;
-    public CategoryListViewpagerAdapter(List<WebserviceCategoryModel> categoryList , @NonNull FragmentManager fm, int behavior) {
-        super(fm, behavior);
+
+    public CategoryListViewpagerAdapter(@NonNull Fragment fragment , List<WebserviceCategoryModel> categoryList) {
+        super(fragment);
         this.categoryList = categoryList;
     }
+
     @NonNull
     @Override
-    public Fragment getItem(int position) {
+    public Fragment createFragment(int position) {
         return SubCategoryListFragment.newInstance(categoryList.get(position).getId());
     }
 
     @Override
-    public int getCount() {
+    public int getItemCount() {
         return categoryList.size();
-    }
-
-    @Nullable
-    @Override
-    public CharSequence getPageTitle(int position) {
-        return categoryList.get(position).getName();
     }
 }

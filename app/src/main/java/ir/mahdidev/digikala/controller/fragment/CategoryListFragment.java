@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +43,7 @@ public class CategoryListFragment extends Fragment {
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
     @BindView(R.id.viewPager)
-    ViewPager viewPager;
+    ViewPager2 viewPager;
 
     private CategoryListViewpagerAdapter categoryListViewpagerAdapter;
     private CategoryListViewModel viewModel;
@@ -77,12 +79,17 @@ public class CategoryListFragment extends Fragment {
     private void initViewPager(List<WebserviceCategoryModel> categoryModelList) {
      List<WebserviceCategoryModel> categoryList = new ArrayList<>();
         filterCategory(categoryModelList, categoryList);
-        categoryListViewpagerAdapter = new CategoryListViewpagerAdapter(categoryList
-             , getChildFragmentManager() ,FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        categoryListViewpagerAdapter = new CategoryListViewpagerAdapter(CategoryListFragment.this , categoryList);
      viewPager.setAdapter(categoryListViewpagerAdapter);
      viewPager.setOffscreenPageLimit(3);
-     tabLayout.setupWithViewPager(viewPager);
-             viewPager.setCurrentItem(categoryPosition ,true);
+     viewPager.setCurrentItem(categoryPosition ,true);
+     initTabLayout(categoryList);
+    }
+
+    private void initTabLayout(List<WebserviceCategoryModel> categoryList) {
+        new TabLayoutMediator(tabLayout , viewPager , (tab, position) ->
+                tab.setText(categoryList.get(position).getName())).attach();
+
     }
 
     private void filterCategory(List<WebserviceCategoryModel> categoryModelList, List<WebserviceCategoryModel> categoryList) {

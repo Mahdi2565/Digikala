@@ -105,6 +105,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputEditText
+                    android:background="@color/white"
                     android:inputType="textEmailAddress"
                     android:id="@+id/email_edt"
                     android:drawableEnd="@drawable/ic_email_black_24dp"
@@ -125,6 +126,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputEditText
+                    android:background="@color/white"
                     android:inputType="textPassword"
                     android:id="@+id/password_edt"
                     android:drawableEnd="@drawable/ic_lock_black_24dp"

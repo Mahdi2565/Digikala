@@ -6,15 +6,12 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -138,10 +135,10 @@ public class MainFragment extends Fragment {
         viewModel = ViewModelProviders.of(this).get(MainFragmentViewModel.class);
         viewModel.getEspecialProducts().observe(this, this::initSliderView);
         viewModel.getCategoryListLiveData().observe(this , this::initCategoryRecyclerView);
-        viewModel.getAmazingSuggestionListLiveData(amazingSuggestionPage).observe(this , this::initamazingSuggestionRecyclerView);
-        viewModel.getMostNewestListLiveData(newestPage).observe(this , this::initNewestProductRecyclerView);
-        viewModel.getMostRatingListLiveData(ratingPage).observe(this , this::initRatingProductRecyclerView);
-        viewModel.getMostVisitingListLiveData(visitingPage).observe(this , this::initVisitingRecyclerView);
+        viewModel.getAmazingSuggestionListLiveData().observe(this , this::initamazingSuggestionRecyclerView);
+        viewModel.getMostNewestListLiveData().observe(this , this::initNewestProductRecyclerView);
+        viewModel.getMostRatingListLiveData().observe(this , this::initRatingProductRecyclerView);
+        viewModel.getMostVisitingListLiveData().observe(this , this::initVisitingRecyclerView);
         if (categoryList ==null || categoryList.isEmpty()){
             viewModel.loadCategory();
         }
@@ -170,7 +167,7 @@ public class MainFragment extends Fragment {
 
                     LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                     if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == webserviceProductModels.size() - 1) {
-                        viewModel.getMostVisitingListLiveData(++visitingPage);
+                        viewModel.loadMostVisitingListLiveData(++visitingPage);
                     }
                 }
             });
@@ -206,7 +203,7 @@ public class MainFragment extends Fragment {
 
                     LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                     if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == webserviceProductModels.size() - 1) {
-                        viewModel.getMostRatingListLiveData(++ratingPage);
+                        viewModel.loadMostRatingListLiveData(++ratingPage);
                     }
                 }
             });
@@ -242,7 +239,7 @@ public class MainFragment extends Fragment {
 
                     LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                     if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == webserviceProductModels.size() - 1) {
-                        viewModel.getMostNewestListLiveData(++newestPage);
+                        viewModel.loadMostNewestListLiveData(++newestPage);
                     }
                 }
             });
@@ -274,7 +271,7 @@ public class MainFragment extends Fragment {
 
                     LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                     if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == webserviceProductModels.size() - 1) {
-                        viewModel.getAmazingSuggestionListLiveData(++amazingSuggestionPage);
+                        viewModel.loadAmazingSuggestionListLiveData(++amazingSuggestionPage);
                     }
                 }
             });

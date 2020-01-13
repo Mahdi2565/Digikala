@@ -50,6 +50,8 @@
     </androidx.appcompat.widget.Toolbar>
 
     <com.google.android.material.tabs.TabLayout
+        app:tabMode="scrollable"
+        android:layoutDirection="rtl"
         android:elevation="4dp"
         app:tabIndicatorColor="@color/white"
         app:tabTextColor="@color/white"
@@ -57,13 +59,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar"
-        android:layout_marginTop="-4dp"
         android:background="@color/colorPrimary"
         tools:targetApi="lollipop" />
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPager"
-        android:layout_below="@id/tab_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        <androidx.viewpager2.widget.ViewPager2
+            android:layoutDirection="rtl"
+            android:id="@+id/viewPager"
+            android:layout_below="@id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 </RelativeLayout>

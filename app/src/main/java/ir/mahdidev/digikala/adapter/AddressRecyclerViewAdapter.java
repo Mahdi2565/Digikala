@@ -4,11 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ public class AddressRecyclerViewAdapter extends RecyclerView.Adapter<AddressRecy
     private List<CustomerAddressModel> addressList;
     private Context context;
     private int adapterPosition;
+    private int checkedPosition = -1;
 
     public AddressRecyclerViewAdapter(List<CustomerAddressModel> addressList, Context context, int adapterPosition) {
         this.addressList = addressList;
@@ -40,8 +43,10 @@ public class AddressRecyclerViewAdapter extends RecyclerView.Adapter<AddressRecy
     }
 
     public CustomerAddressModel getCustomerAddress(){
-        // TODO: 12/20/2019 getCustomerModelWhenRadioButtonClicked
-        return addressList.get(addressList.size()-1);
+        if (checkedPosition != -1){
+            return addressList.get(checkedPosition);
+        }
+        return null;
     }
 
     @NonNull
@@ -72,7 +77,30 @@ public class AddressRecyclerViewAdapter extends RecyclerView.Adapter<AddressRecy
             holder.deleteAddress.setOnClickListener(view ->
                     addressRecyclerViewAdapterInterface.onDeleteAddressClicked(customerAddressModel));
         }else {
-            holder.selectAddress.setChecked(true);
+            //holder.selectAddress.setChecked(true);
+            if (checkedPosition == -1){
+                holder.selectAddress.setChecked(false);
+            }else {
+                if (checkedPosition == position){
+                    holder.selectAddress.setChecked(true);
+                }else {
+                    holder.selectAddress.setChecked(false);
+                }
+            }
+            holder.finalAddressBasketCardView.setOnClickListener(view -> {
+                singleSelectFun(holder, position);
+            });
+            holder.selectAddress.setOnClickListener(view -> {
+                singleSelectFun(holder , position);
+            });
+        }
+    }
+
+    private void singleSelectFun(@NonNull ViewHolder holder, int position) {
+        holder.selectAddress.setChecked(true);
+        if (checkedPosition != position){
+            notifyItemChanged(checkedPosition);
+            checkedPosition = position;
         }
     }
 
@@ -97,6 +125,9 @@ public class AddressRecyclerViewAdapter extends RecyclerView.Adapter<AddressRecy
         @Nullable
         @BindView(R.id.select_address_radio_button)
         RadioButton selectAddress;
+        @Nullable
+        @BindView(R.id.final_address_basket_card_view)
+        CardView finalAddressBasketCardView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this , itemView);

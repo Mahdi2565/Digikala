@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.view.LayoutInflater;
@@ -71,11 +70,11 @@ public class SplashScreenFragment extends Fragment {
     }
 
     private void requestProductsList() {
-        viewModel.getEspecialProducts();
-        viewModel.getAmazingSuggestionListLiveData(1);
-        viewModel.getMostRatingListLiveData(1);
-        viewModel.getMostVisitingListLiveData(1);
-        viewModel.getMostNewestListLiveData(1);
+        viewModel.loadEspecialProducts();
+        viewModel.loadAmazingSuggestionListLiveData(1);
+        viewModel.loadMostRatingListLiveData(1);
+        viewModel.loadMostVisitingListLiveData(1);
+        viewModel.loadMostNewestListLiveData(1);
 
     }
 

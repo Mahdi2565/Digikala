@@ -120,6 +120,7 @@
                     android:layout_height="wrap_content">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:background="#F7F5F5"
                         android:hint="@string/enter_coupons"
                         android:id="@+id/coupons_edt"
                         android:layout_width="match_parent"
@@ -128,6 +129,8 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
+                    android:textSize="16sp"
+                    app:background="@color/priceColor"
                     android:id="@+id/register_coupons"
                     android:text="@string/register_coupons"
                     android:textColor="@color/white"
@@ -146,6 +149,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputEditText
+                    android:background="#F7F5F5"
                     android:inputType="textMultiLine"
                     android:id="@+id/order_note_edt"
                     android:layout_width="match_parent"

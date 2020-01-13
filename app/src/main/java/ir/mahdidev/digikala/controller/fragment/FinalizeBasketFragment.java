@@ -149,6 +149,12 @@ public class FinalizeBasketFragment extends Fragment {
             progressBar.setVisibility(View.VISIBLE);
             String orderNote = orderNoteEdt.getText().toString().trim();
             CustomerAddressModel customerAddressModel = addressRecyclerViewAdapter.getCustomerAddress();
+            if (customerAddressModel == null){
+                Toast.makeText(getActivity() , "لطفا آدرس خود را انتخاب کنید" , Toast.LENGTH_LONG).show();
+                progressBar.setVisibility(View.GONE);
+                registerOrder.setEnabled(true);
+                return;
+            }
             ir.mahdidev.digikala.networkmodel.order.Shipping shipping = new ir.mahdidev.digikala.networkmodel.order.Shipping(customerAddressModel.getFirstName() , customerAddressModel.getLastName() ,
                     customerAddressModel.getLatitude() + " " + customerAddressModel.getLongitude() ,
                     customerAddressModel.getCustomerAddress() , customerAddressModel.getMapAddress() , customerAddressModel.getCity()

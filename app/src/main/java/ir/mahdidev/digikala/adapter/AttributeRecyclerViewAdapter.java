@@ -23,7 +23,7 @@ public class AttributeRecyclerViewAdapter extends RecyclerView.Adapter<Attribute
 
     private List<WebServiceAttribute> attributeList;
     private Context context;
-    private int lastSelectedPosition = -1;
+    private int checkedPosition = -1;
 
     public AttributeRecyclerViewAdapter(List<WebServiceAttribute> attributeList, Context context) {
         this.attributeList = attributeList;
@@ -35,8 +35,11 @@ public class AttributeRecyclerViewAdapter extends RecyclerView.Adapter<Attribute
         this.attributeList.addAll(attributeList);
     }
 
-    public List<WebServiceAttribute> getAttributeList() {
-        return attributeList;
+    public WebServiceAttribute getAttributeModel() {
+        if (checkedPosition != -1){
+            return attributeList.get(checkedPosition);
+        }
+        return null;
     }
 
     @NonNull
@@ -49,7 +52,32 @@ public class AttributeRecyclerViewAdapter extends RecyclerView.Adapter<Attribute
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         WebServiceAttribute attribute = attributeList.get(position);
         holder.attributeText.setText(attribute.getName());
+        if (checkedPosition == -1){
+            selectAttribute(holder, context.getResources().getColor(R.color.attributeBackgroundColor), R.color.white);
+        }else {
+            if (checkedPosition == position){
+                selectAttribute(holder, Color.WHITE, R.color.attributeBackgroundColor);
 
+            }else {
+                selectAttribute(holder, context.getResources().getColor(R.color.attributeBackgroundColor), R.color.white);
+            }
+        }
+        holder.parentAttribute.setOnClickListener(view -> {
+            attributeAdapterInterface.onAttributeClicked(attribute.getId());
+
+            selectAttribute(holder, Color.WHITE, R.color.attributeBackgroundColor);
+
+            if (checkedPosition != position){
+                notifyItemChanged(checkedPosition);
+                checkedPosition = position;
+            }
+
+        });
+    }
+
+    private void selectAttribute(@NonNull ViewHolder holder, int color, int p) {
+        holder.parentAttribute.setBackgroundColor(color);
+        holder.attributeText.setTextColor(context.getResources().getColor(p));
     }
 
     @Override
@@ -68,7 +96,7 @@ public class AttributeRecyclerViewAdapter extends RecyclerView.Adapter<Attribute
             parentAttribute.setOnClickListener(view ->{
                 WebServiceAttribute attribute = attributeList.get(getAdapterPosition());
 
-                lastSelectedPosition = getAdapterPosition();
+                checkedPosition = getAdapterPosition();
                 notifyDataSetChanged();
                 attributeAdapterInterface.onAttributeClicked(attribute.getId());
 
@@ -77,7 +105,7 @@ public class AttributeRecyclerViewAdapter extends RecyclerView.Adapter<Attribute
                         context.getResources().getColor(R.color.attributeBackgroundColor));
                 attributeText.setTextColor(attribute.isSelected()? context.getResources().getColor(R.color.attributeBackgroundColor):
                         context.getResources().getColor(R.color.white));
-                lastSelectedPosition =getAdapterPosition();
+                checkedPosition =getAdapterPosition();
             });
         }
     }

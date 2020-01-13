@@ -65,6 +65,7 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:background="@color/white"
                     android:id="@+id/title_address_edt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
@@ -81,6 +82,7 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:background="@color/white"
                     android:id="@+id/first_name_edt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
@@ -96,6 +98,7 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:background="@color/white"
                     android:id="@+id/last_name_edt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
@@ -111,6 +114,7 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:background="@color/white"
                     android:inputType="number"
                     android:id="@+id/phone_number_edt"
                     android:layout_width="match_parent"
@@ -127,6 +131,8 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
+
+                    android:background="@color/white"
                     android:inputType="number"
                     android:id="@+id/postal_code_edt"
                     android:layout_width="match_parent"
@@ -144,12 +150,15 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:background="@color/white"
                     android:id="@+id/customer_user_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
+                android:visibility="gone"
+                android:background="@color/white"
                 android:hint="@string/generated_address_by_map"
                 android:layout_marginTop="24dp"
                 android:layout_marginStart="16dp"

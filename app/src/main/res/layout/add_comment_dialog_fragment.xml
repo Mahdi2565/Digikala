@@ -49,6 +49,7 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:background="@color/white"
                 android:id="@+id/review_edt"
                 android:inputType="textLongMessage"
                 android:layout_width="match_parent"

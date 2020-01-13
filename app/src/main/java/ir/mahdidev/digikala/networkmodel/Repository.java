@@ -1,7 +1,5 @@
 package ir.mahdidev.digikala.networkmodel;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -123,7 +121,9 @@ public class Repository {
         });
     }
 
-    public MutableLiveData<List<WebserviceProductModel>> getAmazingSuggestionProductListLiveData(int page) {
+
+
+    public MutableLiveData<List<WebserviceProductModel>> loadAmazingSuggestionProductListLiveData(int page) {
         RetrofitConfig.getRetrofit().create(RetrofitApi.class).getAllAmazingSuggestionProduct(
                 Const.OrderTag.MOST_NEWEST_PRODUCT, Const.DISCOUNT_TAG, page
         ).enqueue(new Callback<List<WebserviceProductModel>>() {
@@ -142,7 +142,7 @@ public class Repository {
         return amazingSuggestionProductListLiveData;
     }
 
-    public MutableLiveData<List<WebserviceProductModel>> getMostNewestProductListLiveData(int page) {
+    public MutableLiveData<List<WebserviceProductModel>> loadMostNewestProductListLiveData(int page) {
         RetrofitConfig.getRetrofit().create(RetrofitApi.class).getAllSortedProduct(Const.OrderTag.MOST_NEWEST_PRODUCT, page)
                 .enqueue(new Callback<List<WebserviceProductModel>>() {
                     @Override
@@ -160,7 +160,7 @@ public class Repository {
         return mostNewestProductListLiveData;
     }
 
-    public MutableLiveData<List<WebserviceProductModel>> getMostRatingProductListLiveData(int page) {
+    public MutableLiveData<List<WebserviceProductModel>> loadMostRatingProductListLiveData(int page) {
         RetrofitConfig.getRetrofit().create(RetrofitApi.class).getAllSortedProduct(Const.OrderTag.MOST_RATING_PRODUCT, page)
                 .enqueue(new Callback<List<WebserviceProductModel>>() {
                     @Override
@@ -179,7 +179,7 @@ public class Repository {
         return mostRatingProductListLiveData;
     }
 
-    public MutableLiveData<List<WebserviceProductModel>> getMostVisitingProductListLiveData(int page) {
+    public MutableLiveData<List<WebserviceProductModel>> loadMostVisitingProductListLiveData(int page) {
         RetrofitConfig.getRetrofit().create(RetrofitApi.class).getAllSortedProduct(Const.OrderTag.MOST_VISITING_PRODUCT, page)
                 .enqueue(new Callback<List<WebserviceProductModel>>() {
                     @Override
@@ -195,6 +195,26 @@ public class Repository {
                     }
                 });
         return mostVisitingProductListLiveData;
+    }
+
+    public MutableLiveData<List<WebserviceProductModel>> getAmazingSuggestionProductListLiveData() {
+        return amazingSuggestionProductListLiveData;
+    }
+
+    public MutableLiveData<List<WebserviceProductModel>> getMostNewestProductListLiveData() {
+        return mostNewestProductListLiveData;
+    }
+
+    public MutableLiveData<List<WebserviceProductModel>> getMostRatingProductListLiveData() {
+        return mostRatingProductListLiveData;
+    }
+
+    public MutableLiveData<List<WebserviceProductModel>> getMostVisitingProductListLiveData() {
+        return mostVisitingProductListLiveData;
+    }
+
+    public MutableLiveData<List<WebserviceProductModel>> getEspecialProductsMutabaleLiveData() {
+        return especialProductsMutabaleLiveData;
     }
 
     public void setProductId(int productId) {
@@ -269,7 +289,7 @@ public class Repository {
                 });
         return relatedProductMutableLiveData;
     }
-    public MutableLiveData<List<WebserviceProductModel>> getEspecialProduct(){
+    public MutableLiveData<List<WebserviceProductModel>> loadEspecialProduct(){
         especialProductsMutabaleLiveData = new MutableLiveData<>();
         // TODO: 11/18/2019 ESPECIAL TAG !!
         RetrofitConfig.getRetrofit().create(RetrofitApi.class).getEspecialProducts(Const.SPECIAL_TAG)

@@ -12,14 +12,11 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
-import org.neshan.vectorelements.Line;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,12 +83,9 @@ public class FilterProductsFragment extends Fragment {
 
     private void filterBtnFunction() {
         filterBtn.setOnClickListener(view -> {
-            String attributeTxt = null;
-            for (WebServiceAttribute attribute : attributeRecyclerViewAdapter.getAttributeList()){
-                if (attribute.isSelected()) {
-                attributeTxt = attribute.getSlug();
-                }
-            }
+            String attributeTxt;
+            attributeTxt = attributeRecyclerViewAdapter.getAttributeModel().getSlug();
+
             List<Integer> attributeTermList = new ArrayList<>();
             if (attributeTermRecyclerViewAdapter == null) {
                 Toast.makeText(getActivity(), "لطفا یک ویژگی انتخاب کنید", Toast.LENGTH_SHORT).show();

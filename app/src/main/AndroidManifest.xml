@@ -24,6 +24,7 @@
             android:name=".controller.activity.CustomerInfoActivity"
             android:launchMode="singleTask" />
         <activity
+            android:windowSoftInputMode="adjustResize"
             android:name=".controller.activity.LoginRegisterActivity"
             android:launchMode="singleTask" />
         <activity

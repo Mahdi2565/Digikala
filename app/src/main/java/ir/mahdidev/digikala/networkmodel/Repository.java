@@ -46,7 +46,7 @@ public class Repository {
     private MutableLiveData<WebServiceCustomerModel> updateCustomerMutable = new MutableLiveData<>();
     private MutableLiveData<List<WebServiceAttribute>> attributeProductsMutable;
     private MutableLiveData<List<WebServiceAttributeTerm>> attributeTermProductsMutable;
-    private MutableLiveData<WebServiceCommentModel> updateCommentMutable;
+    private MutableLiveData<WebServiceCommentModel> updateCommentMutable = new MutableLiveData<>();
 
     public static Repository getInstance() {
         if (instance == null) {
@@ -97,7 +97,7 @@ public class Repository {
 
     public MutableLiveData<List<WebserviceCategoryModel>> loadCategoryList() throws IOException {
         Response<List<WebserviceCategoryModel>> category = RetrofitConfig.getRetrofit().create(RetrofitApi.class)
-                .getAllCategories().execute();
+                .getAllCategories(100).execute();
         categoryListLiveData.postValue(category.body());
         return categoryListLiveData;
     }
@@ -107,7 +107,7 @@ public class Repository {
     }
     public void loadCategoryListFromMainFragment(){
         RetrofitConfig.getRetrofit().create(RetrofitApi.class)
-                .getAllCategories().enqueue(new Callback<List<WebserviceCategoryModel>>() {
+                .getAllCategories(100).enqueue(new Callback<List<WebserviceCategoryModel>>() {
             @Override
             public void onResponse(Call<List<WebserviceCategoryModel>> call, Response<List<WebserviceCategoryModel>> response) {
                 if (response.isSuccessful()){
@@ -290,7 +290,6 @@ public class Repository {
     }
 
     public MutableLiveData<List<WebServiceCommentModel>> getCommentsProduct(int productId){
-        commentProductsMutableLiveData = new MutableLiveData<>();
         RetrofitConfig.getRetrofit().create(RetrofitApi.class).getProductComment(productId)
                 .enqueue(new Callback<List<WebServiceCommentModel>>() {
                     @Override
@@ -306,6 +305,9 @@ public class Repository {
                     }
                 });
         return commentProductsMutableLiveData;
+    }
+    public void clearCommentProductMutable(){
+        commentProductsMutableLiveData = new MutableLiveData<>();
     }
     public MutableLiveData<List<WebserviceProductModel>> getSortedProductList(int categoryId , String orderBy
             , String order , String search , int page , String attribute , List<Integer> attributeTerm){
@@ -441,6 +443,11 @@ public class Repository {
                 });
         return attributeTermProductsMutable;
     }
+
+    public MutableLiveData<WebServiceCommentModel> getUpdateCommentMutable() {
+        return updateCommentMutable;
+    }
+
     public MutableLiveData<WebServiceCommentModel> updateComment(WebServiceCommentModel webServiceCommentModel){
         updateCommentMutable = new MutableLiveData<>();
         RetrofitConfig.getRetrofit().create(RetrofitApi.class).updateComment(webServiceCommentModel.getId() ,webServiceCommentModel)
@@ -451,10 +458,8 @@ public class Repository {
                             updateCommentMutable.setValue(response.body());
                         }
                     }
-
                     @Override
                     public void onFailure(Call<WebServiceCommentModel> call, Throwable t) {
-
                     }
                 });
         return updateCommentMutable;

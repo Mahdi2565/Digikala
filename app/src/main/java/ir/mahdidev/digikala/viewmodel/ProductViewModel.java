@@ -79,7 +79,9 @@ public class ProductViewModel extends AndroidViewModel {
     public LiveData<List<WebServiceCommentModel>> getCommentsProduct(int productId) {
         return repository.getCommentsProduct(productId);
     }
-
+    public void clearCommentProductMutable(){
+        repository.clearCommentProductMutable();
+    }
     public LiveData<WebServiceCommentModel> sendCustomerComment(WebServiceCommentModel webServiceCommentModel) {
         return customerRepository.sendCustomerComment(webServiceCommentModel);
     }
@@ -94,6 +96,10 @@ public class ProductViewModel extends AndroidViewModel {
 
     public LiveData<List<WebServiceAttributeTerm>> getAllAttributeTerm(int attributeId) {
         return repository.getAllAttributeTerms(attributeId);
+    }
+
+    public LiveData<WebServiceCommentModel> getUpdateComment(){
+        return repository.getUpdateCommentMutable();
     }
 
     public LiveData<WebServiceCommentModel> updateComment(WebServiceCommentModel webServiceCommentModel) {

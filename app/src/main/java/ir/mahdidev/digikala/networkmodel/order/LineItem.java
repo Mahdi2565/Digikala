@@ -48,7 +48,7 @@ public class LineItem {
     private String sku;
     @SerializedName("price")
     @Expose
-    private Integer price;
+    private Double price;
 
     public LineItem(Integer productId, Integer quantity) {
         this.productId = productId;
@@ -159,11 +159,11 @@ public class LineItem {
         this.sku = sku;
     }
 
-    public Integer getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

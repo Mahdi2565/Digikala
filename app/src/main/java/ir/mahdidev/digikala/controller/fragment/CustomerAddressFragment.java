@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -45,6 +46,8 @@ public class CustomerAddressFragment extends Fragment {
     FloatingActionButton addAddressFab;
     @BindView(R.id.customer_address_recyclerView)
     RecyclerView addressRecyclerView;
+    @BindView(R.id.no_address_txt)
+    TextView noAddressTxt;
 
     public CustomerAddressFragment() {
     }
@@ -75,6 +78,11 @@ public class CustomerAddressFragment extends Fragment {
     }
 
     private void initRecyclerView(List<CustomerAddressModel> customerAddressModels) {
+        if (customerAddressModels.isEmpty()){
+            noAddressTxt.setVisibility(View.VISIBLE);
+        }else {
+            noAddressTxt.setVisibility(View.GONE);
+        }
         if (addressRecyclerViewAdapter==null){
             addressRecyclerViewAdapter = new AddressRecyclerViewAdapter(customerAddressModels , getActivity() , Const.FROM_ADDRESS_FRAGMENT);
         }else {

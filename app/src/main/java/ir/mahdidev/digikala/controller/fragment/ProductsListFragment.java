@@ -50,10 +50,12 @@ public class ProductsListFragment extends Fragment {
 
     @BindView(R.id.title_toolbar)
     TextView titleToolbar;
+
     @OnClick(R.id.back_toolbar)
-    void onBackClicked(){
+    void onBackClicked() {
         getActivity().finish();
     }
+
     @BindView(R.id.basket_badge)
     TextView basketBadge;
     @BindView(R.id.products_list_recyclerView)
@@ -72,8 +74,10 @@ public class ProductsListFragment extends Fragment {
     TextView subSortTxt;
     @BindView(R.id.filter_relative)
     RelativeLayout filterRelative;
+
     public ProductsListFragment() {
     }
+
     private ListProductData listProductData;
     private ProductsListViewModel viewModel;
     private ProductsListRecyclerViewAdapter productsListRecyclerViewAdapter;
@@ -91,7 +95,7 @@ public class ProductsListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() !=null){
+        if (getArguments() != null) {
             listProductData = (ListProductData) getArguments().getSerializable(Const.BundleKey.PRODUCT_LIST_DATA_BUNDLE_KEY);
         }
     }
@@ -99,7 +103,7 @@ public class ProductsListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this , view);
+        ButterKnife.bind(this, view);
         progressBar.setVisibility(View.VISIBLE);
         SortProductDialogFragment.radioChecked = 4;
         navController = Navigation.findNavController(view);
@@ -113,30 +117,30 @@ public class ProductsListFragment extends Fragment {
     }
 
     private void filterFunction() {
-        filterRelative.setOnClickListener(view ->{
+        filterRelative.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
-            bundle.putSerializable(Const.BundleKey.PRODUCT_LIST_DATA_BUNDLE_KEY , listProductData);
-            navController.navigate(R.id.action_productsListFragment_to_filterProductsFragment , bundle);
-                });
+            bundle.putSerializable(Const.BundleKey.PRODUCT_LIST_DATA_BUNDLE_KEY, listProductData);
+            navController.navigate(R.id.action_productsListFragment_to_filterProductsFragment, bundle);
+        });
 
     }
 
     private void subSortTxtFunction() {
-        if (listProductData.getOrderBy().equals(Const.OrderTag.MOST_NEWEST_PRODUCT)){
+        if (listProductData.getOrderBy().equals(Const.OrderTag.MOST_NEWEST_PRODUCT)) {
             subSortTxt.setText(R.string.most_newest);
             SortProductDialogFragment.radioChecked = 4;
-        }else if (listProductData.getOrderBy().equals(Const.OrderTag.MOST_VISITING_PRODUCT)){
+        } else if (listProductData.getOrderBy().equals(Const.OrderTag.MOST_VISITING_PRODUCT)) {
             SortProductDialogFragment.radioChecked = 2;
             subSortTxt.setText(R.string.most_visiting);
-        }else if (listProductData.getOrderBy().equals(Const.OrderTag.MOST_RATING_PRODUCT)){
+        } else if (listProductData.getOrderBy().equals(Const.OrderTag.MOST_RATING_PRODUCT)) {
             SortProductDialogFragment.radioChecked = 3;
             subSortTxt.setText(R.string.most_rating);
-        }else if (listProductData.getOrderBy().equals(Const.OrderTag.PRICE_PRODUCT) &&
-        listProductData.getOrder().equals("asc")){
+        } else if (listProductData.getOrderBy().equals(Const.OrderTag.PRICE_PRODUCT) &&
+                listProductData.getOrder().equals("asc")) {
             SortProductDialogFragment.radioChecked = 0;
             subSortTxt.setText(R.string.price_asc);
-        }else if (listProductData.getOrderBy().equals(Const.OrderTag.PRICE_PRODUCT) &&
-                listProductData.getOrder().equals("desc")){
+        } else if (listProductData.getOrderBy().equals(Const.OrderTag.PRICE_PRODUCT) &&
+                listProductData.getOrder().equals("desc")) {
             SortProductDialogFragment.radioChecked = 1;
             subSortTxt.setText(R.string.price_desc);
         }
@@ -145,9 +149,9 @@ public class ProductsListFragment extends Fragment {
     private void sortProductDialog() {
         sortRelative.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
-            bundle.putSerializable(Const.BundleKey.PRODUCT_LIST_DATA_TO_SORT_FRAGMENT_BUNDLE_KEY ,
+            bundle.putSerializable(Const.BundleKey.PRODUCT_LIST_DATA_TO_SORT_FRAGMENT_BUNDLE_KEY,
                     listProductData);
-            navController.navigate(R.id.action_productsListFragment_to_sortProductDialogFragment , bundle);
+            navController.navigate(R.id.action_productsListFragment_to_sortProductDialogFragment, bundle);
         });
     }
 
@@ -166,59 +170,63 @@ public class ProductsListFragment extends Fragment {
     }
 
     private void initViewModel() {
-
         viewModel = ViewModelProviders.of(this).get(ProductsListViewModel.class);
         viewModel.getProductCount().observe(this, integer -> {
-            if (integer>0){
+            if (integer > 0) {
                 basketBadge.setVisibility(View.VISIBLE);
                 basketBadge.setText(String.valueOf(integer));
-            }else {
+            } else {
                 basketBadge.setVisibility(View.GONE);
             }
         });
 
-        viewModel.getAllSortedProductsList(listProductData , productListPage).observe(this,
+        viewModel.getAllSortedProductsList(listProductData, productListPage).observe(this,
                 webserviceProductModels -> {
-            if (webserviceProductModels.isEmpty()){
-                isListEmpty = true;
-            }
+                    if (webserviceProductModels.isEmpty()) {
+                        isListEmpty = true;
+                    }
                     progressBar.setVisibility(View.GONE);
                     initRecyclerView(webserviceProductModels);
                 });
     }
 
     private void initRecyclerView(List<WebserviceProductModel> webserviceProductModels) {
-        if (productsListRecyclerViewAdapter== null){
-            productsListRecyclerViewAdapter = new ProductsListRecyclerViewAdapter(webserviceProductModels , getActivity());
-        }else {
+        if (productsListRecyclerViewAdapter == null) {
+            productsListRecyclerViewAdapter = new ProductsListRecyclerViewAdapter(webserviceProductModels, getActivity());
+            productsListRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+                }
+
+                @Override
+                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                    LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == webserviceProductModels.size() - 1) {
+                        if (isListEmpty) return;
+                        viewModel.getAllSortedProductsList(listProductData, ++productListPage);
+                    }
+                }
+            });
+            productsListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            productsListRecyclerView.setAdapter(productsListRecyclerViewAdapter);
+        } else {
             productsListRecyclerViewAdapter.setProductList(webserviceProductModels);
             productsListRecyclerViewAdapter.notifyDataSetChanged();
         }
-        productsListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        productsListRecyclerView.setAdapter(productsListRecyclerViewAdapter);
-
-        if (productsListRecyclerViewAdapter.getProductsList().isEmpty()){
+        if (productsListRecyclerViewAdapter.getProductsList().isEmpty()) {
             emptyList.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             emptyList.setVisibility(View.GONE);
         }
 
-        productsListRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
+    }
 
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == webserviceProductModels.size() - 1) {
-                    if (isListEmpty) return;
-                    viewModel.getAllSortedProductsList(listProductData,++productListPage);
-                }
-            }
-        });
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        productsListRecyclerView = null;
+        productsListRecyclerViewAdapter = null;
     }
 }

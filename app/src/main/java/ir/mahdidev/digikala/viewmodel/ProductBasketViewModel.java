@@ -36,4 +36,7 @@ public class ProductBasketViewModel extends AndroidViewModel {
     public void deleteAllProductsRows(){
         repository.deleteAllRows();
     }
+    public void updateProductBasketDb(ProductBasketModel productBasketModel){
+        repository.updateProductBaskerDb(productBasketModel);
+    }
 }

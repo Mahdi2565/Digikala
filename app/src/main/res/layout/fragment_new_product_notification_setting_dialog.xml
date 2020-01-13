@@ -1,86 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:orientation="vertical"
-    android:gravity="center"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".controller.fragment.NewProductNotificationSettingDialogFragment"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_margin="32dp"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".controller.fragment.NewProductNotificationSettingDialogFragment">
 
 
     <RadioGroup
-        android:gravity="center"
         android:id="@+id/notif_radio_group"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center">
 
         <RadioButton
-            android:layoutDirection="rtl"
             android:id="@+id/turn_off_notif"
-            android:text="@string/none"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layoutDirection="rtl"
+            android:text="@string/none" />
 
         <RadioButton
-            android:layoutDirection="rtl"
-            android:text="@string/every_15_min"
             android:id="@+id/_15_min_notif"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <RadioButton
-            android:text="@string/every_3_hours"
-            android:id="@+id/every_3_hours_notif"
+            android:layout_height="wrap_content"
             android:layoutDirection="rtl"
+            android:text="@string/every_15_min" />
+
+        <RadioButton
+            android:id="@+id/every_3_hours_notif"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layoutDirection="rtl"
+            android:text="@string/every_3_hours" />
+
         <RadioButton
             android:id="@+id/every_5_hours_notif"
-            android:layoutDirection="rtl"
             android:layout_width="wrap_content"
-            android:text="@string/every_5_hours"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layoutDirection="rtl"
+            android:text="@string/every_5_hours" />
+
         <RadioButton
             android:id="@+id/every_8_hours_notif"
-            android:layoutDirection="rtl"
             android:layout_width="wrap_content"
-            android:text="@string/every_8_hours"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layoutDirection="rtl"
+            android:text="@string/every_8_hours" />
+
         <RadioButton
             android:id="@+id/every_12_hours_notif"
-            android:layoutDirection="rtl"
             android:layout_width="wrap_content"
-            android:text="@string/every_12_hours"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layoutDirection="rtl"
+            android:text="@string/every_12_hours" />
+
         <RadioButton
             android:id="@+id/custom_notif"
-            android:layoutDirection="rtl"
             android:layout_width="wrap_content"
-            android:text="@string/choose_your_time"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layoutDirection="rtl"
+            android:text="@string/choose_your_time" />
     </RadioGroup>
+
     <com.google.android.material.textfield.TextInputLayout
-        android:visibility="gone"
         android:id="@+id/custom_notif_layout"
-        android:hint="@string/hint_custom_notif"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_custom_notif"
+        android:visibility="gone">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:inputType="number"
             android:id="@+id/custom_notif_edt"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:inputType="number" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
     <Button
         android:id="@+id/save_notif_state"
-        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="@string/register_norif"
         android:textColor="@color/white"
-        app:backgroundTint="@color/colorPrimary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:textSize="16sp"
+        app:backgroundTint="@color/colorPrimary" />
 
 </LinearLayout>

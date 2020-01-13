@@ -1,25 +1,24 @@
 package ir.mahdidev.digikala.adapter;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Build;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.navigation.fragment.FragmentNavigator;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 import butterknife.BindView;
@@ -27,7 +26,6 @@ import butterknife.ButterKnife;
 import ir.mahdidev.digikala.R;
 import ir.mahdidev.digikala.database.ProductBasketModel;
 import ir.mahdidev.digikala.database.ProductFavoriteModel;
-import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
 import ir.mahdidev.digikala.util.MyApplication;
 
 public class ProductBasketAdapterRecyclerView<T> extends RecyclerView.Adapter {
@@ -67,8 +65,9 @@ public class ProductBasketAdapterRecyclerView<T> extends RecyclerView.Adapter {
             } else {
                 holder.shortDescriptionProduct.setText(Html.fromHtml(productBasketModel.getShortDescription()));
             }
-            holder.productCount.setText(MyApplication.getInstance()
-                    .getPersianNumber(productBasketModel.getProductCount()));
+
+            initProductCountSpinner(productBasketModel , holder);
+
             String regularPrice = MyApplication.getInstance()
                     .getPersianNumber(Double.parseDouble(productBasketModel.getPrice()))
                     + " تومان";
@@ -107,8 +106,8 @@ public class ProductBasketAdapterRecyclerView<T> extends RecyclerView.Adapter {
             } else {
                 holder.shortDescriptionProduct.setText(Html.fromHtml(productFavorite.getShortDescription()));
             }
-            holder.productCount.setText(MyApplication.getInstance()
-                    .getPersianNumber(productFavorite.getProductCount()));
+//            holder.productCountSpinner.setText(MyApplication.getInstance()
+//                    .getPersianNumber(productFavorite.getProductCount()));
             String regularPrice = MyApplication.getInstance()
                     .getPersianNumber(Double.parseDouble(productFavorite.getPrice()))
                     + " تومان";
@@ -139,6 +138,28 @@ public class ProductBasketAdapterRecyclerView<T> extends RecyclerView.Adapter {
         }
     }
 
+    private void initProductCountSpinner(ProductBasketModel productBasketModel , ViewHolder holder) {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
+                R.array.product_count, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        holder.productCountSpinner.setAdapter(adapter);
+        holder.productCountSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            if (productBasketModel.getProductCount()!=i+1){
+                productBasketModel.setProductCount(i+1);
+                productBasketAdapterInterface.onProductCountChange(productBasketModel);
+            }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        holder.productCountSpinner.setSelection(productBasketModel.getProductCount()-1);
+    }
+
     @Override
     public int getItemCount() {
         return list.size();
@@ -151,8 +172,8 @@ public class ProductBasketAdapterRecyclerView<T> extends RecyclerView.Adapter {
         TextView titleProduct;
         @BindView(R.id.short_description_product)
         TextView shortDescriptionProduct;
-        @BindView(R.id.product_count_txt)
-        TextView productCount;
+        @BindView(R.id.product_count_spinner)
+        Spinner productCountSpinner;
         @BindView(R.id.price)
         TextView price;
         @BindView(R.id.discount_price_txt)
@@ -171,6 +192,7 @@ public class ProductBasketAdapterRecyclerView<T> extends RecyclerView.Adapter {
     public interface ProductBasketAdapterInterface<T>{
         void onDeleteProductClicked(T model);
         void onProductPictureClicked(int productId);
+        void onProductCountChange(ProductBasketModel productBasketModel);
     }
     private ProductBasketAdapterInterface productBasketAdapterInterface;
     public void setProductBasketAdapterInterface(ProductBasketAdapterInterface productBasketAdapterInterface){

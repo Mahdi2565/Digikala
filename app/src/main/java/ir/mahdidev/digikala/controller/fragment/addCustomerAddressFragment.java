@@ -60,6 +60,7 @@ public class addCustomerAddressFragment extends Fragment {
 
     public addCustomerAddressFragment() {
     }
+
     private WebServiceCustomerModel webServiceCustomerModel ;
     private NavController navController;
     private CustomerViewModel viewModel;

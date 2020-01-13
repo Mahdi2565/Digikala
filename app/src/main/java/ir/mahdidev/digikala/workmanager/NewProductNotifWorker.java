@@ -42,8 +42,8 @@ public class NewProductNotifWorker extends Worker {
         int serverProductId = webserviceProductModel.getId();
         int clientProductId = Pref.getLastProductId(getApplicationContext());
 
-        if (serverProductId == -1) return Result.retry();
-        if (serverProductId >= clientProductId){
+        if (webserviceProductModel.getId() == null) return Result.retry();
+        if (serverProductId > clientProductId){
             try {
                 Bitmap productBitmap = Picasso.get().load(webserviceProductModel.getImages().get(0).getSrc()).get();
                 createNotification(webserviceProductModel.getId() ,webserviceProductModel.getName() , productBitmap);
@@ -82,10 +82,11 @@ public class NewProductNotifWorker extends Worker {
         NotificationCompat.Builder newestProduct = new NotificationCompat.Builder(getApplicationContext() , Const.NOTIFICATION_CHANNEL_ID);
         newestProduct.setContentTitle(getApplicationContext().getString(R.string.new_product));
         newestProduct.setContentText("محصول " + productTitle + " اضافه شد");
-        newestProduct.setSmallIcon(R.drawable.digikala_small_logo);
+        newestProduct.setSmallIcon(R.drawable.ic_digikala_notif);
         newestProduct.setAutoCancel(true);
         newestProduct.setBadgeIconType(NotificationCompat.BADGE_ICON_LARGE);
         newestProduct.setPriority(NotificationCompat.PRIORITY_HIGH);
+        newestProduct.setColor(getApplicationContext().getResources().getColor(R.color.colorPrimary));
         if (productImage !=null){
             newestProduct.setStyle(new NotificationCompat.BigPictureStyle()
                     .bigPicture(productImage));

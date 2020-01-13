@@ -12,12 +12,15 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -68,6 +71,8 @@ public class FinalizeBasketFragment extends Fragment {
     void onBackClicked(){
         navController.popBackStack();
     }
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
 
     public FinalizeBasketFragment() {
     }
@@ -80,11 +85,11 @@ public class FinalizeBasketFragment extends Fragment {
     private NavController navController;
     private List<LineItem> listItem = new ArrayList<>();
     private List<CouponLine> couponLines = new ArrayList<>();
+    private List<CustomerAddressModel> addressList = new ArrayList<>();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // TODO: 12/20/2019 isUserLoggedIn
         webServiceCustomerModel = Pref.getCustomerModelFromPref(getActivity());
     }
 
@@ -120,6 +125,7 @@ public class FinalizeBasketFragment extends Fragment {
             }
             customerViewModel.verifyCoupon(codeCoupons).observe(this , webServiceCoupons -> {
                 if (!webServiceCoupons.isEmpty()){
+                     couponsEdt.setEnabled(false);
                     Toast.makeText(getActivity() , getActivity().getResources().getString(R.string.verify_comment ), Toast.LENGTH_LONG).show();
                     for (WebServiceCoupon webServiceCoupon : webServiceCoupons){
                         couponLines.add(new CouponLine( webServiceCoupon.getCode() ,
@@ -135,6 +141,12 @@ public class FinalizeBasketFragment extends Fragment {
 
     private void sendOrderToServer() {
         registerOrder.setOnClickListener(view -> {
+            if (addressList.isEmpty()){
+                Toast.makeText(getActivity() , "لطفا یک آدرس اضافه کنید" , Toast.LENGTH_LONG).show();
+                return;
+            }
+            registerOrder.setEnabled(false);
+            progressBar.setVisibility(View.VISIBLE);
             String orderNote = orderNoteEdt.getText().toString().trim();
             CustomerAddressModel customerAddressModel = addressRecyclerViewAdapter.getCustomerAddress();
             ir.mahdidev.digikala.networkmodel.order.Shipping shipping = new ir.mahdidev.digikala.networkmodel.order.Shipping(customerAddressModel.getFirstName() , customerAddressModel.getLastName() ,
@@ -155,6 +167,8 @@ public class FinalizeBasketFragment extends Fragment {
             webServiceOrder.setCustomerId(webServiceCustomerModel.getId());
             webServiceOrder.setCouponLines(couponLines);
             viewModel.sendOrder(webServiceOrder).observe(this , orderResult -> {
+                progressBar.setVisibility(View.GONE);
+                registerOrder.setEnabled(true);
                 if (orderResult.getId() != null){
                     Toast.makeText(getActivity() , "سفارش شما به شماره سفارش " + orderResult.getId() + " ثبت شد" , Toast.LENGTH_LONG).show();
                     getActivity().finish();
@@ -172,7 +186,7 @@ public class FinalizeBasketFragment extends Fragment {
     }
 
     private void initAddressRecyclerView(List<CustomerAddressModel> customerAddressModels) {
-
+            addressList = customerAddressModels;
             if (customerAddressModels.isEmpty()){
                 addAddress.setVisibility(View.VISIBLE);
                 customerAddressRecyclerView.setVisibility(View.GONE);
@@ -194,16 +208,17 @@ public class FinalizeBasketFragment extends Fragment {
     private void iniProductsRecyclerView(List<ProductBasketModel> productBasketModels) {
 
         List<WebserviceProductModel> productModelList = new ArrayList<>();
-        List<Image> images = new ArrayList<>();
         for (ProductBasketModel productBasketModel : productBasketModels){
             listItem.add(new LineItem(productBasketModel.getProductId() , productBasketModel.getProductCount()));
             WebserviceProductModel webserviceProductModel = new WebserviceProductModel();
             webserviceProductModel.setId(productBasketModel.getProductId());
             webserviceProductModel.setName(productBasketModel.getTitleProduct());
             webserviceProductModel.setShortDescription(productBasketModel.getShortDescription());
+            List<Image> images = new ArrayList<>();
             Image image = new Image();
             image.setSrc(productBasketModel.getImageSrc());
             images.add(image);
+
             webserviceProductModel.setImages(images);
             webserviceProductModel.setRegularPrice(productBasketModel.getPrice());
             webserviceProductModel.setPrice(productBasketModel.getFinalPrice());

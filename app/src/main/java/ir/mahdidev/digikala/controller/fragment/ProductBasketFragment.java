@@ -13,6 +13,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,7 +88,6 @@ public class ProductBasketFragment extends Fragment {
         initViewModel();
         finalizeFunction();
     }
-
     private void finalizeFunction() {
         finalizeBasket.setOnClickListener(view -> {
             if (webServiceCustomerModel==null){
@@ -153,6 +153,11 @@ public class ProductBasketFragment extends Fragment {
             @Override
             public void onProductPictureClicked(int productId) {
                 EventBus.getDefault().post(new OnProductClickedMessage(productId));
+            }
+
+            @Override
+            public void onProductCountChange(ProductBasketModel productBasketModel) {
+               viewModel.updateProductBasketDb(productBasketModel);
             }
         });
     }

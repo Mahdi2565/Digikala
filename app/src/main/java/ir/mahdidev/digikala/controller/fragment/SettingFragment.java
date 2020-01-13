@@ -27,11 +27,10 @@ public class SettingFragment extends Fragment {
 
     @OnClick(R.id.back_toolbar)
     void onBackClicked(){
-        navController.popBackStack();
+        getActivity().finish();
     }
 
     private NavController navController;
-
     public SettingFragment() {
     }
 

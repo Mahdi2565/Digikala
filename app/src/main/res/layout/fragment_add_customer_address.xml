@@ -111,6 +111,7 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:inputType="number"
                     android:id="@+id/phone_number_edt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
@@ -126,6 +127,7 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:inputType="number"
                     android:id="@+id/postal_code_edt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>

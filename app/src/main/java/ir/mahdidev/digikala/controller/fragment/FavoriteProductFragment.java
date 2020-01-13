@@ -96,6 +96,11 @@ public class FavoriteProductFragment extends Fragment {
             public void onProductPictureClicked(int productId) {
                 EventBus.getDefault().post(new OnProductClickedMessage(productId));
             }
+
+            @Override
+            public void onProductCountChange(ProductBasketModel productBasketModel) {
+
+            }
         });
     }
     private void createDeleteAlertDialog(ProductFavoriteModel productFavoriteModel) {

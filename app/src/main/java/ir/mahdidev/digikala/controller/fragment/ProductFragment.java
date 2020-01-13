@@ -24,6 +24,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.material.card.MaterialCardView;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderView;
 
@@ -94,6 +95,8 @@ public class ProductFragment extends Fragment {
     RelativeLayout userComments;
     @BindView(R.id.related_product_txt)
     TextView relatedProductTxt;
+    @BindView(R.id.description_card)
+    MaterialCardView descriptionCardView;
 
     private boolean isAmazingSuggestion = false;
     private ProductViewModel viewModel;
@@ -103,13 +106,6 @@ public class ProductFragment extends Fragment {
     private ProductFavoriteModel productFavoriteModel;
     private NavController navController;
     public ProductFragment() {}
-
-    public static ProductFragment newInstance() {
-        Bundle args = new Bundle();
-        ProductFragment fragment = new ProductFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -229,12 +225,12 @@ public class ProductFragment extends Fragment {
             }else relatedProductTxt.setVisibility(View.VISIBLE);
             if (relatedProductsAdapter==null){
                 relatedProductsAdapter = new MainHorizontalRecyclerViewAdapter(webserviceProductModels , getActivity());
-                relatedProductRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity() , RecyclerView.HORIZONTAL , true));
-                relatedProductRecyclerView.setAdapter(relatedProductsAdapter);
             }else {
                 relatedProductsAdapter.addProductList(webserviceProductModels);
                 relatedProductsAdapter.notifyDataSetChanged();
             }
+            relatedProductRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity() , RecyclerView.HORIZONTAL , true));
+            relatedProductRecyclerView.setAdapter(relatedProductsAdapter);
         });
     }
 
@@ -243,12 +239,12 @@ public class ProductFragment extends Fragment {
             if (categoryRecyclerViewAdapter == null){
                 categoryRecyclerViewAdapter = new CategoryRecyclerViewAdapter(categoryModelList , getActivity() ,
                         Const.FROM_PRODUCT_FRAGMENT);
-                categoryProductRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity() , RecyclerView.HORIZONTAL , true));
-                categoryProductRecyclerView.setAdapter(categoryRecyclerViewAdapter);
             }else {
                 categoryRecyclerViewAdapter.setCategoryList(categoryModelList);
                 categoryRecyclerViewAdapter.notifyDataSetChanged();
             }
+            categoryProductRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity() , RecyclerView.HORIZONTAL , true));
+            categoryProductRecyclerView.setAdapter(categoryRecyclerViewAdapter);
             categoryRecyclerViewAdapter.setCategoryRecyclerViewAdapterInterface((position, webserviceCategoryModel) -> {
                 startActivity(ProductsListActivity.newIntent(getActivity()
                         , new ListProductData(webserviceCategoryModel.getName() , webserviceCategoryModel.getId()
@@ -258,9 +254,11 @@ public class ProductFragment extends Fragment {
     }
 
     private void initTitleDescriptionAndPrice(WebserviceProductModel webserviceProductModel) {
-
         if (webserviceProductModel.getShortDescription().isEmpty()){
             shortDescriptionProduct.setVisibility(View.INVISIBLE);
+        }
+        if (webserviceProductModel.getDescription().isEmpty()){
+            descriptionCardView.setVisibility(View.GONE);
         }
         titleProduct.setText(webserviceProductModel.getName());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

@@ -7,14 +7,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,13 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.List;
 
 import butterknife.BindView;
@@ -43,7 +35,6 @@ import ir.mahdidev.digikala.networkmodel.customer.WebServiceCustomerModel;
 import ir.mahdidev.digikala.util.Const;
 import ir.mahdidev.digikala.util.Pref;
 import ir.mahdidev.digikala.viewmodel.ProductViewModel;
-import okhttp3.ResponseBody;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -75,7 +66,19 @@ public class CommentsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initViewModel();
         getCustomerModel();
+        clearCommentProduct();
+
+    }
+
+    private void initViewModel() {
+        viewModel = ViewModelProviders.of(this).get(ProductViewModel.class);
+
+    }
+
+    private void clearCommentProduct() {
+        viewModel.clearCommentProductMutable();
     }
 
     private void getCustomerModel() {
@@ -94,8 +97,12 @@ public class CommentsFragment extends Fragment {
         navController = Navigation.findNavController(view);
         ButterKnife.bind(this , view);
         canWriteComment();
-        initViewModel();
+        getCommentProductList();
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     private void canWriteComment() {
@@ -111,8 +118,7 @@ public class CommentsFragment extends Fragment {
         });
     }
 
-    private void initViewModel() {
-        viewModel = ViewModelProviders.of(this).get(ProductViewModel.class);
+    private void getCommentProductList() {
         viewModel.getCommentsProduct(viewModel.getProductIdMutableLiveData().getValue()).observe(this, webServiceCommentModels -> {
             if (webServiceCommentModels.isEmpty()){
                 emptyComment.setVisibility(View.VISIBLE);
@@ -165,5 +171,10 @@ public class CommentsFragment extends Fragment {
                 bundle.putSerializable(Const.BundleKey.COMMENT_MODEL_BUNDLE_KEY , webServiceCommentModel);
                 navController.navigate(R.id.action_commentsFragment_to_addCommentDialogFragment , bundle);            }
         });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
     }
 }

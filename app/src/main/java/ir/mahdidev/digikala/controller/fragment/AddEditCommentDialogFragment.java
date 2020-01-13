@@ -4,6 +4,7 @@ import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -107,7 +108,7 @@ public class AddEditCommentDialogFragment extends DialogFragment {
 
             if (fragmentPosition==Const.COMMENT_FRAGMENT_ADD){
                 webServiceCommentModel = new WebServiceCommentModel();
-                setdataToModel();
+                setDataToModel();
                 viewModel.sendCustomerComment(webServiceCommentModel).observe(AddEditCommentDialogFragment.this ,
                         webServiceCommentModel1 -> {
                             if (webServiceCommentModel1.getId()!=null){
@@ -116,7 +117,7 @@ public class AddEditCommentDialogFragment extends DialogFragment {
                             }
                         });
             }else {
-                setdataToModel();
+                setDataToModel();
                 viewModel.updateComment(webServiceCommentModel).observe(AddEditCommentDialogFragment.this , commentEditResponse -> {
                     if (commentEditResponse.getId() == null){
                         Toast.makeText(getActivity() , getActivity().getResources().getString(R.string.cant_update_comment), Toast.LENGTH_LONG).show();
@@ -129,7 +130,7 @@ public class AddEditCommentDialogFragment extends DialogFragment {
         });
     }
 
-    private void setdataToModel() {
+    private void setDataToModel() {
         webServiceCommentModel.setProduct_id(viewModel.getProductIdMutableLiveData().getValue());
         webServiceCommentModel.setRating(rateReview);
         webServiceCommentModel.setReview(reviewTxt);

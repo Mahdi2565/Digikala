@@ -46,6 +46,17 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/no_address_txt"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:text="@string/no_address"
+        android:layout_centerInParent="true"
+        android:textSize="24sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_below="@id/toolbar"
         android:id="@+id/customer_address_recyclerView"

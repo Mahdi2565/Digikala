@@ -89,8 +89,8 @@
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/product_count_txt"
+                <Spinner
+                    android:id="@+id/product_count_spinner"
                     android:layout_marginEnd="8dp"
                     android:text="@string/digikala_txt"
                     android:layout_width="wrap_content"

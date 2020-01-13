@@ -37,7 +37,7 @@ public class CustomerRepository {
 
     private RoomConfig roomConfig;
     private MutableLiveData<WebServiceAddress> customerAddressMutable = new MutableLiveData<>();
-    private MutableLiveData<WebServiceCommentModel> sendCustomerCommentMutable = new MutableLiveData<>();
+    private MutableLiveData<WebServiceCommentModel> sendCustomerCommentMutable ;
     private MutableLiveData<WebServiceCommentModel> deleteCommentMutable;
     private MutableLiveData<WebServiceOrder> sendOrderMutable;
     private MutableLiveData<List<WebServiceOrder>> getOrdersMutable;
@@ -82,7 +82,7 @@ public class CustomerRepository {
         return customerAddressMutable;
     }
     public MutableLiveData<WebServiceCommentModel> sendCustomerComment(WebServiceCommentModel webServiceCommentModel){
-
+        sendCustomerCommentMutable = new MutableLiveData<>();
         RetrofitConfig.getRetrofit().create(RetrofitApi.class).sendCustomerComment(webServiceCommentModel)
                 .enqueue(new Callback<WebServiceCommentModel>() {
                     @Override
@@ -142,10 +142,12 @@ public class CustomerRepository {
                         if (response.isSuccessful()){
                             getOrdersMutable.setValue(response.body());
                         }
+                        Log.e("TAG4" ,response.message()  + " "  + response.code());
                     }
 
                     @Override
                     public void onFailure(Call<List<WebServiceOrder>> call, Throwable t) {
+                        Log.e("TAG4" ,t.getMessage());
 
                     }
                 });

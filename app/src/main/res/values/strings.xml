@@ -127,4 +127,5 @@
     <string name="enter_your_time_for_notif">زمان دلخواه خود را به ساعت وارد کنید</string>
     <string name="choose_your_time">زمان دلخواه خود را انتخاب کنید</string>
     <string name="hint_custom_notif">به ساعت وارد کنید مثال: 1</string>
+    <string name="no_address">هیچ آدرسی وجود ندارد</string>
 </resources>

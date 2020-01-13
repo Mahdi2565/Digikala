@@ -329,6 +329,7 @@ public class WebserviceProductModel {
     }
 
     public String getPrice() {
+        if (price.isEmpty()) return "53000";
         return price;
     }
 

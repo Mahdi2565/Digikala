@@ -39,7 +39,7 @@ public interface RetrofitApi {
     @GET("products/{id}")
     Call<WebserviceProductModel> getSingleProduct(@Path("id") int productId);
     @GET("products/categories")
-    Call<List<WebserviceCategoryModel>> getAllCategories();
+    Call<List<WebserviceCategoryModel>> getAllCategories(@Query("per_page") int perPage);
 
     @GET("products/categories")
     Call<List<WebserviceCategoryModel>> getProductCategories(@Query("product") int productId);

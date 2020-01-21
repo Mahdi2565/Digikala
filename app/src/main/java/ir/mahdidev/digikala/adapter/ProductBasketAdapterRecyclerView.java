@@ -3,7 +3,6 @@ package ir.mahdidev.digikala.adapter;
 import android.content.Context;
 import android.os.Build;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +32,7 @@ public class ProductBasketAdapterRecyclerView<T> extends RecyclerView.Adapter {
     private List<T> list;
     private Context context;
 
-    public ProductBasketAdapterRecyclerView( List<T> list , Context context) {
+    public ProductBasketAdapterRecyclerView(List<T> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -46,15 +45,15 @@ public class ProductBasketAdapterRecyclerView<T> extends RecyclerView.Adapter {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.product_basket_item ,
-                parent , false));
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.product_basket_item,
+                parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder1, int position) {
         Object object = list.get(position);
         ProductBasketAdapterRecyclerView.ViewHolder holder = (ViewHolder) holder1;
-        if (object instanceof ProductBasketModel){
+        if (object instanceof ProductBasketModel) {
             ProductBasketModel productBasketModel = (ProductBasketModel) object;
             Picasso.get().load(productBasketModel.getImageSrc())
                     .placeholder(R.drawable.digikala_place_holder)
@@ -66,7 +65,7 @@ public class ProductBasketAdapterRecyclerView<T> extends RecyclerView.Adapter {
                 holder.shortDescriptionProduct.setText(Html.fromHtml(productBasketModel.getShortDescription()));
             }
 
-            initProductCountSpinner(productBasketModel , holder);
+            initProductCountSpinner(productBasketModel, holder);
 
             String regularPrice = MyApplication.getInstance()
                     .getPersianNumber(Double.parseDouble(productBasketModel.getPrice()))
@@ -78,14 +77,14 @@ public class ProductBasketAdapterRecyclerView<T> extends RecyclerView.Adapter {
                 holder.amazingSuggestionTxt.setVisibility(View.VISIBLE);
                 int price = Integer.parseInt(productBasketModel.getPrice());
                 int finalPrice = Integer.parseInt(productBasketModel.getFinalPrice());
-                String discountPrice  =  MyApplication.getInstance()
-                        .getPersianNumber(Double.parseDouble(String.valueOf(price - finalPrice)))+ " تومان";
+                String discountPrice = MyApplication.getInstance()
+                        .getPersianNumber(Double.parseDouble(String.valueOf(price - finalPrice))) + " تومان";
                 holder.discountPrice.setText(discountPrice);
-            }else {
+            } else {
                 holder.discountPrice.setVisibility(View.GONE);
                 holder.amazingSuggestionTxt.setVisibility(View.GONE);
             }
-            String finalPrice =  MyApplication.getInstance()
+            String finalPrice = MyApplication.getInstance()
                     .getPersianNumber(Double.parseDouble(productBasketModel.getFinalPrice()))
                     + " تومان";
             holder.finalePrice.setText(finalPrice);
@@ -95,7 +94,7 @@ public class ProductBasketAdapterRecyclerView<T> extends RecyclerView.Adapter {
             holder.productImg.setOnClickListener(view -> {
                 productBasketAdapterInterface.onProductPictureClicked(productBasketModel.getProductId());
             });
-        }else if (object instanceof ProductFavoriteModel){
+        } else if (object instanceof ProductFavoriteModel) {
             ProductFavoriteModel productFavorite = (ProductFavoriteModel) object;
             Picasso.get().load(productFavorite.getImageSrc())
                     .placeholder(R.drawable.digikala_place_holder)
@@ -118,14 +117,14 @@ public class ProductBasketAdapterRecyclerView<T> extends RecyclerView.Adapter {
                 holder.amazingSuggestionTxt.setVisibility(View.VISIBLE);
                 int price = Integer.parseInt(productFavorite.getPrice());
                 int finalPrice = Integer.parseInt(productFavorite.getFinalPrice());
-                String discountPrice  =  MyApplication.getInstance()
-                        .getPersianNumber(Double.parseDouble(String.valueOf(price - finalPrice)))+ " تومان";
+                String discountPrice = MyApplication.getInstance()
+                        .getPersianNumber(Double.parseDouble(String.valueOf(price - finalPrice))) + " تومان";
                 holder.discountPrice.setText(discountPrice);
-            }else {
+            } else {
                 holder.discountPrice.setVisibility(View.GONE);
                 holder.amazingSuggestionTxt.setVisibility(View.GONE);
             }
-            String finalPrice =  MyApplication.getInstance()
+            String finalPrice = MyApplication.getInstance()
                     .getPersianNumber(Double.parseDouble(productFavorite.getFinalPrice()))
                     + " تومان";
             holder.finalePrice.setText(finalPrice);
@@ -138,7 +137,7 @@ public class ProductBasketAdapterRecyclerView<T> extends RecyclerView.Adapter {
         }
     }
 
-    private void initProductCountSpinner(ProductBasketModel productBasketModel , ViewHolder holder) {
+    private void initProductCountSpinner(ProductBasketModel productBasketModel, ViewHolder holder) {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
                 R.array.product_count, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -146,10 +145,10 @@ public class ProductBasketAdapterRecyclerView<T> extends RecyclerView.Adapter {
         holder.productCountSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-            if (productBasketModel.getProductCount()!=i+1){
-                productBasketModel.setProductCount(i+1);
-                productBasketAdapterInterface.onProductCountChange(productBasketModel);
-            }
+                if (productBasketModel.getProductCount() != i + 1) {
+                    productBasketModel.setProductCount(i + 1);
+                    productBasketAdapterInterface.onProductCountChange(productBasketModel);
+                }
             }
 
             @Override
@@ -157,7 +156,7 @@ public class ProductBasketAdapterRecyclerView<T> extends RecyclerView.Adapter {
 
             }
         });
-        holder.productCountSpinner.setSelection(productBasketModel.getProductCount()-1);
+        holder.productCountSpinner.setSelection(productBasketModel.getProductCount() - 1);
     }
 
     @Override
@@ -165,7 +164,7 @@ public class ProductBasketAdapterRecyclerView<T> extends RecyclerView.Adapter {
         return list.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.product_img)
         ImageView productImg;
         @BindView(R.id.title_product)
@@ -184,18 +183,24 @@ public class ProductBasketAdapterRecyclerView<T> extends RecyclerView.Adapter {
         TextView finalePrice;
         @BindView(R.id.delete_product)
         TextView deleteProduct;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            ButterKnife.bind(this , itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
-    public interface ProductBasketAdapterInterface<T>{
+
+    public interface ProductBasketAdapterInterface<T> {
         void onDeleteProductClicked(T model);
+
         void onProductPictureClicked(int productId);
+
         void onProductCountChange(ProductBasketModel productBasketModel);
     }
+
     private ProductBasketAdapterInterface productBasketAdapterInterface;
-    public void setProductBasketAdapterInterface(ProductBasketAdapterInterface productBasketAdapterInterface){
+
+    public void setProductBasketAdapterInterface(ProductBasketAdapterInterface productBasketAdapterInterface) {
         this.productBasketAdapterInterface = productBasketAdapterInterface;
     }
 }

@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -87,13 +86,14 @@ public class MapActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         initLocation();
-        checkPermission();
+//        checkPermission();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         checkPermission();
+        checkEnableLocation();
     }
 
     @Override
@@ -131,16 +131,12 @@ public class MapActivity extends AppCompatActivity {
     }
 
     private void checkPermission() {
+
         Dexter.withActivity(this)
                 .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
                 .withListener(new PermissionListener() {
                     @Override
                     public void onPermissionGranted(PermissionGrantedResponse response) {
-                        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                        boolean GpsStatus = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-                        if (!GpsStatus) {
-                            showFailDialog("لوکیشن گوشی فعال نیست!\n\nمیخواهید لوکیشن گوشی را فعال کنید ؟", 1);
-                        }
                         initMap();
                         startRequestLocation();
                     }
@@ -158,6 +154,14 @@ public class MapActivity extends AppCompatActivity {
                         token.continuePermissionRequest();
                     }
                 }).check();
+    }
+
+    private void checkEnableLocation() {
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        boolean GpsStatus = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        if (!GpsStatus) {
+            showFailDialog("لوکیشن گوشی فعال نیست!\n\nمیخواهید لوکیشن گوشی را فعال کنید ؟", 1);
+        }
     }
 
     private void initMap() {

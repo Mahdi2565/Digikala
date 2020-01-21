@@ -2,6 +2,11 @@ package ir.mahdidev.digikala.controller.fragment;
 
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,13 +15,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -36,9 +34,10 @@ import ir.mahdidev.digikala.viewmodel.CustomerViewModel;
 public class addCustomerAddressFragment extends Fragment {
 
     @OnClick(R.id.back_toolbar)
-    void onBackClicked(){
+    void onBackClicked() {
         navController.popBackStack();
     }
+
     @BindView(R.id.title_address_edt)
     TextInputEditText titleAddressEdt;
     @BindView(R.id.first_name_edt)
@@ -61,7 +60,7 @@ public class addCustomerAddressFragment extends Fragment {
     public addCustomerAddressFragment() {
     }
 
-    private WebServiceCustomerModel webServiceCustomerModel ;
+    private WebServiceCustomerModel webServiceCustomerModel;
     private NavController navController;
     private CustomerViewModel viewModel;
     private String titleAddress;
@@ -101,7 +100,7 @@ public class addCustomerAddressFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this ,view);
+        ButterKnife.bind(this, view);
         navController = Navigation.findNavController(view);
         selectLocationCardViewFunction();
         getDataFromUser();
@@ -119,8 +118,8 @@ public class addCustomerAddressFragment extends Fragment {
     }
 
     private void getDataFromMap() {
-        viewModel.getCustomerAddress().observe(this , webServiceAddress -> {
-            if (webServiceAddress.getAddressCompact() !=null) {
+        viewModel.getCustomerAddress().observe(this, webServiceAddress -> {
+            if (webServiceAddress.getAddressCompact() != null) {
                 mapAddress = webServiceAddress.getAddressCompact();
                 latitude = webServiceAddress.getGeom().getCoordinates().get(1);
                 longitude = webServiceAddress.getGeom().getCoordinates().get(0);
@@ -140,14 +139,14 @@ public class addCustomerAddressFragment extends Fragment {
     private void addDataToDb() {
         addAddressRelative.setOnClickListener(view -> {
             getDataFromUser();
-            if (mapAddress == null){
-                Toast.makeText(getActivity() , getActivity().getResources().getString(R.string.select_location) , Toast.LENGTH_LONG).show();
-            }else if (customerAddress == null){
-                Toast.makeText(getActivity() , getActivity().getResources().getString(R.string.select_customer_address) , Toast.LENGTH_LONG).show();
+            if (mapAddress == null) {
+                Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.select_location), Toast.LENGTH_LONG).show();
+            } else if (customerAddress == null) {
+                Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.select_customer_address), Toast.LENGTH_LONG).show();
             } else {
-                viewModel.insertCustomerAddress(new CustomerAddressModel(webServiceCustomerModel.getId() ,  titleAddress , firstName , lastName ,
-                        customerAddress , mapAddress ,
-                        phoneNumber , postalCode , latitude  , longitude , city, province ));
+                viewModel.insertCustomerAddress(new CustomerAddressModel(webServiceCustomerModel.getId(), titleAddress, firstName, lastName,
+                        customerAddress, mapAddress,
+                        phoneNumber, postalCode, latitude, longitude, city, province));
                 navController.popBackStack();
             }
         });

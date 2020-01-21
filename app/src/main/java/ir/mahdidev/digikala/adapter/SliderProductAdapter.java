@@ -5,13 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.smarteist.autoimageslider.SliderView;
 import com.smarteist.autoimageslider.SliderViewAdapter;
 import com.squareup.picasso.Picasso;
-
-import java.util.List;
 
 import ir.mahdidev.digikala.R;
 import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;

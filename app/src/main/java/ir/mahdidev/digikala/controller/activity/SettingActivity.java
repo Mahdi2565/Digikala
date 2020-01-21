@@ -1,10 +1,10 @@
 package ir.mahdidev.digikala.controller.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import ir.mahdidev.digikala.R;

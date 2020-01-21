@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -20,8 +19,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ir.mahdidev.digikala.R;
 import ir.mahdidev.digikala.database.CustomerAddressModel;
-import ir.mahdidev.digikala.networkmodel.address.WebServiceAddress;
-import ir.mahdidev.digikala.networkmodel.order.WebServiceOrder;
 import ir.mahdidev.digikala.util.Const;
 
 public class AddressRecyclerViewAdapter extends RecyclerView.Adapter<AddressRecyclerViewAdapter.ViewHolder> {

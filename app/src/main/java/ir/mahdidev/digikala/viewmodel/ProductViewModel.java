@@ -18,9 +18,6 @@ import ir.mahdidev.digikala.networkmodel.attributeterm.WebServiceAttributeTerm;
 import ir.mahdidev.digikala.networkmodel.category.WebserviceCategoryModel;
 import ir.mahdidev.digikala.networkmodel.comment.WebServiceCommentModel;
 import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
-import ir.mahdidev.digikala.networkutil.RetrofitApi;
-import ir.mahdidev.digikala.networkutil.RetrofitConfig;
-import okhttp3.ResponseBody;
 
 public class ProductViewModel extends AndroidViewModel {
     private Repository repository;
@@ -57,11 +54,11 @@ public class ProductViewModel extends AndroidViewModel {
     }
 
     public void insertBasketDb(ProductBasketModel productBasketModel) {
-        repository.insertProductBaskerDb(productBasketModel);
+        repository.insertProductBasketDb(productBasketModel);
     }
 
     public void updateBasketDb(ProductBasketModel productBasketModel) {
-        repository.updateProductBaskerDb(productBasketModel);
+        repository.updateProductBasketDb(productBasketModel);
     }
 
     public void insertFavoritetDb(ProductFavoriteModel productFavoriteModel) {

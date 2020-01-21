@@ -1,9 +1,10 @@
 
 package ir.mahdidev.digikala.networkmodel.attribute;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 public class Links {
 

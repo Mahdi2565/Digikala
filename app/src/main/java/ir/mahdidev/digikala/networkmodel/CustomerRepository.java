@@ -17,7 +17,6 @@ import ir.mahdidev.digikala.networkutil.RetrofitApi;
 import ir.mahdidev.digikala.networkutil.RetrofitConfig;
 import ir.mahdidev.digikala.util.Const;
 import ir.mahdidev.digikala.util.MyApplication;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -65,8 +64,10 @@ public class CustomerRepository {
         , Const.RetrofitConst.GEOCODING_MAP_IR_API_KEY).enqueue(new Callback<WebServiceAddress>() {
             @Override
             public void onResponse(Call<WebServiceAddress> call, Response<WebServiceAddress> response) {
+                Log.e("TAG4" , "HERE1 " + response.code() + " " + response.message());
                 if (response.isSuccessful()){
                     customerAddressMutable.setValue(response.body());
+                    Log.e("TAG4" , "HERE2 " + response.code() + " " + response.message());
                 }
             }
 

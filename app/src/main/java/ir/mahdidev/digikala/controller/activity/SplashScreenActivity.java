@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment;
 import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import ir.mahdidev.digikala.R;
 import ir.mahdidev.digikala.controller.fragment.SplashScreenFragment;
-import ir.mahdidev.digikala.networkutil.ConnectivityReceiver;
 import ir.mahdidev.digikala.util.Const;
 
 public class SplashScreenActivity extends SingleFragmentActivity {

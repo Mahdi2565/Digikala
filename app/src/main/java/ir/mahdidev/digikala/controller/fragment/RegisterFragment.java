@@ -2,18 +2,17 @@ package ir.mahdidev.digikala.controller.fragment;
 
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -27,7 +26,6 @@ import ir.mahdidev.digikala.controller.activity.MainActivity;
 import ir.mahdidev.digikala.networkmodel.customer.Billing;
 import ir.mahdidev.digikala.networkmodel.customer.Shipping;
 import ir.mahdidev.digikala.networkmodel.customer.WebServiceCustomerModel;
-import ir.mahdidev.digikala.util.Const;
 import ir.mahdidev.digikala.util.Pref;
 import ir.mahdidev.digikala.viewmodel.CustomerViewModel;
 

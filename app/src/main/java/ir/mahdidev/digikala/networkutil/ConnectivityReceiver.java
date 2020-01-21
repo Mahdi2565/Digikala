@@ -5,12 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Log;
 
-import ir.mahdidev.digikala.util.MyApplication;
-
-public class ConnectivityReceiver
-        extends BroadcastReceiver {
+public class ConnectivityReceiver extends BroadcastReceiver {
 
     public static ConnectivityReceiverListener connectivityReceiverListener;
 
@@ -21,42 +17,39 @@ public class ConnectivityReceiver
     @Override
     public void onReceive(Context context, Intent arg1) {
 
-        boolean isConnected = haveNetwork(context);
+        boolean isConnected = hasNetwork(context);
 
         if (connectivityReceiverListener != null) {
             connectivityReceiverListener.onNetworkConnectionChanged(isConnected);
         }
     }
 
-
     public static boolean isConnected(Context context) {
-
-        return haveNetwork(context);
+        return hasNetwork(context);
     }
-
 
     public interface ConnectivityReceiverListener {
         void onNetworkConnectionChanged(boolean isConnected);
     }
-    private static boolean haveNetwork(Context context) {
+
+    private static boolean hasNetwork(Context context) {
         boolean has_wifi = false;
         boolean has_mobile_data = false;
         ConnectivityManager connectivityManager = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo[] networkInfos= connectivityManager.getAllNetworkInfo();
-        for(NetworkInfo info: networkInfos){
-            if(info.getTypeName().equalsIgnoreCase("Wifi")){
-                if(info.isConnected()){
-                    has_wifi=true;
+        NetworkInfo[] networkInfos = connectivityManager.getAllNetworkInfo();
+        for (NetworkInfo info : networkInfos) {
+            if (info.getTypeName().equalsIgnoreCase("Wifi")) {
+                if (info.isConnected()) {
+                    has_wifi = true;
                 }
             }
-            if(info.getTypeName().equalsIgnoreCase("Mobile")){
-                if(info.isConnected()){
-                    has_mobile_data=true;
+            if (info.getTypeName().equalsIgnoreCase("Mobile")) {
+                if (info.isConnected()) {
+                    has_mobile_data = true;
                 }
             }
         }
         return has_wifi || has_mobile_data;
-
-}
+    }
 }

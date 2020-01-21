@@ -1,7 +1,5 @@
 package ir.mahdidev.digikala.networkutil;
 
-import androidx.cardview.widget.CardView;
-
 import java.util.List;
 
 import ir.mahdidev.digikala.networkmodel.address.WebServiceAddress;
@@ -13,7 +11,6 @@ import ir.mahdidev.digikala.networkmodel.coupon.WebServiceCoupon;
 import ir.mahdidev.digikala.networkmodel.customer.WebServiceCustomerModel;
 import ir.mahdidev.digikala.networkmodel.order.WebServiceOrder;
 import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;

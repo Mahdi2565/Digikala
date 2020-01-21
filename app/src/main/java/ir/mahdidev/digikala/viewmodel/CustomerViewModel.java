@@ -5,7 +5,6 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
@@ -13,11 +12,9 @@ import ir.mahdidev.digikala.database.CustomerAddressModel;
 import ir.mahdidev.digikala.networkmodel.CustomerRepository;
 import ir.mahdidev.digikala.networkmodel.Repository;
 import ir.mahdidev.digikala.networkmodel.address.WebServiceAddress;
-import ir.mahdidev.digikala.networkmodel.comment.WebServiceCommentModel;
 import ir.mahdidev.digikala.networkmodel.coupon.WebServiceCoupon;
 import ir.mahdidev.digikala.networkmodel.customer.WebServiceCustomerModel;
 import ir.mahdidev.digikala.networkmodel.order.WebServiceOrder;
-import ir.mahdidev.digikala.networkutil.RetrofitConfig;
 
 public class CustomerViewModel extends AndroidViewModel {
     private Repository repository;

@@ -157,8 +157,6 @@
 
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
-                android:visibility="gone"
-                android:background="@color/white"
                 android:hint="@string/generated_address_by_map"
                 android:layout_marginTop="24dp"
                 android:layout_marginStart="16dp"
@@ -167,7 +165,8 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:visibility="gone"
+                    android:background="@color/white"
+                    android:visibility="invisible"
                     android:enabled="false"
                     android:id="@+id/customer_map_address"
                     android:layout_width="match_parent"

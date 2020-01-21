@@ -2,6 +2,13 @@ package ir.mahdidev.digikala.controller.fragment;
 
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,15 +19,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -48,23 +46,27 @@ public class ProductBasketFragment extends Fragment {
     RecyclerView productRecyclerView;
     @BindView(R.id.basket_badge)
     TextView basketBadge;
-    private WebServiceCustomerModel webServiceCustomerModel;
 
-    @OnClick(R.id.back_toolbar)
-    void onBackClicked(){
-        getActivity().finish();
-    }
     @BindView(R.id.sum_basket_price)
     TextView sumBasketPrice;
+
     @BindView(R.id.basket_relative)
     RelativeLayout basketLayout;
     @BindView(R.id.empty_basket_txt)
     TextView emptyBasketText;
     @BindView(R.id.finalize_basket)
     LinearLayout finalizeBasket;
+
+    @OnClick(R.id.back_toolbar)
+    void onBackClicked() {
+        getActivity().finish();
+    }
+
+    private WebServiceCustomerModel webServiceCustomerModel;
     private ProductBasketViewModel viewModel;
     private ProductBasketAdapterRecyclerView productBasketAdapterRecyclerView;
     private NavController navController;
+
     public ProductBasketFragment() {
     }
 
@@ -88,13 +90,14 @@ public class ProductBasketFragment extends Fragment {
         initViewModel();
         finalizeFunction();
     }
+
     private void finalizeFunction() {
         finalizeBasket.setOnClickListener(view -> {
-            if (webServiceCustomerModel==null){
+            if (webServiceCustomerModel == null) {
                 startActivity(LoginRegisterActivity.newIntent(getActivity()));
                 getActivity().finish();
-                Toast.makeText(getActivity() , getString(R.string.login_first) , Toast.LENGTH_LONG).show();
-            }else {
+                Toast.makeText(getActivity(), getString(R.string.login_first), Toast.LENGTH_LONG).show();
+            } else {
                 navController.navigate(R.id.action_productBasketFragment_to_finalizeBasketFragment);
             }
         });
@@ -102,40 +105,40 @@ public class ProductBasketFragment extends Fragment {
 
     private void initViewModel() {
         viewModel = ViewModelProviders.of(this).get(ProductBasketViewModel.class);
-        viewModel.getProductCount().observe(this , integer -> {
-                if (integer>0){
-                    basketBadge.setVisibility(View.VISIBLE);
-                    basketBadge.setText(String.valueOf(integer));
-                }else {
-                    basketBadge.setVisibility(View.GONE);
-                }
-            });
-           viewModel.getAllBasketProductDb().observe(this , productBasketModels -> {
-               if (productBasketModels.isEmpty()){
-                   finalizeBasket.setVisibility(View.GONE);
-                   basketLayout.setVisibility(View.GONE);
-                   emptyBasketText.setVisibility(View.VISIBLE);
-               }else {
-                   finalizeBasket.setVisibility(View.VISIBLE);
-                   emptyBasketText.setVisibility(View.GONE);
-                   basketLayout.setVisibility(View.VISIBLE);
-               }
-               initRecyclerView(productBasketModels);
-               int productPrice;
-               int sumPrice = 0;
-               for (ProductBasketModel productBasketModel : productBasketModels){
-                   productPrice= Integer.parseInt(productBasketModel.getFinalPrice());
-                   sumPrice += productBasketModel.getProductCount() * productPrice;
-               }
-               String sumPriceTxt = MyApplication.getInstance()
-                       .getPersianNumber(sumPrice)
-                       + " تومان";
-               sumBasketPrice.setText(sumPriceTxt);
-           });
-     }
-    private void initRecyclerView( List<ProductBasketModel> productBasketModels) {
-        if (productBasketAdapterRecyclerView == null) {
+        viewModel.getProductCount().observe(this, integer -> {
+            if (integer > 0) {
+                basketBadge.setVisibility(View.VISIBLE);
+                basketBadge.setText(String.valueOf(integer));
+            } else {
+                basketBadge.setVisibility(View.GONE);
+            }
+        });
+        viewModel.getAllBasketProductDb().observe(this, productBasketModels -> {
+            if (productBasketModels.isEmpty()) {
+                finalizeBasket.setVisibility(View.GONE);
+                basketLayout.setVisibility(View.GONE);
+                emptyBasketText.setVisibility(View.VISIBLE);
+            } else {
+                finalizeBasket.setVisibility(View.VISIBLE);
+                basketLayout.setVisibility(View.VISIBLE);
+                emptyBasketText.setVisibility(View.GONE);
+            }
+            initRecyclerView(productBasketModels);
+            int productPrice;
+            int sumPrice = 0;
+            for (ProductBasketModel productBasketModel : productBasketModels) {
+                productPrice = Integer.parseInt(productBasketModel.getFinalPrice());
+                sumPrice += productBasketModel.getProductCount() * productPrice;
+            }
+            String sumPriceTxt = MyApplication.getInstance()
+                    .getPersianNumber(sumPrice)
+                    + " تومان";
+            sumBasketPrice.setText(sumPriceTxt);
+        });
+    }
 
+    private void initRecyclerView(List<ProductBasketModel> productBasketModels) {
+        if (productBasketAdapterRecyclerView == null) {
             productBasketAdapterRecyclerView = new ProductBasketAdapterRecyclerView(productBasketModels, getActivity());
 
         } else {
@@ -157,21 +160,19 @@ public class ProductBasketFragment extends Fragment {
 
             @Override
             public void onProductCountChange(ProductBasketModel productBasketModel) {
-               viewModel.updateProductBasketDb(productBasketModel);
+                viewModel.updateProductBasketDb(productBasketModel);
             }
         });
     }
-    private void createDeleteAlertDialog( Object object) {
 
-            AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-            alert.setMessage(getResources().getString(R.string.do_you_want_delete_product_from_basket));
-            alert.setPositiveButton(getResources().getString(R.string.yes),
-                    (dialogInterface, i) -> viewModel.deleteProduct((ProductBasketModel) object));
-            alert.setNegativeButton(getResources().getString(R.string.no),
-                    (dialogInterface, i) -> dialogInterface.cancel()
-            );
-            alert.show();
-
-
+    private void createDeleteAlertDialog(Object object) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+        alert.setMessage(getResources().getString(R.string.do_you_want_delete_product_from_basket));
+        alert.setPositiveButton(getResources().getString(R.string.yes),
+                (dialogInterface, i) -> viewModel.deleteProduct((ProductBasketModel) object));
+        alert.setNegativeButton(getResources().getString(R.string.no),
+                (dialogInterface, i) -> dialogInterface.cancel()
+        );
+        alert.show();
     }
 }

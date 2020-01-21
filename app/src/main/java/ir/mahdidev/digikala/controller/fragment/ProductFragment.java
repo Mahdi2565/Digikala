@@ -4,16 +4,6 @@ package ir.mahdidev.digikala.controller.fragment;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +13,15 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
 import com.smarteist.autoimageslider.IndicatorAnimations;
@@ -126,7 +125,6 @@ public class ProductFragment extends Fragment {
         navController = Navigation.findNavController(view);
         initViewModel();
         basketImgFunction();
-
     }
 
     private void userCommentsFunction(WebserviceProductModel webserviceProductModel) {
@@ -156,7 +154,7 @@ public class ProductFragment extends Fragment {
 
     private void addToBasketFunction(WebserviceProductModel webserviceProductModel) {
         addToBasket.setOnClickListener(view -> {
-            ProductBasketModel productBasketModel = Repository.getInstance().getSingleProductBaskerDb(webserviceProductModel.getId());
+            ProductBasketModel productBasketModel = Repository.getInstance().getSingleProductBasketDb(webserviceProductModel.getId());
             if (productBasketModel !=null ){
                 int productCountupdate = productBasketModel.getProductCount();
                 productBasketModel.setProductCount(++productCountupdate);
@@ -196,7 +194,6 @@ public class ProductFragment extends Fragment {
     }
 
     private void favoriteProductFunction(WebserviceProductModel webserviceProductModel) {
-
         productFavoriteModel  = viewModel.getSingleProductFavorite(webserviceProductModel.getId());
         favoriteProduct.setOnClickListener(view -> {
             productFavoriteModel =
@@ -280,7 +277,6 @@ public class ProductFragment extends Fragment {
                 .getPersianNumber(Double.parseDouble(webserviceProductModel.getPrice()))
                 + " تومان";
         salePrice.setText(priceTxt);
-
     }
 
     private void initprogressBar() {

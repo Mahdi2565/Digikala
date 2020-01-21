@@ -53,43 +53,51 @@ public class Repository {
         return instance;
     }
 
-    private Repository(){
+    private Repository() {
         roomConfig = MyApplication.getInstance().getRoomDb();
     }
 
-    public LiveData<Integer> getProductBasketCountDb(){
+    public LiveData<Integer> getProductBasketCountDb() {
         return roomConfig.productBasketDao().getProductCount();
     }
-    public LiveData<List<ProductBasketModel>> getAllProductBasketDb(){
+
+    public LiveData<List<ProductBasketModel>> getAllProductBasketDb() {
         return roomConfig.productBasketDao().getAllProductBasket();
     }
-    public ProductBasketModel getSingleProductBaskerDb(int productId){
+
+    public ProductBasketModel getSingleProductBasketDb(int productId) {
         return roomConfig.productBasketDao().getSingleProduct(productId);
     }
-    public void insertProductBaskerDb(ProductBasketModel productBasketModel){
+
+    public void insertProductBasketDb(ProductBasketModel productBasketModel) {
         roomConfig.productBasketDao().insert(productBasketModel);
     }
-    public void updateProductBaskerDb(ProductBasketModel productBasketModel){
+
+    public void updateProductBasketDb(ProductBasketModel productBasketModel) {
         roomConfig.productBasketDao().update(productBasketModel);
     }
-    public void deleteProductBaskerDb(ProductBasketModel productBasketModel){
+
+    public void deleteProductBasketDb(ProductBasketModel productBasketModel) {
         roomConfig.productBasketDao().delete(productBasketModel);
     }
-    public void deleteAllRows(){
+
+    public void deleteAllRows() {
         roomConfig.productBasketDao().deleteAllRows();
     }
 
-    public LiveData<List<ProductFavoriteModel>> getAllProductFavoriteDb(){
+    public LiveData<List<ProductFavoriteModel>> getAllProductFavoriteDb() {
         return roomConfig.productFavoriteDao().getAllProductFavorite();
     }
-    public ProductFavoriteModel getSingleProductFavorite(int productId){
+
+    public ProductFavoriteModel getSingleProductFavorite(int productId) {
         return roomConfig.productFavoriteDao().getSingleProduct(productId);
     }
 
-    public void insertProductFavoriteDb(ProductFavoriteModel productFavoriteModel){
+    public void insertProductFavoriteDb(ProductFavoriteModel productFavoriteModel) {
         roomConfig.productFavoriteDao().insert(productFavoriteModel);
     }
-    public void deleteProductFavoriteDb(ProductFavoriteModel productFavoriteModel){
+
+    public void deleteProductFavoriteDb(ProductFavoriteModel productFavoriteModel) {
         roomConfig.productFavoriteDao().delete(productFavoriteModel);
     }
 
@@ -103,12 +111,13 @@ public class Repository {
     public MutableLiveData<List<WebserviceCategoryModel>> getCategoryListLiveData() {
         return categoryListLiveData;
     }
-    public void loadCategoryListFromMainFragment(){
+
+    public void loadCategoryListFromMainFragment() {
         RetrofitConfig.getRetrofit().create(RetrofitApi.class)
                 .getAllCategories(100).enqueue(new Callback<List<WebserviceCategoryModel>>() {
             @Override
             public void onResponse(Call<List<WebserviceCategoryModel>> call, Response<List<WebserviceCategoryModel>> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     List<WebserviceCategoryModel> categoryList = new ArrayList<>(response.body());
                     categoryListLiveData.setValue(categoryList);
                 }
@@ -120,8 +129,6 @@ public class Repository {
             }
         });
     }
-
-
 
     public MutableLiveData<List<WebserviceProductModel>> loadAmazingSuggestionProductListLiveData(int page) {
         RetrofitConfig.getRetrofit().create(RetrofitApi.class).getAllAmazingSuggestionProduct(
@@ -289,14 +296,15 @@ public class Repository {
                 });
         return relatedProductMutableLiveData;
     }
-    public MutableLiveData<List<WebserviceProductModel>> loadEspecialProduct(){
+
+    public MutableLiveData<List<WebserviceProductModel>> loadEspecialProduct() {
         especialProductsMutabaleLiveData = new MutableLiveData<>();
         // TODO: 11/18/2019 ESPECIAL TAG !!
         RetrofitConfig.getRetrofit().create(RetrofitApi.class).getEspecialProducts(Const.SPECIAL_TAG)
                 .enqueue(new Callback<List<WebserviceProductModel>>() {
                     @Override
                     public void onResponse(Call<List<WebserviceProductModel>> call, Response<List<WebserviceProductModel>> response) {
-                        if (response.isSuccessful()){
+                        if (response.isSuccessful()) {
                             especialProductsMutabaleLiveData.setValue(response.body());
                         }
                     }
@@ -309,12 +317,12 @@ public class Repository {
         return especialProductsMutabaleLiveData;
     }
 
-    public MutableLiveData<List<WebServiceCommentModel>> getCommentsProduct(int productId){
+    public MutableLiveData<List<WebServiceCommentModel>> getCommentsProduct(int productId) {
         RetrofitConfig.getRetrofit().create(RetrofitApi.class).getProductComment(productId)
                 .enqueue(new Callback<List<WebServiceCommentModel>>() {
                     @Override
                     public void onResponse(Call<List<WebServiceCommentModel>> call, Response<List<WebServiceCommentModel>> response) {
-                        if (response.isSuccessful()){
+                        if (response.isSuccessful()) {
                             commentProductsMutableLiveData.setValue(response.body());
                         }
                     }
@@ -326,18 +334,20 @@ public class Repository {
                 });
         return commentProductsMutableLiveData;
     }
-    public void clearCommentProductMutable(){
+
+    public void clearCommentProductMutable() {
         commentProductsMutableLiveData = new MutableLiveData<>();
     }
-    public MutableLiveData<List<WebserviceProductModel>> getSortedProductList(int categoryId , String orderBy
-            , String order , String search , int page , String attribute , List<Integer> attributeTerm){
-        if (page==1) sortProductsListMutableLiveData = new MutableLiveData<>();
-        if (categoryId==0){
-            RetrofitConfig.getRetrofit().create(RetrofitApi.class).getsortedProductsList(order ,
-                    orderBy , page , search , attribute , attributeTerm).enqueue(new Callback<List<WebserviceProductModel>>() {
+
+    public MutableLiveData<List<WebserviceProductModel>> getSortedProductList(int categoryId, String orderBy
+            , String order, String search, int page, String attribute, List<Integer> attributeTerm) {
+        if (page == 1) sortProductsListMutableLiveData = new MutableLiveData<>();
+        if (categoryId == 0) {
+            RetrofitConfig.getRetrofit().create(RetrofitApi.class).getsortedProductsList(order,
+                    orderBy, page, search, attribute, attributeTerm).enqueue(new Callback<List<WebserviceProductModel>>() {
                 @Override
                 public void onResponse(Call<List<WebserviceProductModel>> call, Response<List<WebserviceProductModel>> response) {
-                    if (response.isSuccessful()){
+                    if (response.isSuccessful()) {
                         sortProductsListMutableLiveData.setValue(response.body());
 
                     }
@@ -348,12 +358,12 @@ public class Repository {
 
                 }
             });
-        }else {
-            RetrofitConfig.getRetrofit().create(RetrofitApi.class).getsortedProductsListWithCategory(categoryId ,order ,
-                    orderBy , page , search, attribute , attributeTerm).enqueue(new Callback<List<WebserviceProductModel>>() {
+        } else {
+            RetrofitConfig.getRetrofit().create(RetrofitApi.class).getsortedProductsListWithCategory(categoryId, order,
+                    orderBy, page, search, attribute, attributeTerm).enqueue(new Callback<List<WebserviceProductModel>>() {
                 @Override
                 public void onResponse(Call<List<WebserviceProductModel>> call, Response<List<WebserviceProductModel>> response) {
-                    if (response.isSuccessful()){
+                    if (response.isSuccessful()) {
                         sortProductsListMutableLiveData.setValue(response.body());
 
                     }
@@ -366,15 +376,16 @@ public class Repository {
         }
         return sortProductsListMutableLiveData;
     }
-    public MutableLiveData<WebServiceCustomerModel> registerCustomer (WebServiceCustomerModel webServiceCustomerModel){
+
+    public MutableLiveData<WebServiceCustomerModel> registerCustomer(WebServiceCustomerModel webServiceCustomerModel) {
         registerCustomerMutable = new MutableLiveData<>();
         RetrofitConfig.getRetrofit().create(RetrofitApi.class).registerCustomer(webServiceCustomerModel)
                 .enqueue(new Callback<WebServiceCustomerModel>() {
                     @Override
                     public void onResponse(Call<WebServiceCustomerModel> call, Response<WebServiceCustomerModel> response) {
-                        if (response.isSuccessful()){
-                         registerCustomerMutable.setValue(response.body());
-                        }else if (response.code()==400){
+                        if (response.isSuccessful()) {
+                            registerCustomerMutable.setValue(response.body());
+                        } else if (response.code() == 400) {
                             registerCustomerMutable.setValue(new WebServiceCustomerModel(400));
                         }
                     }
@@ -386,15 +397,16 @@ public class Repository {
                 });
         return registerCustomerMutable;
     }
-    public MutableLiveData<List<WebServiceCustomerModel>> getCustomer(String email){
+
+    public MutableLiveData<List<WebServiceCustomerModel>> getCustomer(String email) {
         getCustomerMutable = new MutableLiveData<>();
         RetrofitConfig.getRetrofit().create(RetrofitApi.class).getCustomer(email)
                 .enqueue(new Callback<List<WebServiceCustomerModel>>() {
                     @Override
                     public void onResponse(Call<List<WebServiceCustomerModel>> call, Response<List<WebServiceCustomerModel>> response) {
-                        if (response.isSuccessful()){
+                        if (response.isSuccessful()) {
                             getCustomerMutable.setValue(response.body());
-                        }else if (response.code()==400){
+                        } else if (response.code() == 400) {
                             List<WebServiceCustomerModel> customerModelList = new ArrayList<>();
                             customerModelList.add(new WebServiceCustomerModel(400));
                             getCustomerMutable.setValue(customerModelList);
@@ -410,12 +422,13 @@ public class Repository {
                 });
         return getCustomerMutable;
     }
-    public MutableLiveData<WebServiceCustomerModel> updateCustomer(WebServiceCustomerModel webServiceCustomerModel){
-        RetrofitConfig.getRetrofit().create(RetrofitApi.class).updateCustomer(webServiceCustomerModel.getId() , webServiceCustomerModel)
+
+    public MutableLiveData<WebServiceCustomerModel> updateCustomer(WebServiceCustomerModel webServiceCustomerModel) {
+        RetrofitConfig.getRetrofit().create(RetrofitApi.class).updateCustomer(webServiceCustomerModel.getId(), webServiceCustomerModel)
                 .enqueue(new Callback<WebServiceCustomerModel>() {
                     @Override
                     public void onResponse(Call<WebServiceCustomerModel> call, Response<WebServiceCustomerModel> response) {
-                        if (response.isSuccessful()){
+                        if (response.isSuccessful()) {
                             updateCustomerMutable.setValue(response.body());
                         }
                     }
@@ -427,12 +440,13 @@ public class Repository {
                 });
         return updateCustomerMutable;
     }
-    public MutableLiveData<List<WebServiceAttribute>> getAllAttributes(){
+
+    public MutableLiveData<List<WebServiceAttribute>> getAllAttributes() {
         attributeProductsMutable = new MutableLiveData<>();
         RetrofitConfig.getRetrofit().create(RetrofitApi.class).getAllAttributes().enqueue(new Callback<List<WebServiceAttribute>>() {
             @Override
             public void onResponse(Call<List<WebServiceAttribute>> call, Response<List<WebServiceAttribute>> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     attributeProductsMutable.setValue(response.body());
                 }
             }
@@ -445,13 +459,13 @@ public class Repository {
         return attributeProductsMutable;
     }
 
-    public MutableLiveData<List<WebServiceAttributeTerm>> getAllAttributeTerms(int attributeId){
+    public MutableLiveData<List<WebServiceAttributeTerm>> getAllAttributeTerms(int attributeId) {
         attributeTermProductsMutable = new MutableLiveData<>();
         RetrofitConfig.getRetrofit().create(RetrofitApi.class).getAllAttributeTerms(attributeId)
                 .enqueue(new Callback<List<WebServiceAttributeTerm>>() {
                     @Override
                     public void onResponse(Call<List<WebServiceAttributeTerm>> call, Response<List<WebServiceAttributeTerm>> response) {
-                        if (response.isSuccessful()){
+                        if (response.isSuccessful()) {
                             attributeTermProductsMutable.setValue(response.body());
                         }
                     }
@@ -468,16 +482,17 @@ public class Repository {
         return updateCommentMutable;
     }
 
-    public MutableLiveData<WebServiceCommentModel> updateComment(WebServiceCommentModel webServiceCommentModel){
+    public MutableLiveData<WebServiceCommentModel> updateComment(WebServiceCommentModel webServiceCommentModel) {
         updateCommentMutable = new MutableLiveData<>();
-        RetrofitConfig.getRetrofit().create(RetrofitApi.class).updateComment(webServiceCommentModel.getId() ,webServiceCommentModel)
+        RetrofitConfig.getRetrofit().create(RetrofitApi.class).updateComment(webServiceCommentModel.getId(), webServiceCommentModel)
                 .enqueue(new Callback<WebServiceCommentModel>() {
                     @Override
                     public void onResponse(Call<WebServiceCommentModel> call, Response<WebServiceCommentModel> response) {
-                        if (response.isSuccessful()){
+                        if (response.isSuccessful()) {
                             updateCommentMutable.setValue(response.body());
                         }
                     }
+
                     @Override
                     public void onFailure(Call<WebServiceCommentModel> call, Throwable t) {
                     }

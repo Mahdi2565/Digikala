@@ -1,11 +1,11 @@
 package ir.mahdidev.digikala.controller.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import ir.mahdidev.digikala.R;
@@ -40,6 +40,7 @@ public class ProductActivity extends AppCompatActivity {
     public static Intent newIntent(Context context ){
         return new Intent(context , ProductActivity.class);
     }
+
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));

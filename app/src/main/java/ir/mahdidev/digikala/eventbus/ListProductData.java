@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class ListProductData implements Serializable {
+
     private String toolbarTitle;
     private int categoryId  ;
     private String orderBy;
@@ -11,8 +12,6 @@ public class ListProductData implements Serializable {
     private String search;
     private String  attribute;
     private List<Integer>   attributeTerm;
-
-
 
     public ListProductData(String toolbarTitle, int categoryId, String orderBy, String order, String search) {
         this.toolbarTitle = toolbarTitle;

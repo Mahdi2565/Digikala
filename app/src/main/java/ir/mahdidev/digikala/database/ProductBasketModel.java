@@ -2,10 +2,6 @@ package ir.mahdidev.digikala.database;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-import androidx.room.TypeConverter;
-import androidx.room.TypeConverters;
-
-import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
 
 @Entity(tableName = "product_basket")
 public class ProductBasketModel {

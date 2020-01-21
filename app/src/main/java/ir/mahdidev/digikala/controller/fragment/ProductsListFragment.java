@@ -1,8 +1,14 @@
 package ir.mahdidev.digikala.controller.fragment;
 
 
-import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,20 +19,6 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
-import java.nio.file.Path;
 import java.util.List;
 
 import butterknife.BindView;
@@ -34,13 +26,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ir.mahdidev.digikala.R;
 import ir.mahdidev.digikala.adapter.ProductsListRecyclerViewAdapter;
-import ir.mahdidev.digikala.controller.activity.MainActivity;
 import ir.mahdidev.digikala.controller.activity.ProductBasketActivity;
 import ir.mahdidev.digikala.controller.activity.SearchActivity;
 import ir.mahdidev.digikala.eventbus.ListProductData;
 import ir.mahdidev.digikala.networkmodel.product.WebserviceProductModel;
 import ir.mahdidev.digikala.util.Const;
-import ir.mahdidev.digikala.util.MyApplication;
 import ir.mahdidev.digikala.viewmodel.ProductsListViewModel;
 
 /**

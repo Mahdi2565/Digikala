@@ -19,6 +19,7 @@ public class MyApplication extends Application {
     private static MyApplication mInstance;
     private NumberFormat nf = NumberFormat.getInstance(new Locale("fa", "IR"));
     private RoomConfig roomDb;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -41,7 +42,7 @@ public class MyApplication extends Application {
     }
 
     private void initRoomDataBase() {
-       roomDb = RoomConfig.getInstance(this);
+        roomDb = RoomConfig.getInstance(this);
     }
 
     public RoomConfig getRoomDb() {
@@ -66,7 +67,7 @@ public class MyApplication extends Application {
         ConnectivityReceiver.connectivityReceiverListener = listener;
     }
 
-    public String getPersianNumber(double i){
+    public String getPersianNumber(double i) {
         return nf.format(i);
     }
 
